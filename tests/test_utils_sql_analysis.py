@@ -232,15 +232,12 @@ def test_analyze_function_operation(conn):
 
 
 def test_analyze_create_virtual_table_operation():
-    conn = sqlite3.connect(":memory:")
-    try:
+    with contextlib.closing(sqlite3.connect(":memory:")) as conn:
         analysis = analyze_sql_tables(
             conn,
             "create virtual table docs using fts5(body)",
             database_name="data",
         )
-    finally:
-        conn.close()
 
     assert {
         "operation": "create",
