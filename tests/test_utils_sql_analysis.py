@@ -150,11 +150,8 @@ def test_analyze_vacuum_operation():
 
 
 def test_analyze_statement_with_no_authorizer_callbacks_is_unknown():
-    conn = sqlite3.connect(":memory:")
-    try:
+    with contextlib.closing(sqlite3.connect(":memory:")) as conn:
         analysis = analyze_sql_tables(conn, "reindex", database_name="data")
-    finally:
-        conn.close()
 
     assert [operation_dict(operation) for operation in analysis.operations] == [
         {
