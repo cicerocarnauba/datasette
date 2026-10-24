@@ -300,16 +300,13 @@ def test_analyze_table_kind_for_regular_virtual_and_shadow_tables():
 
 
 def test_analyze_create_table_as_select_function_is_not_internal():
-    conn = sqlite3.connect(":memory:")
-    try:
+    with contextlib.closing(sqlite3.connect(":memory:")) as conn:
         conn.execute("create table secret(value text)")
         analysis = analyze_sql_tables(
             conn,
             "create table copied as select substr(value, 1, 1) from secret",
             database_name="data",
         )
-    finally:
-        conn.close()
 
     assert {
         "operation": "function",
