@@ -250,8 +250,7 @@ def test_analyze_create_virtual_table_operation():
 
 
 def test_analyze_table_kind_for_regular_virtual_and_shadow_tables():
-    conn = sqlite3.connect(":memory:")
-    try:
+    with contextlib.closing(sqlite3.connect(":memory:")) as conn:
         conn.executescript("""
             create table dogs (id integer primary key, name text);
             create virtual table docs using fts5(title, body, content='');
@@ -272,8 +271,6 @@ def test_analyze_table_kind_for_regular_virtual_and_shadow_tables():
             "insert into docs_config(k, v) values ('x', 1)",
             database_name="data",
         )
-    finally:
-        conn.close()
 
     regular_insert = next(
         operation
