@@ -101,15 +101,12 @@ def operation_dict(operation):
 
 
 def test_analyze_create_table_operation():
-    conn = sqlite3.connect(":memory:")
-    try:
+    with contextlib.closing(sqlite3.connect(":memory:")) as conn:
         analysis = analyze_sql_tables(
             conn,
             "create table foobar (id integer primary key, name text)",
             database_name="data",
         )
-    finally:
-        conn.close()
 
     assert {
         "operation": "create",
