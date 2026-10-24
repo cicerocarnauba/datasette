@@ -1,3 +1,4 @@
+import contextlib
 import pytest
 
 from datasette.utils.sql_analysis import analyze_sql_tables
@@ -130,11 +131,8 @@ def test_analyze_create_table_operation():
 
 
 def test_analyze_vacuum_operation():
-    conn = sqlite3.connect(":memory:")
-    try:
+    with contextlib.closing(sqlite3.connect(":memory:")) as conn:
         analysis = analyze_sql_tables(conn, "vacuum", database_name="data")
-    finally:
-        conn.close()
 
     assert [operation_dict(operation) for operation in analysis.operations] == [
         {
