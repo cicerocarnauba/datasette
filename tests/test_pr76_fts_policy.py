@@ -111,18 +111,15 @@ async def test_vocabulary_immediate_source_permissions(
         ("fts4", "fts4aux('main', 'search')"),
     ],
 )
-def test_cross_schema_vocabulary_is_unresolved(module, definition):
-    conn = sqlite3.connect(":memory:")
-    try:
-        conn.execute(f"create virtual table search using {module}(body)")
-        conn.execute(f"create virtual table temp.words using {definition}")
-        # Cross-schema ownership is not representable by the current map.
-        # The source is itself derived, so the immediate-source policy denies it.
-        assert (
-            sqlite_derived_table_dependencies(conn, schema="temp")["words"] == "words"
-        )
-    finally:
-        conn.close()
+def test_cross_schema_vocabulary_is_unresolved(module, definition, memory_conn):
+    memory_conn.execute(f"create virtual table search using {module}(body)")
+    memory_conn.execute(f"create virtual table temp.words using {definition}")
+    # Cross-schema ownership is not representable by the current map.
+    # The source is itself derived, so the immediate-source policy denies it.
+    assert (
+        sqlite_derived_table_dependencies(memory_conn, schema="temp")["words"]
+        == "words"
+    )
 
 
 @pytest.mark.parametrize(
