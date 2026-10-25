@@ -130,11 +130,7 @@ def test_cross_schema_vocabulary_is_unresolved(module, definition, memory_conn):
         """CREATE VIRTUAL TABLE`words`USING`fts5vocab`('search', 'row')""",
     ],
 )
-def test_vocabulary_quoted_token_boundaries(definition):
-    conn = sqlite3.connect(":memory:")
-    try:
-        conn.execute("create virtual table search using fts5(body)")
-        conn.execute(definition)
-        assert sqlite_derived_table_dependencies(conn)["words"] == "search"
-    finally:
-        conn.close()
+def test_vocabulary_quoted_token_boundaries(definition, memory_conn):
+    memory_conn.execute("create virtual table search using fts5(body)")
+    memory_conn.execute(definition)
+    assert sqlite_derived_table_dependencies(memory_conn)["words"] == "search"
