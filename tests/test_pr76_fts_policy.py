@@ -9,6 +9,13 @@ from datasette.resources import TableResource
 from datasette.utils.sqlite import sqlite3, sqlite_derived_table_dependencies
 
 
+@pytest.fixture
+def memory_conn():
+    conn = sqlite3.connect(":memory:")
+    yield conn
+    conn.close()
+
+
 @pytest.mark.parametrize("vocab_name", ["words", "name USING fts4aux", 'quoted"name'])
 @pytest.mark.parametrize(
     "module,arguments",
@@ -19,18 +26,14 @@ from datasette.utils.sqlite import sqlite3, sqlite_derived_table_dependencies
         ("fts4aux", "'Search,Index'"),
     ],
 )
-def test_vocabulary_dependency_identity(module, arguments, vocab_name):
-    conn = sqlite3.connect(":memory:")
-    try:
-        fts = "fts5" if module == "fts5vocab" else "fts4"
-        conn.execute(f'create virtual table "Search,Index" using {fts}(body)')
-        quoted_name = '"' + vocab_name.replace('"', '""') + '"'
-        conn.execute(
-            f"create virtual table {quoted_name} USING /* module */ {module}({arguments})"
-        )
-        assert sqlite_derived_table_dependencies(conn)[vocab_name] == "Search,Index"
-    finally:
-        conn.close()
+def test_vocabulary_dependency_identity(module, arguments, vocab_name, memory_conn):
+    fts = "fts5" if module == "fts5vocab" else "fts4"
+    memory_conn.execute(f'create virtual table "Search,Index" using {fts}(body)')
+    quoted_name = '"' + vocab_name.replace('"', '""') + '"'
+    memory_conn.execute(
+        f"create virtual table {quoted_name} USING /* module */ {module}({arguments})"
+    )
+    assert sqlite_derived_table_dependencies(memory_conn)[vocab_name] == "Search,Index"
 
 
 @pytest.mark.asyncio
