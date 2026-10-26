@@ -621,7 +621,8 @@ def test_permissions_cascade(reset_cascade_config, path, permissions, expected_s
 
 
 
-def test_padlocks_on_database_page(cascade_app_client):
+@pytest.fixture
+def padlocks_database_page_client(cascade_app_client):
     config = {
         "databases": {
             "fixtures": {
@@ -635,27 +636,30 @@ def test_padlocks_on_database_page(cascade_app_client):
         }
     }
     previous_config = cascade_app_client.ds.config
-    try:
-        cascade_app_client.ds.config = config
-        async_to_sync(cascade_app_client.ds.invoke_startup)()
-        async_to_sync(cascade_app_client.ds.add_query)(
-            "fixtures", "query_two", "select 2", source="config"
-        )
-        response = cascade_app_client.get(
-            "/fixtures",
-            cookies={"ds_actor": cascade_app_client.actor_cookie({"id": "test"})},
-        )
-        # Tables
-        assert ">123_starts_with_digits</a></h3>" in response.text
-        assert ">Table With Space In Name</a> 🔒</h3>" in response.text
-        # Queries
-        assert ">query_two</a></li>" in response.text
-        # Views
-        assert ">paginated_view</a> 🔒</li>" in response.text
-        assert ">simple_view</a></li>" in response.text
-    finally:
-        cascade_app_client.ds.config = previous_config
-        async_to_sync(cascade_app_client.ds.remove_query)("fixtures", "query_two")
+    cascade_app_client.ds.config = config
+    async_to_sync(cascade_app_client.ds.invoke_startup)()
+    async_to_sync(cascade_app_client.ds.add_query)(
+        "fixtures", "query_two", "select 2", source="config"
+    )
+    yield cascade_app_client
+    cascade_app_client.ds.config = previous_config
+    async_to_sync(cascade_app_client.ds.remove_query)("fixtures", "query_two")
+
+
+def test_padlocks_on_database_page(padlocks_database_page_client):
+    response = padlocks_database_page_client.get(
+        "/fixtures",
+        cookies={"ds_actor": padlocks_database_page_client.actor_cookie({"id": "test"})},
+    )
+    # Tables
+    assert ">123_starts_with_digits</a></h3>" in response.text
+    assert ">Table With Space In Name</a> 🔒</h3>" in response.text
+    # Queries
+    assert ">query_two</a></li>" in response.text
+    # Views
+    assert ">paginated_view</a> 🔒</li>" in response.text
+    assert ">simple_view</a></li>" in response.text
+
 
 
 @pytest.mark.asyncio
