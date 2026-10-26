@@ -545,6 +545,13 @@ def cascade_app_client():
         yield client
 
 
+@pytest.fixture
+def reset_cascade_config(cascade_app_client):
+    previous_config = cascade_app_client.ds.config
+    yield cascade_app_client
+    cascade_app_client.ds.config = previous_config
+
+
 @pytest.mark.parametrize(
     "path,permissions,expected_status",
     [
@@ -582,39 +589,36 @@ def cascade_app_client():
         ("/fixtures.db", ["download"], 200),
     ],
 )
-def test_permissions_cascade(cascade_app_client, path, permissions, expected_status):
+def test_permissions_cascade(reset_cascade_config, path, permissions, expected_status):
     """Test that e.g. having view-table but NOT view-database lets you view table page, etc"""
     allow = {"id": "*"}
     deny = {}
-    previous_config = cascade_app_client.ds.config
-    updated_config = copy.deepcopy(previous_config)
+    updated_config = copy.deepcopy(reset_cascade_config.ds.config)
     actor = {"id": "test"}
     if "download" in permissions:
         actor["can_download"] = 1
-    try:
-        # Set up the different allow blocks
-        updated_config["allow"] = allow if "instance" in permissions else deny
-        # Note: download permission also needs database access (via plugin granting both)
-        # so we don't set a deny rule when download is in permissions
-        updated_config["databases"]["fixtures"]["allow"] = (
-            allow if ("database" in permissions or "download" in permissions) else deny
-        )
-        updated_config["databases"]["fixtures"]["tables"]["binary_data"] = {
-            "allow": (allow if "table" in permissions else deny)
-        }
-        updated_config["databases"]["fixtures"]["queries"]["magic_parameters"][
-            "allow"
-        ] = (allow if "query" in permissions else deny)
-        cascade_app_client.ds.config = updated_config
-        response = cascade_app_client.get(
-            path,
-            cookies={"ds_actor": cascade_app_client.actor_cookie(actor)},
-        )
-        assert (
-            response.status == expected_status
-        ), f"path: {path}, permissions: {permissions}, expected_status: {expected_status}, status: {response.status}"
-    finally:
-        cascade_app_client.ds.config = previous_config
+    # Set up the different allow blocks
+    updated_config["allow"] = allow if "instance" in permissions else deny
+    # Note: download permission also needs database access (via plugin granting both)
+    # so we don't set a deny rule when download is in permissions
+    updated_config["databases"]["fixtures"]["allow"] = (
+        allow if ("database" in permissions or "download" in permissions) else deny
+    )
+    updated_config["databases"]["fixtures"]["tables"]["binary_data"] = {
+        "allow": (allow if "table" in permissions else deny)
+    }
+    updated_config["databases"]["fixtures"]["queries"]["magic_parameters"][
+        "allow"
+    ] = (allow if "query" in permissions else deny)
+    reset_cascade_config.ds.config = updated_config
+    response = reset_cascade_config.get(
+        path,
+        cookies={"ds_actor": reset_cascade_config.actor_cookie(actor)},
+    )
+    assert (
+        response.status == expected_status
+    ), f"path: {path}, permissions: {permissions}, expected_status: {expected_status}, status: {response.status}"
+
 
 
 def test_padlocks_on_database_page(cascade_app_client):
