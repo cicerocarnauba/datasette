@@ -1,3 +1,4 @@
+import contextlib
 import json
 import pathlib
 
@@ -81,17 +82,23 @@ def config_dir(tmp_path_factory):
     return config_dir
 
 
-def test_invalid_settings(config_dir):
-    previous = (config_dir / "datasette.json").read_text("utf-8")
-    (config_dir / "datasette.json").write_text(
-        json.dumps({"settings": {"invalid": "invalid-setting"}}), "utf-8"
-    )
+@contextlib.contextmanager
+def temporary_config(config_dir, content):
+    config_file = config_dir / "datasette.json"
+    previous = config_file.read_text("utf-8")
+    config_file.write_text(content, "utf-8")
     try:
+        yield
+    finally:
+        config_file.write_text(previous, "utf-8")
+
+
+def test_invalid_settings(config_dir):
+    invalid_content = json.dumps({"settings": {"invalid": "invalid-setting"}})
+    with temporary_config(config_dir, invalid_content):
         with pytest.raises(StartupError) as ex:
             Datasette([], config_dir=config_dir)
         assert ex.value.args[0] == "Invalid setting 'invalid' in config file"
-    finally:
-        (config_dir / "datasette.json").write_text(previous, "utf-8")
 
 
 @pytest.fixture(scope="session")
