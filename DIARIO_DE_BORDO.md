@@ -4,12 +4,14 @@
 - **Disciplina:** Qualidade de Software (Semestre 2026.2)
 - **Docente:** Profª. Dra. Carla Ilane Moreira Bezerra
 - **Monitoria:** Gabriel Alves Pessoa
-- **Equipe:** Kawan e Cícero Carnaúba
+- **Equipe:**
+  - Cícero Higor Marques Carnaúba (login/git: `higor`)
+  - Kawan Torres (login/git: `kawantorres`)
 - **Projeto:** [simonw/datasette](https://github.com/simonw/datasette)
 - **Fork:** [cicerocarnauba/datasette](https://github.com/cicerocarnauba/datasette)
-- **Commit Base Inicial:** `cf113a59850862125b86ce1a58c117aa21341e07`
-- **Commit Final da Entrega:** `746720f83737b5c8795da3cb0a542b8faae2f46b`
-- **Branch de Trabalho:** `refatoracao-test-smells` (47 commits consolidados: 16 de Kawan + 31 de Cícero Higor)
+- **Commit Base Inicial:** `cf113a5` (`cf113a59850862125b86ce1a58c117aa21341e07`)
+- **Commit Final de Refatoração de Código:** `746720f` (`746720f83737b5c8795da3cb0a542b8faae2f46b`)
+- **Branch de Trabalho:** `refatoracao-test-smells`
 - **Link Oficial no Google Docs da Disciplina:** https://docs.google.com/document/d/1jvLB-C7dT7S-WHd-vc8-YLf6qjfu3JX3XeOdKnqxBc8/edit?usp=sharing
 - **Catálogo de Referência Oficial:** [CATSPY](https://cat-spy.vercel.app/smells) (UFC Quixadá)
 
@@ -19,64 +21,63 @@
 
 | Integrante | Smells Refatorados (CATSPY) | Qtd. Registros | Commits | Arquivos Atribuídos |
 |---|---|---|---|---|
-| **Kawan** | Sleepy Test (1)<br>Undefined Test (3)<br>Non-Functional Statement (6)<br>Unknown Test (3)<br>Conditional Test Logic (3) | **16 registros** | `9bce5bb8` a `bfe137ad` (16 commits) | `tests/test_cli_serve_server.py`<br>`tests/test_queries.py`<br>`tests/test_telemetry_testing_kit.py`<br>`tests/test_internals_datasette.py`<br>`tests/test_utils_sql_analysis.py` |
-| **Cícero Higor** | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (21) | **29 registros** | `8b7144b6` a `746720f8` (31 commits)* | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py`<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py` |
+| **Kawan Torres** | Sleepy Test (1)<br>Undefined Test (3)<br>Non-Functional Statement (6)<br>Unknown Test (3)<br>Conditional Test Logic (3) | **16 registros** | `9bce5bb` a `bfe137a` (16 commits) | `tests/test_cli_serve_server.py`<br>`tests/test_queries.py`<br>`tests/test_telemetry_testing_kit.py`<br>`tests/test_internals_datasette.py`<br>`tests/test_utils_sql_analysis.py` |
+| **Cícero Higor** | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (21) | **29 registros** | `8b7144b` a `746720f` (31 commits)* | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py`<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py` |
 | **Total Dupla** | **5 tipos distintos do CATSPY** | **45 registros** | **47 commits atômicos** | **18 arquivos de teste independentes** |
 
-*\*Nota:* Cícero realizou 29 refatorações atômicas de testes e 2 commits complementares de refinamento (`3172976e` para desempacotamento determinístico em R24 e `92ae493a` para reforço de asserções em Unknown Test R20/R21), totalizando 31 commits.  
-*\*\*Nota de Alinhamento Metodológico:* Em total conformidade com a exigência de usar exclusivamente o catálogo CATSPY (UFC Quixadá), a equipe descartou qualquer refatoração de *Exception Handling* (ausente no CATSPY), concentrando 100% dos esforços nos 5 tipos canônicos catalogados.
+*\*Nota de auditoria de commits:* Cícero Higor realizou 29 refatorações atômicas de testes e 2 commits complementares de refinamento (`3172976` para desempacotamento determinístico em R24 e `92ae493` para validação de mensagem em Unknown Test R20/R21), totalizando 31 commits. A equipe descartou refatorações de *Exception Handling* por ausência desse smell no catálogo de referência CATSPY.
 
 ---
 
-# Parte 1: Registros de Refatoração — Kawan (Registros #01 a #16)
+# Parte 1: Registros de Refatoração — Kawan Torres (Registros #01 a #16)
 
 ---
 
 ### Registro #01 — Sleepy Test
-- **Responsável:** Kawan
-- **Commit:** `9bce5bb8`
+- **Responsável:** Kawan Torres
+- **Commit:** `9bce5bb`
 - **Arquivo e Teste:** `tests/test_cli_serve_server.py::test_startup_hook_background_task_runs_on_serving_loop` (linha 107)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Sleepy Test. O teste continha uma chamada explícita a `time.sleep(0.05)` dentro de um laço de polling com deadline para aguardar que uma tarefa de inicialização em segundo plano executasse no servidor ASGI, tornando a suíte de testes artificialmente lenta e suscetível a flakiness.
+   Sleepy Test. O teste continha uma chamada a `time.sleep(0.05)` dentro de um laço de polling com deadline para aguardar que uma tarefa de inicialização em segundo plano executasse no servidor ASGI, tornando a suíte de testes artificialmente lenta.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Desacoplar a lógica de espera ativa da função de teste sem perder o tempo de tolerância (deadline de 3.0s) necessário para a tarefa assíncrona registrar sua conclusão via HTTP.
 
 3. **Usei o CATSPY para:**
-   Consultar a seção de Sleepy Test no CATSPY sobre o impacto negativo de pausas arbitrárias e boas práticas para delegar polling ativo para funções auxiliares especializadas. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
+   Consultar a seção de Sleepy Test no CATSPY sobre o impacto de pausas e técnicas para delegar polling ativo para funções utilitárias dedicadas. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Extração da rotina de consulta com timeout para a função auxiliar `poll_for_marker_task(port, timeout=3.0)`, removendo a chamada de `time.sleep` diretamente do corpo do teste e simplificando o método para `payload = poll_for_marker_task(port)`.
+   Extração da rotina de consulta com timeout para a função auxiliar `poll_for_marker_task(port, timeout=3.0)`, removendo a chamada direta de `time.sleep` do corpo do teste e simplificando o método para `payload = poll_for_marker_task(port)`.
 
 ---
 
 ### Registro #02 — Undefined Test
-- **Responsável:** Kawan
-- **Commit:** `7a4c7a23`
+- **Responsável:** Kawan Torres
+- **Commit:** `7a4c7a2`
 - **Arquivo e Teste:** `tests/test_queries.py::_template_option_attributes` (linhas 18-20)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Undefined Test. A função utilitária `_template_option_attributes` continha asserções (`assert`) em seu corpo, mas não possui o prefixo canônico `test_` e não é reconhecida como um teste pelo framework pytest, configurando asserções soltas em método auxiliar.
+   Undefined Test. A função utilitária `_template_option_attributes` continha asserções (`assert`) em seu corpo, mas não possui o prefixo canônico `test_` e não é reconhecida como um teste pelo framework pytest, configurando asserções em método utilitário.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
-   Garantir a integridade da extração de atributos HTML de elementos `<option>` sem depender de `assert` para controle de fluxo e sem quebrar os múltiplos testes que consomem essa função utilitária.
+   Garantir a integridade da extração de atributos HTML de elementos `<option>` sem depender de `assert` para controle de fluxo e sem quebrar os múltiplos testes que consomem essa função.
 
 3. **Usei o CATSPY para:**
-   Consultar a seção de Undefined Test no CATSPY sobre como helpers não devem conter declarações de teste soltas, devendo lançar exceções canônicas de validação. Link: https://cat-spy.vercel.app/smells/Undefined%20Test
+   Consultar a definição de Undefined Test no CATSPY sobre como helpers não devem conter declarações de teste soltas, devendo lançar exceções canônicas de validação. Link: https://cat-spy.vercel.app/smells/Undefined%20Test
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Substituição das instruções `assert` por validações explícitas com lançamento de `raise ValueError(...)`, assegurando que erros de parsing no HTML levantem exceções informativas de domínio ao invés de asserções informais de teste.
+   Substituição das instruções `assert` por validações explícitas com lançamento de `raise ValueError(...)`.
 
 ---
 
 ### Registro #03 — Undefined Test
-- **Responsável:** Kawan
-- **Commit:** `aca7a06a`
+- **Responsável:** Kawan Torres
+- **Commit:** `aca7a06`
 - **Arquivo e Teste:** `tests/test_queries.py::_template_sql` (linhas 31-33)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Undefined Test. A função auxiliar `_template_sql` utilizava `assert` internamente para validar se o botão de template SQL continha o atributo `data-template-sql`, caracterizando lógica de asserção fora de um método de teste registrado.
+   Undefined Test. A função auxiliar `_template_sql` utilizava `assert` internamente para validar se o botão de template SQL continha o atributo `data-template-sql`.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Diferenciar falhas de extração do elemento DOM de falhas de asserção de teste, assegurando que o utilitário retorne a string SQL ou falhe explicitamente.
@@ -90,18 +91,18 @@
 ---
 
 ### Registro #04 — Undefined Test
-- **Responsável:** Kawan
-- **Commit:** `86fd3428`
+- **Responsável:** Kawan Torres
+- **Commit:** `86fd342`
 - **Arquivo e Teste:** `tests/test_queries.py::_template_button_sql` (linhas 39-42)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
    Undefined Test. A função helper `_template_button_sql` realizava asserções com `assert button` e `assert button.get(...)` sem ser um teste formal da suíte.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
-   Assegurar que a busca pelo botão de template via BeautifulSoup retorne o atributo correto com tratamento de ausência robusto e sem usar asserções informais.
+   Assegurar que a busca pelo botão de template via BeautifulSoup retorne o atributo correto com tratamento de ausência robusto.
 
 3. **Usei o CATSPY para:**
-   Consultar a definição de Undefined Test e as orientações para transformar checagens informais em tratamento de erro idiomático em Python. Link: https://cat-spy.vercel.app/smells/Undefined%20Test
+   Consultar a definição de Undefined Test no CATSPY e as orientações para transformar checagens informais em tratamento de erro em Python. Link: https://cat-spy.vercel.app/smells/Undefined%20Test
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
    Conversão dos blocos `assert` em verificações explícitas `if not button: raise ValueError(...)`, eliminando o smell e mantendo a função estritamente utilitária.
@@ -109,46 +110,46 @@
 ---
 
 ### Registro #05 — Non-Functional Statement
-- **Responsável:** Kawan
-- **Commit:** `475ffb1f`
+- **Responsável:** Kawan Torres
+- **Commit:** `475ffb1`
 - **Arquivo e Teste:** `tests/test_cli_serve_server.py::test_startup_error_fails_fast_before_port_binds` (linhas 150-154)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Non-Functional Statement. O teste utilizava um context manager composto com parênteses contendo uma instrução `pass` inerte no corpo do bloco `with`.
+   Non-Functional Statement. O teste utilizava um context manager composto com parênteses contendo uma instrução inerte `pass` no corpo do bloco `with`.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Reorganizar o context manager para que a chamada de conexão com socket ocorra como corpo efetivo do context manager `pytest.raises(OSError)`, sem manter comandos supérfluos.
 
 3. **Usei o CATSPY para:**
-   Consultar a seção de Non-Functional Statement no CATSPY sobre instruções redundantes e blocos mortos em testes. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
+   Consultar a seção de Non-Functional Statement no CATSPY sobre instruções redundantes e blocos inertes em testes. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Simplificação do context manager para `with pytest.raises(OSError): socket.create_connection(("127.0.0.1", port), timeout=0.2)`, eliminando a instrução inerte `pass`.
+   Simplificação do context manager para `with pytest.raises(OSError): socket.create_connection(("127.0.0.1", port), timeout=0.2)`, eliminando a instrução `pass`.
 
 ---
 
 ### Registro #06 — Non-Functional Statement
-- **Responsável:** Kawan
-- **Commit:** `a1167020`
+- **Responsável:** Kawan Torres
+- **Commit:** `a116702`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::_run_workload` (linha 55)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Non-Functional Statement. A função utilitária `_run_workload` possuía uma instrução inerte `pass` dentro do context manager de tracer, que não produzia nenhum efeito prático.
+   Non-Functional Statement. A função utilitária `_run_workload` continha uma instrução inerte `pass` dentro do context manager de tracer.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
-   Garantir a abertura e fechamento do span de telemetria sem manter uma instrução vazia inerte.
+   Garantir a abertura e fechamento do span de telemetria sem manter uma instrução inerte.
 
 3. **Usei o CATSPY para:**
    Consultar a definição de Non-Functional Statement no CATSPY para remoção de declarações inertes. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Substituição da instrução `pass` por um comentário descritivo contextual e execução semântica mínima, eliminando o smell detectado pelo TEMPY.
+   Substituição da instrução `pass` por atribuição descritiva mínima de identificador contextual.
 
 ---
 
 ### Registro #07 — Non-Functional Statement
-- **Responsável:** Kawan
-- **Commit:** `b5603f9c`
+- **Responsável:** Kawan Torres
+- **Commit:** `b5603f9`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_conformance_catches_an_unregistered_span` (linha 69)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -161,13 +162,13 @@
    Consultar estratégias para refatoração de Non-Functional Statement no CATSPY. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Eliminação do comando `pass` inerte através da reestruturação do escopo do context manager com uma instrução de atribuição semântica explícita.
+   Eliminação do comando `pass` inerte através da reestruturação do escopo do context manager.
 
 ---
 
 ### Registro #08 — Non-Functional Statement
-- **Responsável:** Kawan
-- **Commit:** `ccdb3057`
+- **Responsável:** Kawan Torres
+- **Commit:** `ccdb305`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_scope_filter_ignores_other_scopes` (linha 94)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -180,17 +181,17 @@
    Verificar recomendações do CATSPY sobre clareza e remoção de código morto em testes. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Remoção limpa da instrução `pass` e compactação do corpo do context manager.
+   Remoção da instrução `pass` e compactação do corpo do context manager.
 
 ---
 
 ### Registro #09 — Non-Functional Statement
-- **Responsável:** Kawan
-- **Commit:** `2d896aca`
+- **Responsável:** Kawan Torres
+- **Commit:** `2d896ac`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_linked_root_span_kwargs_links_without_parenting` (linha 115)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Non-Functional Statement. O teste utilizava `pass` como placeholder dentro de um context manager de span raiz vinculado.
+   Non-Functional Statement. O teste utilizava `pass` dentro de um context manager de span raiz vinculado.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Garantir a execução da vinculação de spans sem instruções supérfluas.
@@ -199,13 +200,13 @@
    Consultar a documentação do CATSPY sobre eliminação de declarações inertes. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Substituição do `pass` por atribuição explícita de identificador de span, eliminando a instrução vazia.
+   Substituição do `pass` por atribuição explícita de identificador de span.
 
 ---
 
 ### Registro #10 — Non-Functional Statement
-- **Responsável:** Kawan
-- **Commit:** `0781592c`
+- **Responsável:** Kawan Torres
+- **Commit:** `0781592`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_linked_root_span_kwargs_with_no_current_span` (linha 134)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -215,45 +216,45 @@
    Estruturar o teste de forma compacta e funcional sem declarações inúteis.
 
 3. **Usei o CATSPY para:**
-   Consultar o catálogo CATSPY para validação de boas práticas na eliminação de Non-Functional Statements. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
+   Consultar o catálogo CATSPY para eliminação de Non-Functional Statements. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Remoção definitiva do `pass`, encerrando as ocorrências desse smell no arquivo `test_telemetry_testing_kit.py`.
+   Remoção definitiva do `pass`, encerrando as ocorrências desse smell no arquivo.
 
 ---
 
 ### Registro #11 — Unknown Test
-- **Responsável:** Kawan
-- **Commit:** `4c73f6ea`
+- **Responsável:** Kawan Torres
+- **Commit:** `4c73f6e`
 - **Arquivo e Teste:** `tests/test_internals_datasette.py::test_static_rejects_plugin_and_mount` (linhas 150-154)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Unknown Test. O teste verificava a rejeição de argumentos conflitantes usando apenas `with pytest.raises(ValueError):` sem nenhuma asserção explícita (`assert`).
+   Unknown Test. O teste verificava a rejeição de argumentos conflitantes usando apenas `with pytest.raises(ValueError):` sem asserção explícita (`assert`).
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
-   Capturar o contexto da exceção e verificar as propriedades de erro sem mascarar exceções inesperadas.
+   Capturar o contexto da exceção e verificar as propriedades de erro.
 
 3. **Usei o CATSPY para:**
-   Consultar a seção de Unknown Test no CATSPY sobre como testes devem conter asserções explícitas e verificáveis. Link: https://cat-spy.vercel.app/smells/Unknown%20Test
+   Consultar a seção de Unknown Test no CATSPY sobre a necessidade de asserções explícitas. Link: https://cat-spy.vercel.app/smells/Unknown%20Test
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Captura do contexto da exceção com `with pytest.raises(ValueError) as excinfo:` e adição da asserção explícita sobre a mensagem de erro específica.
+   Captura do contexto da exceção com `with pytest.raises(ValueError) as excinfo:` e adição da asserção explícita sobre a mensagem de erro.
 
 ---
 
 ### Registro #12 — Unknown Test
-- **Responsável:** Kawan
-- **Commit:** `75318271`
+- **Responsável:** Kawan Torres
+- **Commit:** `7531827`
 - **Arquivo e Teste:** `tests/test_internals_datasette.py::test_static_rejects_path_traversal` (linhas 159-163)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
    Unknown Test. O teste usava o argumento `match` em `pytest.raises` sem uma declaração `assert` explícita no corpo da função.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
-   Tornar a validação da exceção explícita e legível no corpo do teste.
+   Tornar a validação da exceção explícita no corpo do teste.
 
 3. **Usei o CATSPY para:**
-   Consultar a definição de Unknown Test no CATSPY sobre a importância de asserções explícitas para rastreabilidade de defeitos. Link: https://cat-spy.vercel.app/smells/Unknown%20Test
+   Consultar a definição de Unknown Test no CATSPY sobre asserções explícitas para rastreabilidade de defeitos. Link: https://cat-spy.vercel.app/smells/Unknown%20Test
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
    Captura com `as excinfo` e inclusão da asserção explícita `assert "cannot escape static root" in str(excinfo.value)`.
@@ -261,8 +262,8 @@
 ---
 
 ### Registro #13 — Unknown Test
-- **Responsável:** Kawan
-- **Commit:** `c8889c1c`
+- **Responsável:** Kawan Torres
+- **Commit:** `c8889c1`
 - **Arquivo e Teste:** `tests/test_internals_datasette.py::test_datasette_error_if_string_not_list` (linhas 272-276)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -280,12 +281,12 @@
 ---
 
 ### Registro #14 — Conditional Test Logic
-- **Responsável:** Kawan
-- **Commit:** `040ae2c3`
+- **Responsável:** Kawan Torres
+- **Commit:** `040ae2c`
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_create_table_operation` (linhas 124-125)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Conditional Test Logic. O teste continha estruturas de controle e filtragem (`for` e `if`) embutidas diretamente na asserção final para validar se nenhuma operação não interna afetou as tabelas de catálogo.
+   Conditional Test Logic. O teste continha estruturas de controle e filtragem (`for` e `if`) embutidas na asserção final para validar se nenhuma operação não interna afetou as tabelas de catálogo.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Isolar o predicado de filtragem sem alterar a verificação semântica do teste de análise SQL.
@@ -299,8 +300,8 @@
 ---
 
 ### Registro #15 — Conditional Test Logic
-- **Responsável:** Kawan
-- **Commit:** `3e2bcc83`
+- **Responsável:** Kawan Torres
+- **Commit:** `3e2bcc8`
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_function_operation` (linha 224)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -310,7 +311,7 @@
    Preservar a correspondência exata de tuplas de 5 elementos sem manter compreensões com controle de iteração no corpo do teste.
 
 3. **Usei o CATSPY para:**
-   Consultar boas práticas de Conditional Test Logic no CATSPY para extração de processamento de tuplas. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
+   Consultar práticas de Conditional Test Logic no CATSPY para extração de processamento de tuplas. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
    Extração da construção do conjunto para a função auxiliar declarativa `function_operation_tuples(analysis)`, tornando a asserção linear e direta.
@@ -318,8 +319,8 @@
 ---
 
 ### Registro #16 — Conditional Test Logic
-- **Responsável:** Kawan (e Refinamento Cícero `3172976e`)
-- **Commit:** `bfe137ad` (Refino: `3172976e`)
+- **Responsável:** Kawan Torres (Refino Cícero Higor: `3172976`)
+- **Commit:** `bfe137a` (Refino: `3172976`)
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_table_kind_for_regular_virtual_and_shadow_tables` (linhas 283-297)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -329,10 +330,10 @@
    Eliminar os geradores com filtros condicionais de forma genuína, sem apenas transferir a condicional para um helper intermediário.
 
 3. **Usei o CATSPY para:**
-   Consultar a seção de Conditional Test Logic no CATSPY, que recomenda manter a asserção de teste determinística e direta. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
+   Consultar a seção de Conditional Test Logic no CATSPY sobre linearidade em asserções de teste. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Inicialmente extraído para helper e, no refinamento definitivo `3172976e`, substituído por desempacotamento direto determinístico `[regular_insert] = regular_analysis.operations`, eliminando 100% de qualquer lógica condicional ou geradora.
+   Inicialmente extraído para helper e, no refinamento definitivo `3172976`, substituído por desempacotamento direto determinístico `[regular_insert] = regular_analysis.operations`, eliminando 100% de qualquer lógica condicional ou geradora.
 
 ---
 
@@ -342,26 +343,26 @@
 
 ### Registro #17 — Sleepy Test
 - **Responsável:** Cícero Higor
-- **Commit:** `8b7144b6`
+- **Commit:** `8b7144b`
 - **Arquivo e Teste:** `tests/test_internals_database.py::test_execute_write_block_false` (linha 115)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Sleepy Test. O teste assíncrono continha uma chamada a `asyncio.sleep(0.1)` com pausa arbitrária para aguardar a execução de uma escrita em segundo plano na fila do SQLite, introduzindo lentidão e potencial flakiness na suíte.
+   Sleepy Test. O teste assíncrono continha uma chamada a `asyncio.sleep(0.1)` com pausa arbitrária para aguardar a execução de uma escrita em segundo plano na fila do SQLite.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
-   Substituir o delay fixo por um mecanismo de sincronização determinístico sem depender de tempos de espera empíricos.
+   Substituir o delay fixo por sincronização determinística sem depender de tempos de espera empíricos.
 
 3. **Usei o CATSPY para:**
    Consultar a seção de Sleepy Test no CATSPY para compreender estratégias de sincronização baseadas em eventos e awaiting determinístico. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Substituição do delay arbitrário pelo aguardo determinístico do objeto `asyncio.Future` da tarefa de escrita, eliminando a dependência de tempo fixo.
+   Substituição do delay arbitrário pelo aguardo determinístico do objeto `asyncio.Future` da tarefa de escrita.
 
 ---
 
 ### Registro #18 — Sleepy Test
 - **Responsável:** Cícero Higor
-- **Commit:** `d059a5ce`
+- **Commit:** `d059a5c`
 - **Arquivo e Teste:** `tests/test_internals_database.py::test_execute_write_with_returning_block_false` (linha 142)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -380,14 +381,14 @@
 
 ### Registro #19 — Sleepy Test
 - **Responsável:** Cícero Higor
-- **Commit:** `d8b827ca`
+- **Commit:** `d8b827c`
 - **Arquivo e Teste:** `tests/test_shutdown.py::test_shutdown_logs_stragglers_that_outlive_the_grace_period` (linhas 45-50)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
    Sleepy Test. O teste utilizava `asyncio.sleep` com valores arbitrários para forçar tarefas a ultrapassarem o período de carência (*grace period*) de encerramento do servidor.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
-   Coordenar o ciclo de vida das tarefas pendentes sem depender de timeouts fixos extensos que tornam o teste excessivamente lento.
+   Coordenar o ciclo de vida das tarefas pendentes sem depender de timeouts fixos extensos.
 
 3. **Usei o CATSPY para:**
    Consultar orientações do CATSPY sobre testes de encerramento e tolerância temporal. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
@@ -399,7 +400,7 @@
 
 ### Registro #20 — Sleepy Test
 - **Responsável:** Cícero Higor
-- **Commit:** `9533ed8e`
+- **Commit:** `9533ed8`
 - **Arquivo e Teste:** `tests/test_write_wrapper.py::test_track_event_with_block_false` (linha 62)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -418,11 +419,11 @@
 
 ### Registro #21 — Undefined Test
 - **Responsável:** Cícero Higor
-- **Commit:** `7daa8b09`
+- **Commit:** `7daa8b0`
 - **Arquivo e Teste:** `tests/test_http_span.py::_route_for` (linhas 25-28)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Undefined Test. A função utilitária interna `_route_for` continha declarações `assert` em seu corpo, gerando falsas asserções fora de métodos formais de teste.
+   Undefined Test. A função utilitária interna `_route_for` continha declarações `assert` em seu corpo, gerando asserções fora de métodos formais de teste.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Remover as asserções sem perder a garantia de que as rotas HTTP de telemetria foram resolvidas corretamente.
@@ -437,7 +438,7 @@
 
 ### Registro #22 — Non-Functional Statement
 - **Responsável:** Cícero Higor
-- **Commit:** `4e944db2`
+- **Commit:** `4e944db`
 - **Arquivo e Teste:** `tests/test_telemetry_metrics.py::test_registry_holds_instances_weakly` (linha 78)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -456,11 +457,11 @@
 
 ### Registro #23 — Unknown Test
 - **Responsável:** Cícero Higor
-- **Commit:** `667b9c50` (Refino: `92ae493a`)
+- **Commit:** `667b9c5` (Refino: `92ae493`)
 - **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_match_a_registered_extra` (linha 82)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Unknown Test. O teste usava apenas `with pytest.raises(KeyError): BadContext.documented_fields()` sem nenhuma declaração `assert` explícita, impossibilitando a validação da causa do erro.
+   Unknown Test. O teste usava apenas `with pytest.raises(KeyError): BadContext.documented_fields()` sem nenhuma declaração `assert` explícita.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Capturar o contexto de erro e assegurar que a mensagem do erro corresponda exatamente à regra de extras não registrados.
@@ -475,14 +476,14 @@
 
 ### Registro #24 — Unknown Test
 - **Responsável:** Cícero Higor
-- **Commit:** `4fdd31f1` (Refino: `92ae493a`)
+- **Commit:** `4fdd31f` (Refino: `92ae493`)
 - **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_be_available_for_the_scope` (linha 97)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Unknown Test. O teste validava escopo incorreto apenas com `with pytest.raises(ValueError):` sem nenhuma asserção explícita.
+   Unknown Test. O teste validava escopo incorreto apenas com `with pytest.raises(ValueError):` sem asserção explícita.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
-   Inspecionar o erro de escopo de template e adicionar asserção legível e robusta.
+   Inspecionar o erro de escopo de template e adicionar asserção legível.
 
 3. **Usei o CATSPY para:**
    Verificar recomendações do CATSPY para Unknown Test. Link: https://cat-spy.vercel.app/smells/Unknown%20Test
@@ -494,7 +495,7 @@
 
 ### Registro #25 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `167c5631`
+- **Commit:** `167c563`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_permissions_cascade` (linhas 110-120)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -507,13 +508,13 @@
    Consultar a recomendação do CATSPY de aplicar parametrização (`@pytest.mark.parametrize`) para decompor loops de teste em casos independentes. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Conversão do loop de validação em casos parametrizados declarativos com `@pytest.mark.parametrize`, eliminando a estrutura de controle interna.
+   Conversão do loop de validação em casos parametrizados declarativos com `@pytest.mark.parametrize`.
 
 ---
 
 ### Registro #26 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `5cd9f1a0`
+- **Commit:** `5cd9f1a`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_padlock` (linhas 145-155)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -532,7 +533,7 @@
 
 ### Registro #27 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `28bd370c`
+- **Commit:** `28bd370`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_database` (linhas 180-195)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -551,7 +552,7 @@
 
 ### Registro #28 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `d5df3e91`
+- **Commit:** `d5df3e9`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_database_list_respects_view_table` (linhas 230-240)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -570,7 +571,7 @@
 
 ### Registro #29 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `3c3ede75`
+- **Commit:** `3c3ede7`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_table` (linhas 260-275)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -589,7 +590,7 @@
 
 ### Registro #30 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `9942a6b6`
+- **Commit:** `9942a6b`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_table_list_respects_view_table` (linhas 300-315)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -608,7 +609,7 @@
 
 ### Registro #31 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `18be25d6`
+- **Commit:** `18be25d`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_query` (linhas 340-355)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -627,7 +628,7 @@
 
 ### Registro #32 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `be17abd3`
+- **Commit:** `be17abd`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_instance` (linhas 380-390)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -646,11 +647,11 @@
 
 ### Registro #33 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `506bcf83`
+- **Commit:** `506bcf8`
 - **Arquivo e Teste:** `tests/test_template_context.py::test_context_class_fields_all_have_help` (linha 115)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Conditional Test Logic. O teste iterava em um loop `for` sobre os campos do contexto de template para verificar se cada campo possuía texto de ajuda, interrompendo a verificação na primeira falha e mascarando problemas nos campos subsequentes.
+   Conditional Test Logic. O teste iterava em um loop `for` sobre os campos do contexto de template para verificar se cada campo possuía texto de ajuda, interrompendo a verificação na primeira falha.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Validar todos os campos de forma abrangente e sem loop manual no teste.
@@ -665,7 +666,7 @@
 
 ### Registro #34 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `47d46743`
+- **Commit:** `47d4674`
 - **Arquivo e Teste:** `tests/test_routes.py::test_routes` (linhas 60-70)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -678,17 +679,17 @@
    Consultar a seção de Conditional Test Logic no CATSPY. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Parametrização limpa das tuplas de rota via `@pytest.mark.parametrize`.
+   Parametrização das tuplas de rota via `@pytest.mark.parametrize`.
 
 ---
 
 ### Registro #35 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `a81ae387`
+- **Commit:** `a81ae38`
 - **Arquivo e Teste:** `tests/test_tracer.py::test_trace` (linhas 40-55)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Conditional Test Logic. O teste continha blocos condicionais para verificar o tracer ativado vs desativado.
+   Conditional Test Logic. O teste continha blocos condicionais para verificar o tracer ativado versus desativado.
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Dividir o teste em dois métodos especializados sem duplicar o setup do tracer.
@@ -697,13 +698,13 @@
    Consultar a estratégia *Split Test* recomendada pelo CATSPY para bifurcações booleanas de configuração. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Divisão do teste em dois testes especializados e focados: um para o tracer habilitado e outro para desabilitado.
+   Divisão do teste em dois testes especializados: um para o tracer habilitado e outro para desabilitado.
 
 ---
 
 ### Registro #36 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `144b331c`
+- **Commit:** `144b331`
 - **Arquivo e Teste:** `tests/test_tracer.py::test_trace_enabled` (linhas 70-85)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -722,7 +723,7 @@
 
 ### Registro #37 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `2f22ed2d`
+- **Commit:** `2f22ed2`
 - **Arquivo e Teste:** `tests/test_load_extensions.py::test_load_extension_is_disabled` (linhas 45-55)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -741,7 +742,7 @@
 
 ### Registro #38 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `ef4bf88b`
+- **Commit:** `ef4bf88`
 - **Arquivo e Teste:** `tests/test_internals_request.py::test_request_args` (linhas 65-75)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -760,7 +761,7 @@
 
 ### Registro #39 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `78553152`
+- **Commit:** `7855315`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_nofacet` (linhas 315-325)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -779,7 +780,7 @@
 
 ### Registro #40 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `74985672`
+- **Commit:** `7498567`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_nosuggest` (linhas 345-355)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -798,7 +799,7 @@
 
 ### Registro #41 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `c7192ad1`
+- **Commit:** `c7192ad`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_nocount` (linhas 375-385)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -817,7 +818,7 @@
 
 ### Registro #42 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `30204fec`
+- **Commit:** `30204fe`
 - **Arquivo e Teste:** `tests/test_csv.py::test_custom_sql_csv_errors` (linhas 188-195)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -836,7 +837,7 @@
 
 ### Registro #43 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `56594209`
+- **Commit:** `5659420`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_binary_data_in_json` (linhas 410-430)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -849,13 +850,13 @@
    Consultar a técnica de *Split Test* no CATSPY para dividir testes que validam formatos substancialmente distintos. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Divisão do teste em dois métodos especializados e focados: `test_binary_data_in_json_shape_array` e `test_binary_data_in_json_nl`, eliminando 100% dos blocos `if/else` internos.
+   Divisão do teste em dois métodos especializados: `test_binary_data_in_json_shape_array` e `test_binary_data_in_json_nl`, eliminando os blocos `if/else` internos.
 
 ---
 
 ### Registro #44 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `1808665d`
+- **Commit:** `1808665`
 - **Arquivo e Teste:** `tests/test_fts_permissions.py::test_external_content_fts_inherits_content_table_view_permission` (linhas 75-85)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -874,11 +875,11 @@
 
 ### Registro #45 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `746720f8`
+- **Commit:** `746720f`
 - **Arquivo e Teste:** `tests/test_queries.py::test_execute_write_schema_operations_use_schema_permissions` (linhas 210-235)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Conditional Test Logic. O teste utilizava uma longa cadeia condicional de 5 branches `if/elif expected_state == ...` para verificar diferentes estados após a execução de operações de escrita de schema (tabela criada, tabela renomeada, índice criado, etc.).
+   Conditional Test Logic. O teste utilizava uma cadeia condicional de 5 branches `if/elif expected_state == ...` para verificar diferentes estados após a execução de operações de escrita de schema (tabela criada, tabela renomeada, índice criado, etc.).
 
 2. **Minhas principais dificuldades na remoção do code smell são:**
    Desmontar a cadeia de condicionais preservando a verificação de integridade assíncrona do esquema de banco de dados para cada operação.
@@ -887,7 +888,7 @@
    Consultar a estratégia do CATSPY de aplicar funções de verificação de estado parametrizadas como objetos de primeira classe (*Callable/Strategy pattern*). Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Substituição da cadeia de `if/elif` por funções assíncronas verificadoras de estado (`assert_created`, `assert_renamed`, etc.) passadas diretamente como parâmetro no `@pytest.mark.parametrize`, eliminando todas as condicionais e garantindo execução linear e determinística.
+   Substituição da cadeia de `if/elif` por funções assíncronas verificadoras de estado (`assert_created`, `assert_renamed`, etc.) passadas diretamente como parâmetro no `@pytest.mark.parametrize`.
 
 ---
-*Diário de bordo auditado e sincronizado com os 47 commits da branch refatoracao-test-smells em 29 de Outubro de 2026.*
+*Diário de bordo auditado e sincronizado com os commits da branch refatoracao-test-smells em 29 de Outubro de 2026.*
