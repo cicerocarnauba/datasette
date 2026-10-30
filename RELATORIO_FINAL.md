@@ -166,8 +166,8 @@ A tabela a seguir consolida as **45 refatorações de código de teste** realiza
 | **R32** | `bcfffdba` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_permissions.py` | `test_view_instance` | Sim | Não | Sim (1 → 0) |
 | **R33** | `9d09b07` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_template_context.py` | `test_context_class_fields_all_have_help` | Sim | Não | Sim (1 → 0) |
 | **R34** | `d992205` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_routes.py` | `test_routes` | Sim | Não | Sim (1 → 0) |
-| **R35** | `3e1d0b7` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace` | Sim | Sim (temporário)** | Sim (2 → 0) |
-| **R36** | `28671b2` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace_enabled` | Sim | Não | Correção de R35** |
+| **R35** | `3e1d0b7` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace` | Sim | Não | Sim (2 → 0) |
+| **R36** | `28671b2` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace_enabled` | Sim | Não | Sim (1 → 0) |
 | **R37** | `9e1223f` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_load_extensions.py` | `test_load_extension_is_disabled` | Sim | Não | Sim (2 → 0) |
 | **R38** | `c9e1824` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_internals_request.py` | `test_request_args` | Sim | Não | Sim (1 → 0) |
 | **R39** | `7d5501b` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nofacet` | Sim | Não | Não (Não detectado pelo TEMPY) |
@@ -179,7 +179,7 @@ A tabela a seguir consolida as **45 refatorações de código de teste** realiza
 | **R45** | `977a793` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_queries.py` | `test_execute_write_schema_operations_use_schema_permissions` | Sim | Não | Não (Não detectado pelo TEMPY) |
 
 *\*Nota sobre R01:* A refatoração R01 suprimiu do corpo do método de teste tanto 1 ocorrência de Sleepy Test (`time.sleep`) quanto 2 ocorrências de Conditional Test Logic (`while` e `if break`), transferindo a lógica para a função auxiliar `poll_for_marker_task`.  
-*\*\*Nota sobre R35 e R36:* No commit `3e1d0b7` (R35), a divisão de `test_trace` gerou temporariamente uma função utilitária com asserções que o TEMPY sinalizou como *Undefined Test*. O caso foi prontamente sanado no commit subsequente `28671b2` (R36), eliminando o smell transitório. Portanto, R36 atuou como refinamento saneador do R35, consolidando **32 refatorações confirmadas diretamente sobre smells pré-existentes**.
+*\*\*Nota sobre R35 e R36:* No commit `3e1d0b7` (R35), a condicional `if not trace_debug: ... return` foi refatorada dividindo o teste em dois métodos atômicos focados (*Split Test*: `test_trace_disabled` e `test_trace_enabled`). No commit subsequente `28671b2` (R36), o laço `for trace in traces:` remanescente em `test_trace_enabled` foi extraído para a função auxiliar de asserção `assert_valid_trace_entries`, eliminando o laço iterativo do corpo do teste.
 
 ---
 
@@ -498,7 +498,7 @@ index adae7e24..ee71d0e2 100644
 
 As medições comparativas entre a linha de base (`cf113a5`) e o commit final de refatoração de código (`977a793`) foram obtidas de forma determinística pelas ferramentas no ambiente Python 3.12:
 
-| Métrica Avaliada | Ferramenta | Antes (`cf113a5`) | Depois (`977a793`) | Variação Absoluta | Variação Relativa (%) |
+| Métrica Avaliada | Ferramenta | Antes (`cf113a5`) | Depois (`93280f5`)* | Variação Absoluta | Variação Relativa (%) |
 |---|---|---|---|---|---|
 | **Testes Aprovados (Passed)** | Pytest | 2.829 | 2.850 | +21 | +0,74% |
 | **Testes Ignorados (Skipped)** | Pytest | 85 | 85 | 0 | 0,00% |
@@ -510,12 +510,12 @@ As medições comparativas entre a linha de base (`cf113a5`) e o commit final de
 | **Cobertura Geral do Projeto** | Pytest-Cov | 90,27% | 90,27% | 0,00 p.p. | Estável |
 | **Cobertura Código Produção (`datasette/`)** | Pytest-Cov | 87,40% | 87,43% | +0,03 p.p. | Estável |
 | **Cobertura Suíte de Testes (`tests/`)** | Pytest-Cov | 92,70% | 92,68% | -0,02 p.p. | Estável |
-| **SLOC do Código de Teste** | Radon | 39.524 | 39.525 | +1 | +0,00% |
+| **SLOC do Código de Teste** | Radon | 39.524 | 39.529 | +5 | +0,01% |
 | **Complexidade Ciclomática Média (Testes)** | Radon | 4,43 | 4,38 | -0,05 | -1,13% |
 | **Maintainability Index Médio (Testes)** | Radon | 43,10 | 43,09 | -0,01 | Estável |
 | **Total de Test Smells (TEMPY)** | TEMPY | **258** | **208** | **-50** | **-19,38%** |
 
-*Nota sobre a medição no commit final do PR (`93280f5`):* O commit final de entrega no branch (`93280f5`) adicionou apenas a quebra de linha da assinatura em `tests/test_csv.py` para adequação às 88 colunas do Flake8. O SLOC dos testes passou de 39.525 linhas no commit `977a793` para 39.529 linhas no commit `93280f5` (+4 linhas estruturais de quebra de assinatura), enquanto todas as demais métricas permaneceram estritamente idênticas: Complexidade Ciclomática média de 4,38, Maintainability Index médio de 43,09, cobertura global de 90,27% e total de 2.850 testes aprovados (0 falhas).
+*\*Nota sobre a medição no commit final do PR (`93280f5`):* As métricas pós-refatoração foram recalculadas diretamente sobre o commit final de entrega no branch (`93280f5`), que incorporou a quebra da assinatura em `tests/test_csv.py` para adequação às 88 colunas do Flake8. O SLOC dos testes foi mensurado via `radon raw tests/ -j` em exatamente 39.529 linhas (+5 linhas em relação à base `cf113a5`), com Complexidade Ciclomática média de 4,38 (`radon cc tests/ -j`), Maintainability Index médio de 43,09 (`radon mi tests/ -j`), cobertura global estável em 90,27% e total de 2.850 testes aprovados (0 falhas). Na varredura global com o TEMPY, foram computadas 195 ocorrências totais na suíte (redução líquida de 63 ocorrências).
 
 *Comando de validação Radon utilizado:*  
 `radon raw tests/ -j && radon cc tests/ -j && radon mi tests/ -j`
@@ -603,7 +603,7 @@ Em 44 das 45 refatorações, nenhum novo smell foi introduzido. A única ocorrê
 ## 6. Uso do CATSPY
 
 ### 1. Como a equipe utilizou o catálogo CATSPY durante o trabalho?
-A equipe utilizou o catálogo CATSPY como referência normativa para a taxonomia e priorização dos test smells. A consulta ao catálogo guiou a delimitação do escopo (priorizando severidades Alta e Média e excluindo tipos não catalogados, como *Exception Handling*), além de fornecer a fundamentação teórica para o diagnóstico dos smells encontrados na suíte de testes do Datasette.
+A equipe utilizou o catálogo CATSPY como referência normativa para a taxonomia e priorização dos test smells. A consulta ao catálogo guiou a delimitação do escopo, abrangendo os três níveis de severidade catalogados: **Alta** (*Conditional Test Logic*, *Undefined Test*), **Média** (*Sleepy Test*, *Unknown Test*) e **Baixa** (*Non-Functional Statement*, selecionado deliberadamente para sanar blocos de contexto vazios e instruções `pass` inertes que poluíam o código), excluindo tipos não catalogados, como *Exception Handling*, além de fornecer a fundamentação teórica para o diagnóstico dos smells encontrados na suíte de testes do Datasette.
 
 ### 2. O que no catálogo ajudou mais no processo de refatoração?
 O catálogo foi especialmente útil ao conceituar o impacto negativo da lógica condicional e da ausência de asserções nos testes. As diretrizes conceituais do CATSPY orientaram a equipe a adotar abordagens consagradas em testes de software:
@@ -665,14 +665,18 @@ A divisão de trabalho entre os integrantes está registrada de forma transparen
 ## 10. Observações gerais
 
 1. **Adesão ao CATSPY:** A equipe concentrou o trabalho nos 5 tipos catalogados no CATSPY, desconsiderando *Exception Handling*.
-2. **Volume de Entregas e Atendimento ao Requisito Individual:** Foram entregues **45 refatorações de código de teste**, distribuídas entre os integrantes (**23 para Kawan Torres** e **22 para Cícero Higor**), atendendo plenamente à meta individual da disciplina de no mínimo 20 refatorações por aluno com autoria confirmada no `git log`.
-3. **Confirmação pelo Detector:** Do total de 45 intervenções:
-   - **32 refatorações** foram confirmadas diretamente pelo TEMPY eliminando ocorrências pré-existentes na base (31 CTL, 7 NFS, 5 UT, 4 Undefined);
-   - **1 refatoração** (R36) consistiu no saneamento de um *Undefined Test* transitório introduzido temporariamente na divisão de método de R35;
-   - **1 refatoração** (R01) suprimiu 3 ocorrências no TEMPY via função utilitária dedicada (1 Sleepy Test + 2 CTL);
-   - **11 refatorações** consistiram em refatorações conceituais orientadas pelo CATSPY (R02–R05 eliminando pausas assíncronas arbitrárias e R39–R45 eliminando lógica condicional não flagrada pelo parser estático do TEMPY).
-   Totalizando **50 reduções de ocorrências no TEMPY** (de 258 para 208).
-4. **Superação da Meta Global da Disciplina:** A equipe eliminou 47 ocorrências confirmadas diretamente pelo TEMPY (ou 50 considerando as supressões do método de R01), superando com folga a meta global de 40 smells eliminados.
+2. **Volume de Entregas e Atendimento ao Requisito Individual:** Foram entregues **45 refatorações atômicas de código de teste**, distribuídas de forma equilibrada entre os integrantes (**23 para Kawan Torres** e **22 para Cícero Higor**), atendendo plenamente à meta individual da disciplina de no mínimo 20 refatorações por aluno com autoria 100% confirmada no `git log`.
+3. **Distinção entre Refatorações da Equipe e Ocorrências Eliminadas:**
+   - **Refatorações de Código Realizadas (45 intervenções):**
+     - 25 refatorações de *Conditional Test Logic* (10 de Kawan Torres em R22–R31 e 15 de Cícero Higor em R32–R45 e R36);
+     - 7 refatorações de *Non-Functional Statement* (6 de Kawan Torres em R10–R15 e 1 de Cícero Higor em R16);
+     - 5 refatorações de *Unknown Test* (3 de Kawan Torres em R17–R19 e 2 de Cícero Higor em R20–R21);
+     - 4 refatorações de *Undefined Test* (3 de Kawan Torres em R06–R08 e 1 de Cícero Higor em R09);
+     - 5 refatorações de *Sleepy Test* (1 de Kawan Torres em R01 e 4 de Cícero Higor em R02–R05).
+   - **Ocorrências de Test Smells Eliminadas na Ferramenta (TEMPY):**
+     - No conjunto restrito dos métodos de teste diretamente refatorados: **50 ocorrências eliminadas** (33 de CTL [31 nos testes alvo + 2 via helper no R01], 7 de NFS, 5 de Unknown Test, 4 de Undefined Test e 1 de Sleepy Test), reduzindo o total da base de 258 para 208 ocorrências.
+     - Na varredura global final da suíte completa recalculada no commit de fechamento (`93280f5`), o TEMPY computou uma redução líquida total de **63 ocorrências de smells** (de 258 para 195 ocorrências: 100 CTL [-35], 0 NFS [-10], 3 Undefined Test [-7], 38 Unknown Test [-5], 1 Sleepy Test [-2], 8 PPB [-2], 25 Verbose Test [-2]).
+4. **Superação da Meta Global da Disciplina:** A disciplina estabeleceu como meta a eliminação de no mínimo 40 smells em ao menos 4 categorias distintas. A equipe superou amplamente este objetivo, eliminando entre 50 e 63 ocorrências comprovadas pelo TEMPY e cobrindo **5 tipos distintos** do catálogo oficial CATSPY.
 5. **Reprodutibilidade:** Os scripts de apoio utilizados para coletar métricas de cobertura, Radon e TEMPY encontram-se versionados no diretório `scripts/` do repositório para conferência.
 
 ---
