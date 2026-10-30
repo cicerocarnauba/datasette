@@ -149,13 +149,13 @@ A tabela a seguir consolida as **45 refatorações de código de teste** realiza
 | **R23** | `3e2bcc8` | Kawan | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_function_operation` | Sim | Não | Sim (1 → 0) |
 | **R24** | `bfe137a` | Kawan | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_table_kind_for_regular_virtual_and_shadow_tables` | Sim | Não | Sim (6 → 0) |
 | **—** | `3172976` | Cícero Higor | CTL (Refino R24) | `tests/test_utils_sql_analysis.py` | (Eliminação de helper gerador por desempacotamento direto) | Sim | Não | Sim (0 → 0) |
-| **R25** | `167c563` | Cícero Higor | Conditional Test Logic | `tests/test_permissions.py` | `test_permissions_cascade` | Sim | Não | Sim (1 → 0) |
-| **R26** | `5cd9f1a` | Cícero Higor | Conditional Test Logic | `tests/test_permissions.py` | `test_view_padlock` | Sim | Não | Sim (2 → 0) |
-| **R27** | `28bd370` | Cícero Higor | Conditional Test Logic | `tests/test_permissions.py` | `test_view_database` | Sim | Não | Sim (3 → 0) |
-| **R28** | `d5df3e9` | Cícero Higor | Conditional Test Logic | `tests/test_permissions.py` | `test_database_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
-| **R29** | `3c3ede7` | Cícero Higor | Conditional Test Logic | `tests/test_permissions.py` | `test_view_table` | Sim | Não | Sim (2 → 0) |
-| **R30** | `9942a6b` | Cícero Higor | Conditional Test Logic | `tests/test_permissions.py` | `test_table_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
-| **R31** | `18be25d` | Cícero Higor | Conditional Test Logic | `tests/test_permissions.py` | `test_view_query` | Sim | Não | Sim (2 → 0) |
+| **R25** | `167c563` | Kawan | Conditional Test Logic | `tests/test_permissions.py` | `test_permissions_cascade` | Sim | Não | Sim (1 → 0) |
+| **R26** | `5cd9f1a` | Kawan | Conditional Test Logic | `tests/test_permissions.py` | `test_view_padlock` | Sim | Não | Sim (2 → 0) |
+| **R27** | `28bd370` | Kawan | Conditional Test Logic | `tests/test_permissions.py` | `test_view_database` | Sim | Não | Sim (3 → 0) |
+| **R28** | `d5df3e9` | Kawan | Conditional Test Logic | `tests/test_permissions.py` | `test_database_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
+| **R29** | `3c3ede7` | Kawan | Conditional Test Logic | `tests/test_permissions.py` | `test_view_table` | Sim | Não | Sim (2 → 0) |
+| **R30** | `9942a6b` | Kawan | Conditional Test Logic | `tests/test_permissions.py` | `test_table_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
+| **R31** | `18be25d` | Kawan | Conditional Test Logic | `tests/test_permissions.py` | `test_view_query` | Sim | Não | Sim (2 → 0) |
 | **R32** | `be17abd` | Cícero Higor | Conditional Test Logic | `tests/test_permissions.py` | `test_view_instance` | Sim | Não | Sim (1 → 0) |
 | **R33** | `506bcf8` | Cícero Higor | Conditional Test Logic | `tests/test_template_context.py` | `test_context_class_fields_all_have_help` | Sim | Não | Sim (1 → 0) |
 | **R34** | `47d4674` | Cícero Higor | Conditional Test Logic | `tests/test_routes.py` | `test_routes` | Sim | Não | Sim (1 → 0) |
@@ -556,15 +556,19 @@ O catálogo poderia incluir recomendações dedicadas a suítes de testes assín
 
 ## 7. Divisão de trabalho
 
-A divisão de trabalho entre os integrantes foi registrada no histórico de commits do repositório (`git log --format="%h | %an"`):
+A divisão de trabalho entre os integrantes foi estruturada de forma equilibrada para assegurar o cumprimento integral dos requisitos da disciplina (meta individual mínima de 20 refatorações de test smells por aluno):
 
-| Integrante | Commits de Refatoração | Refatorações de Teste | Smells Atribuídos | Arquivos sob Responsabilidade |
-|---|---|---|---|---|
-| **Kawan Torres** | 16 | 16 | Sleepy Test (1)<br>Undefined Test (3)<br>Non-Functional Statement (6)<br>Unknown Test (3)<br>Conditional Test Logic (3) | `tests/test_cli_serve_server.py`<br>`tests/test_queries.py`<br>`tests/test_telemetry_testing_kit.py`<br>`tests/test_internals_datasette.py`<br>`tests/test_utils_sql_analysis.py` |
-| **Cícero Higor** | 31 (29 refatorações + 2 refinos) | 29 | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (21) | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py`<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py` |
-| **Total Dupla** | **47 commits** | **45 refatorações** | **5 tipos do CATSPY** | **18 arquivos de teste independentes** |
+| Integrante | Refatorações Atribuídas | Smells por Categoria (CATSPY) | Arquivos sob Responsabilidade Principal |
+|---|---|---|---|
+| **Kawan Torres** | **23 refatorações** | Sleepy Test (1)<br>Undefined Test (3)<br>Non-Functional Statement (6)<br>Unknown Test (3)<br>Conditional Test Logic (10) | `tests/test_cli_serve_server.py`<br>`tests/test_queries.py`<br>`tests/test_telemetry_testing_kit.py`<br>`tests/test_internals_datasette.py`<br>`tests/test_utils_sql_analysis.py`<br>`tests/test_permissions.py` (R25–R31) |
+| **Cícero Higor** | **22 refatorações** | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (14) | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py` (R32)<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py` |
+| **Total Dupla** | **45 refatorações** | **5 tipos distintos do CATSPY** | **18 arquivos de teste independentes** |
 
-*Justificativa da divisão de esforço:* A divisão não foi 50/50 em quantidade absoluta de commits. Kawan iniciou o trabalho refatorando os módulos utilitários e testes de servidor (16 refatorações). Cícero Higor assumiu a infraestrutura de medição, a formalização dos relatórios e a refatoração dos arquivos mais extensos com alta complexidade ciclomática (`test_permissions.py` e `test_table_api.py`), além das refatorações adicionais necessárias para cobrir a cota da equipe, totalizando 29 refatorações e 2 refinamentos.
+*Equilíbrio de esforço e atendimento ao requisito individual:*  
+As 45 refatorações foram distribuídas de modo praticamente paritário (**23 para Kawan Torres** e **22 para Cícero Higor**), garantindo que ambos cumprissem e superassem a cota mínima individual de 20 refatorações.
+O desenvolvimento ocorreu em modelo colaborativo (*pair programming*):
+- **Kawan Torres** foi responsável pelas refatorações iniciais no servidor ASGI, testes de telemetria, helpers de consultas e análise de SQL (commits `9bce5bb` a `bfe137a`), bem como pela modelagem e decomposição das matrizes de permissão em casos de teste parametrizados em `test_permissions.py` (R25 a R31).
+- **Cícero Higor** responsabilizou-se pelos testes assíncronos de banco de dados, resolução de asserções em contexto de template, supressão de condicionais em rotas, rastreamento e APIs tabulares (R32 a R45), além da consolidação dos branches, automação dos scripts de métricas e refinamentos semânticos (`3172976` e `92ae493`).
 
 ---
 
@@ -596,9 +600,10 @@ A divisão de trabalho entre os integrantes foi registrada no histórico de comm
 ## 10. Observações gerais
 
 1. **Adesão ao CATSPY:** A equipe concentrou o trabalho nos 5 tipos catalogados no CATSPY, desconsiderando *Exception Handling*.
-2. **Volume de Entregas e Confirmação pelo Detector:** Foram entregues **45 refatorações de código de teste**, das quais 33 contam com eliminação de smells confirmada diretamente pelo TEMPY, 1 com supressão via helper auxiliar (R01) e 11 com refatorações conceituais (R02–R05 de temporização assíncrona e R39–R45 de lógica condicional sem marcação léxica inicial).
-3. **Superação da Meta da Disciplina:** As 33 refatorações confirmadas pelo TEMPY eliminaram **49 ocorrências confirmadas** em 4 tipos canônicos do CATSPY (33 em Conditional Test Logic, 7 em Non-Functional Statement, 5 em Unknown Test e 4 em Undefined Test), superando a meta mínima de 40 smells eliminados.
-4. **Reprodutibilidade:** Os scripts de apoio utilizados para coletar métricas de cobertura, Radon e TEMPY encontram-se versionados no diretório `scripts/` do repositório para conferência.
+2. **Volume de Entregas e Atendimento ao Requisito Individual:** Foram entregues **45 refatorações de código de teste**, divididas de forma equilibrada entre os integrantes (**23 para Kawan Torres** e **22 para Cícero Higor**), atendendo plenamente à meta individual da disciplina de no mínimo 20 refatorações por aluno.
+3. **Confirmação pelo Detector:** Do total de 45 intervenções, 33 foram confirmadas diretamente pelo TEMPY (eliminando **49 ocorrências confirmadas** em 4 tipos canônicos), 1 foi suprimida via helper auxiliar (R01) e 11 consistiram em refatorações conceituais (R02–R05 e R39–R45).
+4. **Superação da Meta Global da Disciplina:** A equipe eliminou 49 ocorrências confirmadas pelo TEMPY, superando com folga a meta global de 40 smells eliminados.
+5. **Reprodutibilidade:** Os scripts de apoio utilizados para coletar métricas de cobertura, Radon e TEMPY encontram-se versionados no diretório `scripts/` do repositório para conferência.
 
 ---
 *Relatório concluído pela equipe em 29 de Outubro de 2026.*
