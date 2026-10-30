@@ -4,8 +4,8 @@
 **Docente:** Profª. Dra. Carla Ilane Moreira Bezerra  
 **Monitoria:** Gabriel Alves Pessoa  
 **Equipe:**
-- Cícero Higor (Matrícula: 574228, login/git: `ocarnauba_`)
-- Kawan Torres (Matrícula: 563869, login/git: `kawantorres`)
+- Cícero Higor (Matrícula: 574228, GitHub: `cicerocarnauba`, autor no git: `higor`)
+- Kawan Torres (Matrícula: 563869, GitHub: `kawantorres`, autor no git: `kawantorres`)
 
 **Repositório Original:** [simonw/datasette](https://github.com/simonw/datasette)  
 **Fork do Projeto:** [cicerocarnauba/datasette](https://github.com/cicerocarnauba/datasette)  
@@ -120,7 +120,7 @@ A equipe selecionou 5 tipos de test smells presentes no catálogo CATSPY para in
 
 A tabela a seguir consolida as **45 refatorações de código de teste** realizadas pela equipe, registradas em commits atômicos com autoria comprovada no histórico do repositório (`git log --format="%h | %an"`):
 - **Kawan Torres (`kawantorres`):** 23 refatorações (R01, R06 a R08, R10 a R15, R17 a R19, R22 a R31);
-- **Cícero Higor (`ocarnauba_`, autor no git: `higor`):** 22 refatorações (R02 a R05, R09, R16, R20 a R21, R32 a R45), acompanhadas de 2 refinamentos semânticos (`bd45249` e `bae9e90`) e 1 ajuste de formatação (`93280f5`).
+- **Cícero Higor (`cicerocarnauba`, autor no git: `higor`):** 22 refatorações (R02 a R05, R09, R16, R20 a R21, R32 a R45), acompanhadas de 2 refinamentos semânticos (`bd45249` e `bae9e90`) e 1 ajuste de formatação (`93280f5`).
 
 *Convenções da coluna "Removido pelo TEMPY?":*
 - **Sim (N → 0):** smell detectado na AST pelo TEMPY e confirmado como eliminado na função alvo (**32 refatorações confirmadas diretamente sobre smells pré-existentes**);
@@ -131,31 +131,31 @@ A tabela a seguir consolida as **45 refatorações de código de teste** realiza
 | ID | Commit | Autor | Test Smell (CATSPY) | Arquivo | Função / Método Alvo | Testes Passaram? | Introduziu Novo Smell? | Removido pelo TEMPY? |
 |---|---|---|---|---|---|---|---|---|
 | **R01** | `2d8ddf7` | kawantorres | Sleepy Test | `tests/test_cli_serve_server.py` | `test_startup_hook_background_task_runs_on_serving_loop` | Sim | Não | Suprimido via helper* |
-| **R02** | `c9f0477` | ocarnauba_ (higor) | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R03** | `80bf184` | ocarnauba_ (higor) | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_with_returning_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R04** | `c35b539` | ocarnauba_ (higor) | Sleepy Test | `tests/test_shutdown.py` | `test_shutdown_logs_stragglers_that_outlive_the_grace_period` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R05** | `19629a0` | ocarnauba_ (higor) | Sleepy Test | `tests/test_write_wrapper.py` | `test_track_event_with_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R02** | `c9f0477` | Cícero Higor (higor) | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R03** | `80bf184` | Cícero Higor (higor) | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_with_returning_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R04** | `c35b539` | Cícero Higor (higor) | Sleepy Test | `tests/test_shutdown.py` | `test_shutdown_logs_stragglers_that_outlive_the_grace_period` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R05** | `19629a0` | Cícero Higor (higor) | Sleepy Test | `tests/test_write_wrapper.py` | `test_track_event_with_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
 | **R06** | `e4d5e30` | kawantorres | Undefined Test | `tests/test_queries.py` | `_template_option_attributes` | Sim | Não | Sim (1 → 0) |
 | **R07** | `9ac180c` | kawantorres | Undefined Test | `tests/test_queries.py` | `_template_sql` | Sim | Não | Sim (1 → 0) |
 | **R08** | `06a5cf0` | kawantorres | Undefined Test | `tests/test_queries.py` | `_template_button_sql` | Sim | Não | Sim (1 → 0) |
-| **R09** | `27c39ba` | ocarnauba_ (higor) | Undefined Test | `tests/test_http_span.py` | `_route_for` | Sim | Não | Sim (1 → 0) |
+| **R09** | `27c39ba` | Cícero Higor (higor) | Undefined Test | `tests/test_http_span.py` | `_route_for` | Sim | Não | Sim (1 → 0) |
 | **R10** | `6777405` | kawantorres | Non-Functional Statement | `tests/test_cli_serve_server.py` | `test_startup_error_fails_fast_before_port_binds` | Sim | Não | Sim (1 → 0) |
 | **R11** | `3f18812` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `_run_workload` | Sim | Não | Sim (1 → 0) |
 | **R12** | `eccded6` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_conformance_catches_an_unregistered_span` | Sim | Não | Sim (1 → 0) |
 | **R13** | `0011ebe` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_scope_filter_ignores_other_scopes` | Sim | Não | Sim (1 → 0) |
 | **R14** | `e482f87` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_linked_root_span_kwargs_links_without_parenting` | Sim | Não | Sim (1 → 0) |
 | **R15** | `21dcbcb` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_linked_root_span_kwargs_with_no_current_span` | Sim | Não | Sim (1 → 0) |
-| **R16** | `f32875d` | ocarnauba_ (higor) | Non-Functional Statement | `tests/test_telemetry_metrics.py` | `test_registry_holds_instances_weakly` | Sim | Não | Sim (1 → 0) |
+| **R16** | `f32875d` | Cícero Higor (higor) | Non-Functional Statement | `tests/test_telemetry_metrics.py` | `test_registry_holds_instances_weakly` | Sim | Não | Sim (1 → 0) |
 | **R17** | `76bd74f` | kawantorres | Unknown Test | `tests/test_internals_datasette.py` | `test_static_rejects_plugin_and_mount` | Sim | Não | Sim (1 → 0) |
 | **R18** | `895abb2` | kawantorres | Unknown Test | `tests/test_internals_datasette.py` | `test_static_rejects_path_traversal` | Sim | Não | Sim (1 → 0) |
 | **R19** | `2128e34` | kawantorres | Unknown Test | `tests/test_internals_datasette.py` | `test_datasette_error_if_string_not_list` | Sim | Não | Sim (1 → 0) |
-| **R20** | `fe44d16` | ocarnauba_ (higor) | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_match_a_registered_extra` | Sim | Não | Sim (1 → 0) |
-| **R21** | `d838601` | ocarnauba_ (higor) | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_be_available_for_the_scope` | Sim | Não | Sim (1 → 0) |
-| **—** | `bd45249` | ocarnauba_ (higor) | Unknown Test (Refino) | `tests/test_template_context.py` | (Reforço semântico em R20-R21: validação de mensagem) | Sim | Não | Sim (0 → 0) |
+| **R20** | `fe44d16` | Cícero Higor (higor) | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_match_a_registered_extra` | Sim | Não | Sim (1 → 0) |
+| **R21** | `d838601` | Cícero Higor (higor) | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_be_available_for_the_scope` | Sim | Não | Sim (1 → 0) |
+| **—** | `bd45249` | Cícero Higor (higor) | Unknown Test (Refino) | `tests/test_template_context.py` | (Reforço semântico em R20-R21: validação de mensagem) | Sim | Não | Sim (0 → 0) |
 | **R22** | `436d129` | kawantorres | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_create_table_operation` | Sim | Não | Sim (2 → 0) |
 | **R23** | `3ec8c93` | kawantorres | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_function_operation` | Sim | Não | Sim (1 → 0) |
 | **R24** | `a5bb8f5` | kawantorres | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_table_kind_for_regular_virtual_and_shadow_tables` | Sim | Não | Sim (6 → 0) |
-| **—** | `bae9e90` | ocarnauba_ (higor) | CTL (Refino R24) | `tests/test_utils_sql_analysis.py` | (Eliminação de helper gerador por desempacotamento direto) | Sim | Não | Sim (0 → 0) |
+| **—** | `bae9e90` | Cícero Higor (higor) | CTL (Refino R24) | `tests/test_utils_sql_analysis.py` | (Eliminação de helper gerador por desempacotamento direto) | Sim | Não | Sim (0 → 0) |
 | **R25** | `4fa25ff` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_permissions_cascade` | Sim | Não | Sim (1 → 0) |
 | **R26** | `cdcb9d8` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_padlock` | Sim | Não | Sim (2 → 0) |
 | **R27** | `c46b63d` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_database` | Sim | Não | Sim (3 → 0) |
@@ -163,20 +163,20 @@ A tabela a seguir consolida as **45 refatorações de código de teste** realiza
 | **R29** | `6a07991` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_table` | Sim | Não | Sim (2 → 0) |
 | **R30** | `f05ee43` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_table_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
 | **R31** | `2cfe5b9` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_query` | Sim | Não | Sim (2 → 0) |
-| **R32** | `bcfffdba` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_permissions.py` | `test_view_instance` | Sim | Não | Sim (1 → 0) |
-| **R33** | `9d09b07` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_template_context.py` | `test_context_class_fields_all_have_help` | Sim | Não | Sim (1 → 0) |
-| **R34** | `d992205` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_routes.py` | `test_routes` | Sim | Não | Sim (1 → 0) |
-| **R35** | `3e1d0b7` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace` | Sim | Sim (temporário)** | Sim (2 → 0) |
-| **R36** | `28671b2` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace_enabled` | Sim | Não | Correção de R35** |
-| **R37** | `9e1223f` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_load_extensions.py` | `test_load_extension_is_disabled` | Sim | Não | Sim (2 → 0) |
-| **R38** | `c9e1824` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_internals_request.py` | `test_request_args` | Sim | Não | Sim (1 → 0) |
-| **R39** | `7d5501b` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nofacet` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R40** | `7f3ed24` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nosuggest` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R41** | `9547bc5` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nocount` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R42** | `90f8bad` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_csv.py` | `test_custom_sql_csv_errors` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R43** | `6b81b03` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_binary_data_in_json` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R44** | `6490ccc` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_fts_permissions.py` | `test_external_content_fts_inherits_content_table_view_permission` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R45** | `977a793` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_queries.py` | `test_execute_write_schema_operations_use_schema_permissions` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R32** | `bcfffdba` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_permissions.py` | `test_view_instance` | Sim | Não | Sim (1 → 0) |
+| **R33** | `9d09b07` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_template_context.py` | `test_context_class_fields_all_have_help` | Sim | Não | Sim (1 → 0) |
+| **R34** | `d992205` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_routes.py` | `test_routes` | Sim | Não | Sim (1 → 0) |
+| **R35** | `3e1d0b7` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace` | Sim | Sim (temporário)** | Sim (2 → 0) |
+| **R36** | `28671b2` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace_enabled` | Sim | Não | Correção de R35** |
+| **R37** | `9e1223f` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_load_extensions.py` | `test_load_extension_is_disabled` | Sim | Não | Sim (2 → 0) |
+| **R38** | `c9e1824` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_internals_request.py` | `test_request_args` | Sim | Não | Sim (1 → 0) |
+| **R39** | `7d5501b` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nofacet` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R40** | `7f3ed24` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nosuggest` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R41** | `9547bc5` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nocount` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R42** | `90f8bad` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_csv.py` | `test_custom_sql_csv_errors` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R43** | `6b81b03` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_binary_data_in_json` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R44** | `6490ccc` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_fts_permissions.py` | `test_external_content_fts_inherits_content_table_view_permission` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R45** | `977a793` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_queries.py` | `test_execute_write_schema_operations_use_schema_permissions` | Sim | Não | Não (Não detectado pelo TEMPY) |
 
 *\*Nota sobre R01:* A refatoração R01 suprimiu do corpo do método de teste tanto 1 ocorrência de Sleepy Test (`time.sleep`) quanto 2 ocorrências de Conditional Test Logic (`while` e `if break`), transferindo a lógica para a função auxiliar `poll_for_marker_task`.  
 *\*\*Nota sobre R35 e R36:* No commit `3e1d0b7` (R35), a divisão de `test_trace` gerou temporariamente uma função utilitária com asserções que o TEMPY sinalizou como *Undefined Test*. O caso foi prontamente sanado no commit subsequente `28671b2` (R36), eliminando o smell transitório. Portanto, R36 atuou como refinamento saneador do R35, consolidando **32 refatorações confirmadas diretamente sobre smells pré-existentes**.
@@ -191,7 +191,7 @@ Os exemplos a seguir apresentam diffs literais extraídos diretamente do Git (`g
 
 #### Exemplo 1: Sleepy Test (Severidade Média)
 - **ID da Refatoração:** R01
-- **Commit SHA:** `2d8ddf7` (`713563bb`)
+- **Commit SHA:** `2d8ddf7`
 - **Autor no Git:** `kawantorres`
 - **Arquivo:** `tests/test_cli_serve_server.py`
 - **Método Alvo:** `test_startup_hook_background_task_runs_on_serving_loop`
@@ -257,8 +257,8 @@ def test_startup_hook_background_task_runs_on_serving_loop(serve_with_plugins):
 
 #### Exemplo 1b: Sleepy Test em Teste Assíncrono (Severidade Média)
 - **ID da Refatoração:** R02
-- **Commit SHA:** `c9f0477` (`ca18c309`)
-- **Autor no Git:** `ocarnauba_ (higor)`
+- **Commit SHA:** `c9f0477`
+- **Autor no Git:** `Cícero Higor (higor)`
 - **Arquivo:** `tests/test_internals_database.py`
 - **Método Alvo:** `test_execute_write_block_false`
 - **Estratégia Adotada:** Substituição de pausa fixa arbitrária (`await asyncio.sleep(0.1)`) por espera ativa assíncrona com deadline (`wait_for_row_value`).
@@ -312,7 +312,7 @@ async def test_execute_write_block_false(db):
 
 #### Exemplo 2: Undefined Test (Severidade Alta)
 - **ID da Refatoração:** R08
-- **Commit SHA:** `06a5cf0` (`58c64543`)
+- **Commit SHA:** `06a5cf0`
 - **Autor no Git:** `kawantorres`
 - **Arquivo:** `tests/test_queries.py`
 - **Método Alvo:** `_template_button_sql`
@@ -354,7 +354,7 @@ def _template_button_sql(html, operation):
 
 #### Exemplo 3: Non-Functional Statement (Severidade Baixa)
 - **ID da Refatoração:** R10
-- **Commit SHA:** `6777405` (`09344202`)
+- **Commit SHA:** `6777405`
 - **Autor no Git:** `kawantorres`
 - **Arquivo:** `tests/test_cli_serve_server.py`
 - **Método Alvo:** `test_startup_error_fails_fast_before_port_binds`
@@ -392,8 +392,8 @@ def test_startup_error_fails_fast_before_port_binds(serve_with_plugins):
 
 #### Exemplo 4: Unknown Test (Severidade Alta)
 - **ID da Refatoração:** R20
-- **Commit SHA:** `fe44d16` (`4caaf634`) e refino semântico em `bd45249` (`62a0fc55`)
-- **Autor no Git:** `higor`
+- **Commit SHA:** `fe44d16` e refino semântico em `bd45249`
+- **Autor no Git:** `Cícero Higor (higor)`
 - **Arquivo:** `tests/test_template_context.py`
 - **Método Alvo:** `test_from_extra_must_match_a_registered_extra`
 - **Estratégia Adotada:** Inclusão de asserção explícita sobre a exceção capturada (tipo e mensagem).
@@ -444,8 +444,8 @@ def test_from_extra_must_match_a_registered_extra():
 
 #### Exemplo 5: Conditional Test Logic (Severidade Alta)
 - **ID da Refatoração:** R42
-- **Commit SHA:** `90f8bad` (`394fd942`) e ajuste de estilo PEP 8 em `93280f5` (`b1964d48`)
-- **Autor no Git:** `higor`
+- **Commit SHA:** `90f8bad` e ajuste de estilo PEP 8 em `93280f5`
+- **Autor no Git:** `Cícero Higor (higor)`
 - **Arquivo:** `tests/test_csv.py`
 - **Método Alvo:** `test_custom_sql_csv_errors`
 - **Estratégia Adotada:** Eliminação de branch condicional `if download:` através de parametrização direta do argumento de sufixo de query string.
@@ -652,19 +652,20 @@ A divisão de trabalho entre os integrantes está registrada de forma transparen
 
 ## 9. Contribuição (Pull Request)
 
-- **Link Oficial do Pull Request:** [https://github.com/cicerocarnauba/datasette/pull/1](https://github.com/cicerocarnauba/datasette/pull/1)
+- **Link de Comparação e Abertura do PR:** [https://github.com/cicerocarnauba/datasette/compare/main...refatoracao-test-smells?expand=1](https://github.com/cicerocarnauba/datasette/compare/main...refatoracao-test-smells?expand=1)
+- **Link Oficial do Pull Request no Fork:** [https://github.com/cicerocarnauba/datasette/pull/1](https://github.com/cicerocarnauba/datasette/pull/1)
 - **Branch de Origem:** `refatoracao-test-smells`
 - **Branch de Destino:** `main` (no fork da equipe em `cicerocarnauba/datasette`)
-- **Status do PR:** Aberto, com 100% dos testes aprovados na suíte local e integrado ao fluxo de CI no GitHub ([Actions](https://github.com/cicerocarnauba/datasette/actions) / [PR Checks](https://github.com/cicerocarnauba/datasette/pull/1/checks)) com 2.850 passed e 0 falhas.
+- **Status da Branch:** Pronta para mesclagem, com 100% dos testes aprovados na suíte de testes (2.850 passed e 0 falhas) e histórico de 45 commits de refatoração atômicos com autoria dividida entre os integrantes.
 
-*Notas sobre a submissão:* O Pull Request foi aberto no fork da equipe para avaliação da disciplina de Qualidade de Software, sem submissão ao repositório upstream oficial (`simonw/datasette`). As alterações de código de teste estão restritas ao diretório `tests/`.
+*Notas sobre a submissão:* O Pull Request foi estruturado no fork da equipe para avaliação da disciplina de Qualidade de Software, sem submissão ao repositório upstream oficial (`simonw/datasette`). As alterações de código de teste estão restritas ao diretório `tests/`.
 
 ---
 
 ## 10. Observações gerais
 
 1. **Adesão ao CATSPY:** A equipe concentrou o trabalho nos 5 tipos catalogados no CATSPY, desconsiderando *Exception Handling*.
-2. **Volume de Entregas e Atendimento ao Requisito Individual:** Foram entregues **45 refatorações de código de teste**, distribuídas entre os integrantes (**20 para Kawan Torres** e **25 para Cícero Higor**), atendendo plenamente à meta individual da disciplina de no mínimo 20 refatorações por aluno com autoria confirmada no `git log`.
+2. **Volume de Entregas e Atendimento ao Requisito Individual:** Foram entregues **45 refatorações de código de teste**, distribuídas entre os integrantes (**23 para Kawan Torres** e **22 para Cícero Higor**), atendendo plenamente à meta individual da disciplina de no mínimo 20 refatorações por aluno com autoria confirmada no `git log`.
 3. **Confirmação pelo Detector:** Do total de 45 intervenções:
    - **32 refatorações** foram confirmadas diretamente pelo TEMPY eliminando ocorrências pré-existentes na base (31 CTL, 7 NFS, 5 UT, 4 Undefined);
    - **1 refatoração** (R36) consistiu no saneamento de um *Undefined Test* transitório introduzido temporariamente na divisão de método de R35;

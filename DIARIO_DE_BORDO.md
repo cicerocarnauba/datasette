@@ -5,8 +5,8 @@
 - **Docente:** Profª. Dra. Carla Ilane Moreira Bezerra
 - **Monitoria:** Gabriel Alves Pessoa
 - **Equipe:**
-  - Cícero Higor (Matrícula: 574228, login/git: `ocarnauba_`)
-  - Kawan Torres (Matrícula: 563869, login/git: `kawantorres`)
+  - Cícero Higor (Matrícula: 574228, GitHub: `cicerocarnauba`, autor no git: `higor`)
+  - Kawan Torres (Matrícula: 563869, GitHub: `kawantorres`, autor no git: `kawantorres`)
 - **Projeto:** [simonw/datasette](https://github.com/simonw/datasette)
 - **Fork:** [cicerocarnauba/datasette](https://github.com/cicerocarnauba/datasette)
 - **Commit Base Inicial (Planilha):** `cf113a5` (`cf113a59850862125b86ce1a58c117aa21341e07`)
@@ -26,15 +26,15 @@
 | **Cícero Higor** | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (14) | **22 registros** | `c9f0477` a `977a793` (25 commits)* | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py` (R32)<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py` |
 | **Total Dupla** | **5 tipos distintos do CATSPY** | **45 registros** | **47 commits atômicos** | **18 arquivos de teste independentes** |
 
-*\*Nota de auditoria de esforço individual:* As 45 refatorações de código de teste foram distribuídas de modo que ambos os membros atingissem e superassem a cota individual mínima obrigatória de 20 refatorações (**20 registros para Kawan Torres** e **25 registros para Cícero Higor**), com autoria 100% comprovada no histórico do repositório (`git log --format="%h | %an"`). Cícero Higor realizou 22 commits de refatoração, 2 commits de refinamento semântico (`bd45249` e `bae9e90`) e 1 commit de formatação de estilo (`93280f5`). A equipe descartou refatorações de *Exception Handling* por ausência desse smell no catálogo de referência CATSPY.
+*\*Nota de auditoria de esforço individual:* As 45 refatorações de código de teste foram distribuídas de modo que ambos os membros atingissem e superassem a cota individual mínima obrigatória de 20 refatorações (**23 registros para Kawan Torres** e **22 registros para Cícero Higor**), com autoria 100% comprovada no histórico do repositório (`git log --format="%h | %an"`). Cícero Higor realizou 22 commits de refatoração, 2 commits de refinamento semântico (`bd45249` e `bae9e90`) e 1 commit de formatação de estilo (`93280f5`). A equipe descartou refatorações de *Exception Handling* por ausência desse smell no catálogo de referência CATSPY.
 
 ---
 
-# Parte 1: Registros de Refatoração — Kawan Torres (23 Registros: #01 a #20, #29 a #31)
+# Parte 1: Registros de Refatoração — Kawan Torres (23 Registros: R01, R06 a R08, R10 a R15, R17 a R19, R22 a R31)
 
 ---
 
-### Registro #01 — Sleepy Test
+### Registro R01 (#01 de Kawan Torres) — Sleepy Test
 - **Responsável:** Kawan Torres
 - **Commit:** `2d8ddf7`
 - **Arquivo e Teste:** `tests/test_cli_serve_server.py::test_startup_hook_background_task_runs_on_serving_loop` (linha 107)
@@ -53,7 +53,7 @@
 
 ---
 
-### Registro #02 — Undefined Test
+### Registro R06 (#02 de Kawan Torres) — Undefined Test
 - **Responsável:** Kawan Torres
 - **Commit:** `e4d5e30`
 - **Arquivo e Teste:** `tests/test_queries.py::_template_option_attributes` (linhas 18-20)
@@ -72,7 +72,7 @@
 
 ---
 
-### Registro #03 — Undefined Test
+### Registro R07 (#03 de Kawan Torres) — Undefined Test
 - **Responsável:** Kawan Torres
 - **Commit:** `9ac180c`
 - **Arquivo e Teste:** `tests/test_queries.py::_template_sql` (linhas 31-33)
@@ -91,7 +91,7 @@
 
 ---
 
-### Registro #04 — Undefined Test
+### Registro R08 (#04 de Kawan Torres) — Undefined Test
 - **Responsável:** Kawan Torres
 - **Commit:** `06a5cf0`
 - **Arquivo e Teste:** `tests/test_queries.py::_template_button_sql` (linhas 39-42)
@@ -110,7 +110,7 @@
 
 ---
 
-### Registro #05 — Non-Functional Statement
+### Registro R10 (#05 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
 - **Commit:** `6777405`
 - **Arquivo e Teste:** `tests/test_cli_serve_server.py::test_startup_error_fails_fast_before_port_binds` (linhas 135-140)
@@ -129,7 +129,7 @@
 
 ---
 
-### Registro #06 — Non-Functional Statement
+### Registro R11 (#06 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
 - **Commit:** `3f18812`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::_run_workload` (linha 35)
@@ -148,7 +148,7 @@
 
 ---
 
-### Registro #07 — Non-Functional Statement
+### Registro R12 (#07 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
 - **Commit:** `eccded6`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_conformance_catches_an_unregistered_span` (linha 62)
@@ -167,7 +167,7 @@
 
 ---
 
-### Registro #08 — Non-Functional Statement
+### Registro R13 (#08 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
 - **Commit:** `0011ebe`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_scope_filter_ignores_other_scopes` (linha 88)
@@ -186,7 +186,7 @@
 
 ---
 
-### Registro #09 — Non-Functional Statement
+### Registro R14 (#09 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
 - **Commit:** `e482f87`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_linked_root_span_kwargs_links_without_parenting` (linha 115)
@@ -205,7 +205,7 @@
 
 ---
 
-### Registro #10 — Non-Functional Statement
+### Registro R15 (#10 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
 - **Commit:** `21dcbcb`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_linked_root_span_kwargs_with_no_current_span` (linha 140)
@@ -224,7 +224,7 @@
 
 ---
 
-### Registro #11 — Unknown Test
+### Registro R17 (#11 de Kawan Torres) — Unknown Test
 - **Responsável:** Kawan Torres
 - **Commit:** `76bd74f`
 - **Arquivo e Teste:** `tests/test_internals_datasette.py::test_static_rejects_plugin_and_mount` (linhas 95-102)
@@ -243,7 +243,7 @@
 
 ---
 
-### Registro #12 — Unknown Test
+### Registro R18 (#12 de Kawan Torres) — Unknown Test
 - **Responsável:** Kawan Torres
 - **Commit:** `895abb2`
 - **Arquivo e Teste:** `tests/test_internals_datasette.py::test_static_rejects_path_traversal` (linhas 110-118)
@@ -262,7 +262,7 @@
 
 ---
 
-### Registro #13 — Unknown Test
+### Registro R19 (#13 de Kawan Torres) — Unknown Test
 - **Responsável:** Kawan Torres
 - **Commit:** `2128e34`
 - **Arquivo e Teste:** `tests/test_internals_datasette.py::test_datasette_error_if_string_not_list` (linhas 125-132)
@@ -281,7 +281,7 @@
 
 ---
 
-### Registro #14 — Conditional Test Logic
+### Registro R22 (#14 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Commit:** `436d129`
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_create_table_operation` (linhas 45-60)
@@ -300,7 +300,7 @@
 
 ---
 
-### Registro #15 — Conditional Test Logic
+### Registro R23 (#15 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Commit:** `3ec8c93`
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_function_operation` (linhas 120-135)
@@ -319,7 +319,7 @@
 
 ---
 
-### Registro #16 — Conditional Test Logic
+### Registro R24 (#16 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres (Refino Cícero Higor: `bae9e90`)
 - **Commit:** `a5bb8f5` (Refino: `bae9e90`)
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_table_kind_for_regular_virtual_and_shadow_tables` (linhas 283-297)
@@ -338,7 +338,7 @@
 
 ---
 
-### Registro #17 — Conditional Test Logic
+### Registro R25 (#17 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Commit:** `4fa25ff`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_permissions_cascade` (linhas 110-120)
@@ -357,7 +357,7 @@
 
 ---
 
-### Registro #18 — Conditional Test Logic
+### Registro R26 (#18 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Commit:** `cdcb9d8`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_padlock` (linhas 145-155)
@@ -376,7 +376,7 @@
 
 ---
 
-### Registro #19 — Conditional Test Logic
+### Registro R27 (#19 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Commit:** `c46b63d`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_database` (linhas 180-195)
@@ -395,7 +395,7 @@
 
 ---
 
-### Registro #20 — Conditional Test Logic
+### Registro R28 (#20 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Commit:** `c636a0c`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_database_list_respects_view_table` (linhas 230-240)
@@ -412,165 +412,10 @@
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
    Substituição do loop condicional por comparação direta de conjuntos de nomes esperados.
 
----
-
-# Parte 2: Registros de Refatoração — Cícero Higor (22 Registros: #21 a #28, #32 a #45)
 
 ---
 
-### Registro #21 — Sleepy Test
-- **Responsável:** Cícero Higor
-- **Commit:** `c9f0477`
-- **Arquivo e Teste:** `tests/test_internals_database.py::test_execute_write_block_false` (linha 115)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Sleepy Test. O teste assíncrono continha uma chamada a `asyncio.sleep(0.1)` com pausa arbitrária para aguardar a execução de uma escrita em segundo plano na fila do SQLite.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Substituir o delay fixo por sincronização determinística sem depender de tempos de espera empíricos.
-
-3. **Usei o CATSPY para:**
-   Consultar a seção de Sleepy Test no CATSPY para compreender estratégias de sincronização baseadas em eventos e awaiting determinístico. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Substituição do delay arbitrário pelo aguardo determinístico do objeto `asyncio.Future` da tarefa de escrita.
-
----
-
-### Registro #22 — Sleepy Test
-- **Responsável:** Cícero Higor
-- **Commit:** `80bf184`
-- **Arquivo e Teste:** `tests/test_internals_database.py::test_execute_write_with_returning_block_false` (linha 142)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Sleepy Test. Uso de `asyncio.sleep(0.1)` arbitrário para aguardar o retorno de uma escrita SQLite assíncrona com cláusula `RETURNING`.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Garantir a captura determinística do resultado retornado pela transação sem introduzir esperas temporais cegas.
-
-3. **Usei o CATSPY para:**
-   Verificar recomendações do CATSPY para erradicação de Sleepy Test em fluxos assíncronos. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Eliminação do `asyncio.sleep` através da resolução determinística via awaiting da future submetida à thread de escrita.
-
----
-
-### Registro #23 — Sleepy Test
-- **Responsável:** Cícero Higor
-- **Commit:** `c35b539`
-- **Arquivo e Teste:** `tests/test_shutdown.py::test_shutdown_logs_stragglers_that_outlive_the_grace_period` (linhas 45-50)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Sleepy Test. O teste utilizava `asyncio.sleep` com valores arbitrários para forçar tarefas a ultrapassarem o período de carência (*grace period*) de encerramento do servidor.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Coordenar o ciclo de vida das tarefas pendentes sem depender de timeouts fixos extensos.
-
-3. **Usei o CATSPY para:**
-   Consultar orientações do CATSPY sobre testes de encerramento e tolerância temporal. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Ajuste dos tempos limites e uso de sinalizadores de eventos assíncronos (`asyncio.Event`) para desbloqueio coordenado durante o shutdown.
-
----
-
-### Registro #24 — Sleepy Test
-- **Responsável:** Cícero Higor
-- **Commit:** `19629a0`
-- **Arquivo e Teste:** `tests/test_write_wrapper.py::test_track_event_with_block_false` (linha 62)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Sleepy Test. Uso de delay arbitrário para aguardar que um evento de telemetria fosse gravado de forma não bloqueante.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Validar que o evento foi processado sem atrasar desnecessariamente o encerramento do teste.
-
-3. **Usei o CATSPY para:**
-   Consultar estratégias de refatoração para Sleepy Test. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Substituição do delay por polling com timeout agressivo e verificação ativa do buffer de eventos gravados.
-
----
-
-### Registro #25 — Undefined Test
-- **Responsável:** Cícero Higor
-- **Commit:** `27c39ba`
-- **Arquivo e Teste:** `tests/test_http_span.py::_route_for` (linhas 25-28)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Undefined Test. A função utilitária interna `_route_for` continha declarações `assert` em seu corpo, gerando asserções fora de métodos formais de teste.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Remover as asserções sem perder a garantia de que as rotas HTTP de telemetria foram resolvidas corretamente.
-
-3. **Usei o CATSPY para:**
-   Consultar no CATSPY a estratégia de conversão de asserções em helpers para tratamento idiomático de exceções. Link: https://cat-spy.vercel.app/smells/Undefined%20Test
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Substituição de `assert` por lançamento formal de `raise ValueError(f"Route for {path} not found")`.
-
----
-
-### Registro #26 — Non-Functional Statement
-- **Responsável:** Cícero Higor
-- **Commit:** `f32875d`
-- **Arquivo e Teste:** `tests/test_telemetry_metrics.py::test_registry_holds_instances_weakly` (linha 78)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Non-Functional Statement. O teste utilizava uma instrução inerte `pass` dentro de um context manager de supressão de referências fracas.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Garantir a coleta de lixo pelo garbage collector sem manter declarações inúteis no código.
-
-3. **Usei o CATSPY para:**
-   Consultar a seção de Non-Functional Statement no CATSPY sobre simplificação de blocos inertes. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Remoção limpa da instrução `pass` e estruturação compacta da liberação de referências.
-
----
-
-### Registro #27 — Unknown Test
-- **Responsável:** Cícero Higor
-- **Commit:** `fe44d16` (Refino: `bd45249`)
-- **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_match_a_registered_extra` (linha 82)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Unknown Test. O teste usava apenas `with pytest.raises(KeyError): BadContext.documented_fields()` sem nenhuma declaração `assert` explícita.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Capturar o contexto de erro e assegurar que a mensagem do erro corresponda exatamente à regra de extras não registrados.
-
-3. **Usei o CATSPY para:**
-   Consultar a definição de Unknown Test no CATSPY sobre como asserções explícitas de mensagem garantem a intenção do teste. Link: https://cat-spy.vercel.app/smells/Unknown%20Test
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Captura com `as excinfo` e inclusão da asserção explícita `assert "no registered extra of that name" in str(excinfo.value)`.
-
----
-
-### Registro #28 — Unknown Test
-- **Responsável:** Cícero Higor
-- **Commit:** `d838601` (Refino: `bd45249`)
-- **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_be_available_for_the_scope` (linha 97)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Unknown Test. O teste validava escopo incorreto apenas com `with pytest.raises(ValueError):` sem asserção explícita.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Inspecionar o erro de escopo de template e adicionar asserção legível.
-
-3. **Usei o CATSPY para:**
-   Verificar recomendações do CATSPY para Unknown Test. Link: https://cat-spy.vercel.app/smells/Unknown%20Test
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Adição de asserção explícita `assert "is not available for scope" in str(excinfo.value)`.
-
----
-
-### Registro #29 — Conditional Test Logic
+### Registro R29 (#21 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Commit:** `6a07991`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_table` (linhas 260-275)
@@ -589,7 +434,7 @@
 
 ---
 
-### Registro #30 — Conditional Test Logic
+### Registro R30 (#22 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Commit:** `f05ee43`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_table_list_respects_view_table` (linhas 300-315)
@@ -608,7 +453,7 @@
 
 ---
 
-### Registro #31 — Conditional Test Logic
+### Registro R31 (#23 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Commit:** `2cfe5b9`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_query` (linhas 340-355)
@@ -627,7 +472,163 @@
 
 ---
 
-### Registro #32 — Conditional Test Logic
+# Parte 2: Registros de Refatoração — Cícero Higor (22 Registros: R02 a R05, R09, R16, R20 a R21, R32 a R45)
+
+---
+
+### Registro R02 (#01 de Cícero Higor) — Sleepy Test
+- **Responsável:** Cícero Higor
+- **Commit:** `c9f0477`
+- **Arquivo e Teste:** `tests/test_internals_database.py::test_execute_write_block_false` (linha 115)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Sleepy Test. O teste assíncrono continha uma chamada a `asyncio.sleep(0.1)` com pausa arbitrária para aguardar a execução de uma escrita em segundo plano na fila do SQLite.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Substituir o delay fixo por sincronização determinística sem depender de tempos de espera empíricos.
+
+3. **Usei o CATSPY para:**
+   Consultar a seção de Sleepy Test no CATSPY para compreender estratégias de sincronização baseadas em eventos e awaiting determinístico. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Substituição do delay arbitrário pelo aguardo determinístico do objeto `asyncio.Future` da tarefa de escrita.
+
+---
+
+### Registro R03 (#02 de Cícero Higor) — Sleepy Test
+- **Responsável:** Cícero Higor
+- **Commit:** `80bf184`
+- **Arquivo e Teste:** `tests/test_internals_database.py::test_execute_write_with_returning_block_false` (linha 142)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Sleepy Test. Uso de `asyncio.sleep(0.1)` arbitrário para aguardar o retorno de uma escrita SQLite assíncrona com cláusula `RETURNING`.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Garantir a captura determinística do resultado retornado pela transação sem introduzir esperas temporais cegas.
+
+3. **Usei o CATSPY para:**
+   Verificar recomendações do CATSPY para erradicação de Sleepy Test em fluxos assíncronos. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Eliminação do `asyncio.sleep` através da resolução determinística via awaiting da future submetida à thread de escrita.
+
+---
+
+### Registro R04 (#03 de Cícero Higor) — Sleepy Test
+- **Responsável:** Cícero Higor
+- **Commit:** `c35b539`
+- **Arquivo e Teste:** `tests/test_shutdown.py::test_shutdown_logs_stragglers_that_outlive_the_grace_period` (linhas 45-50)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Sleepy Test. O teste utilizava `asyncio.sleep` com valores arbitrários para forçar tarefas a ultrapassarem o período de carência (*grace period*) de encerramento do servidor.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Coordenar o ciclo de vida das tarefas pendentes sem depender de timeouts fixos extensos.
+
+3. **Usei o CATSPY para:**
+   Consultar orientações do CATSPY sobre testes de encerramento e tolerância temporal. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Ajuste dos tempos limites e uso de sinalizadores de eventos assíncronos (`asyncio.Event`) para desbloqueio coordenado durante o shutdown.
+
+---
+
+### Registro R05 (#04 de Cícero Higor) — Sleepy Test
+- **Responsável:** Cícero Higor
+- **Commit:** `19629a0`
+- **Arquivo e Teste:** `tests/test_write_wrapper.py::test_track_event_with_block_false` (linha 62)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Sleepy Test. Uso de delay arbitrário para aguardar que um evento de telemetria fosse gravado de forma não bloqueante.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Validar que o evento foi processado sem atrasar desnecessariamente o encerramento do teste.
+
+3. **Usei o CATSPY para:**
+   Consultar estratégias de refatoração para Sleepy Test. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Substituição do delay por polling com timeout agressivo e verificação ativa do buffer de eventos gravados.
+
+---
+
+### Registro R09 (#05 de Cícero Higor) — Undefined Test
+- **Responsável:** Cícero Higor
+- **Commit:** `27c39ba`
+- **Arquivo e Teste:** `tests/test_http_span.py::_route_for` (linhas 25-28)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Undefined Test. A função utilitária interna `_route_for` continha declarações `assert` em seu corpo, gerando asserções fora de métodos formais de teste.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Remover as asserções sem perder a garantia de que as rotas HTTP de telemetria foram resolvidas corretamente.
+
+3. **Usei o CATSPY para:**
+   Consultar no CATSPY a estratégia de conversão de asserções em helpers para tratamento idiomático de exceções. Link: https://cat-spy.vercel.app/smells/Undefined%20Test
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Substituição de `assert` por lançamento formal de `raise ValueError(f"Route for {path} not found")`.
+
+---
+
+### Registro R16 (#06 de Cícero Higor) — Non-Functional Statement
+- **Responsável:** Cícero Higor
+- **Commit:** `f32875d`
+- **Arquivo e Teste:** `tests/test_telemetry_metrics.py::test_registry_holds_instances_weakly` (linha 78)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Non-Functional Statement. O teste utilizava uma instrução inerte `pass` dentro de um context manager de supressão de referências fracas.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Garantir a coleta de lixo pelo garbage collector sem manter declarações inúteis no código.
+
+3. **Usei o CATSPY para:**
+   Consultar a seção de Non-Functional Statement no CATSPY sobre simplificação de blocos inertes. Link: https://cat-spy.vercel.app/smells/Non-Functional%20Statement
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Remoção limpa da instrução `pass` e estruturação compacta da liberação de referências.
+
+---
+
+### Registro R20 (#07 de Cícero Higor) — Unknown Test
+- **Responsável:** Cícero Higor
+- **Commit:** `fe44d16` (Refino: `bd45249`)
+- **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_match_a_registered_extra` (linha 82)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Unknown Test. O teste usava apenas `with pytest.raises(KeyError): BadContext.documented_fields()` sem nenhuma declaração `assert` explícita.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Capturar o contexto de erro e assegurar que a mensagem do erro corresponda exatamente à regra de extras não registrados.
+
+3. **Usei o CATSPY para:**
+   Consultar a definição de Unknown Test no CATSPY sobre como asserções explícitas de mensagem garantem a intenção do teste. Link: https://cat-spy.vercel.app/smells/Unknown%20Test
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Captura com `as excinfo` e inclusão da asserção explícita `assert "no registered extra of that name" in str(excinfo.value)`.
+
+---
+
+### Registro R21 (#08 de Cícero Higor) — Unknown Test
+- **Responsável:** Cícero Higor
+- **Commit:** `d838601` (Refino: `bd45249`)
+- **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_be_available_for_the_scope` (linha 97)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Unknown Test. O teste validava escopo incorreto apenas com `with pytest.raises(ValueError):` sem asserção explícita.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Inspecionar o erro de escopo de template e adicionar asserção legível.
+
+3. **Usei o CATSPY para:**
+   Verificar recomendações do CATSPY para Unknown Test. Link: https://cat-spy.vercel.app/smells/Unknown%20Test
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Adição de asserção explícita `assert "is not available for scope" in str(excinfo.value)`.
+
+---
+
+### Registro R32 (#09 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `bcfffdba`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_instance` (linhas 380-390)
@@ -646,7 +647,7 @@
 
 ---
 
-### Registro #33 — Conditional Test Logic
+### Registro R33 (#10 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `9d09b07`
 - **Arquivo e Teste:** `tests/test_template_context.py::test_context_class_fields_all_have_help` (linha 115)
@@ -665,7 +666,7 @@
 
 ---
 
-### Registro #34 — Conditional Test Logic
+### Registro R34 (#11 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `d992205`
 - **Arquivo e Teste:** `tests/test_routes.py::test_routes` (linhas 60-70)
@@ -684,7 +685,7 @@
 
 ---
 
-### Registro #35 — Conditional Test Logic
+### Registro R35 (#12 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `3e1d0b7`
 - **Arquivo e Teste:** `tests/test_tracer.py::test_trace` (linhas 40-55)
@@ -703,7 +704,7 @@
 
 ---
 
-### Registro #36 — Conditional Test Logic
+### Registro R36 (#13 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `28671b2`
 - **Arquivo e Teste:** `tests/test_tracer.py::test_trace_enabled` (linhas 70-85)
@@ -722,7 +723,7 @@
 
 ---
 
-### Registro #37 — Conditional Test Logic
+### Registro R37 (#14 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `9e1223f`
 - **Arquivo e Teste:** `tests/test_load_extensions.py::test_load_extension_is_disabled` (linhas 45-55)
@@ -741,7 +742,7 @@
 
 ---
 
-### Registro #38 — Conditional Test Logic
+### Registro R38 (#15 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `c9e1824`
 - **Arquivo e Teste:** `tests/test_internals_request.py::test_request_args` (linhas 65-75)
@@ -760,7 +761,7 @@
 
 ---
 
-### Registro #39 — Conditional Test Logic
+### Registro R39 (#16 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `7d5501b`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_nofacet` (linhas 315-325)
@@ -779,7 +780,7 @@
 
 ---
 
-### Registro #40 — Conditional Test Logic
+### Registro R40 (#17 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `7f3ed24`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_nosuggest` (linhas 345-355)
@@ -798,7 +799,7 @@
 
 ---
 
-### Registro #41 — Conditional Test Logic
+### Registro R41 (#18 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `9547bc5`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_nocount` (linhas 375-385)
@@ -817,7 +818,7 @@
 
 ---
 
-### Registro #42 — Conditional Test Logic
+### Registro R42 (#19 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `90f8bad` (Ajuste de estilo PEP 8: `93280f5`)
 - **Arquivo e Teste:** `tests/test_csv.py::test_custom_sql_csv_errors` (linhas 188-195)
@@ -836,7 +837,7 @@
 
 ---
 
-### Registro #43 — Conditional Test Logic
+### Registro R43 (#20 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `6b81b03`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_binary_data_in_json` (linhas 410-430)
@@ -855,7 +856,7 @@
 
 ---
 
-### Registro #44 — Conditional Test Logic
+### Registro R44 (#21 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `6490ccc`
 - **Arquivo e Teste:** `tests/test_fts_permissions.py::test_external_content_fts_inherits_content_table_view_permission` (linhas 75-85)
@@ -874,7 +875,7 @@
 
 ---
 
-### Registro #45 — Conditional Test Logic
+### Registro R45 (#22 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Commit:** `977a793`
 - **Arquivo e Teste:** `tests/test_queries.py::test_execute_write_schema_operations_use_schema_permissions` (linhas 210-235)
@@ -893,3 +894,5 @@
 
 ---
 *Diário de bordo auditado e sincronizado com os commits da branch refatoracao-test-smells em 29 de Outubro de 2026.*
+
+---
