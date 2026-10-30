@@ -71,8 +71,8 @@ Os valores de execução foram extraídos diretamente do relatório gerado pelo 
 |---|---|---|
 | **Testes Aprovados (Passed)** | 2.829 | 96,39% |
 | **Testes Ignorados (Skipped)** | 85 | 2,90% |
-| **Falhas Esperadas (Expected failures / `xfail`)** | 6 | 0,20% (comportamentos legados sinalizados com `strict=False`) |
-| **Aprovações Inesperadas (Unexpected passes / `xpass`)** | 15 | 0,51% (funcionalidades opcionais de SQLite atendidas no ambiente) |
+| **Falhas Esperadas (Expected failures / `xfail`)** | 6 | 0,20% |
+| **Aprovações Inesperadas (Unexpected passes / `xpass`)** | 15 | 0,51% |
 | **Falhas Não Esperadas (Failed)** | 0 | 0,00% |
 | **Erros de Execução (Errors)** | 0 | 0,00% |
 | **Total de Testes Executados na Suíte** | **2.935** | **100,00%** |
@@ -119,66 +119,67 @@ A equipe selecionou 5 tipos de test smells presentes no catálogo CATSPY para in
 ### 3.2 Tabela Completa das Refatorações Realizadas
 
 A tabela a seguir consolida as **45 refatorações de código de teste** realizadas pela equipe, registradas em commits atômicos com autoria comprovada no histórico do repositório (`git log --format="%h | %an"`):
-- **Kawan Torres:** 20 refatorações (R01, R06 a R08, R10 a R15, R17 a R19, R22 a R28);
-- **Cícero Higor:** 25 refatorações (R02 a R05, R09, R16, R20 a R21, R29 a R45), acompanhadas de 2 refinamentos semânticos (`62a0fc5` e `ff237ad`) e 1 ajuste de formatação (`b1964d4`).
+- **Kawan Torres (`kawantorres`):** 20 refatorações (R01, R06 a R08, R10 a R15, R17 a R19, R22 a R28);
+- **Cícero Higor (`ocarnauba_`, autor no git: `higor`):** 25 refatorações (R02 a R05, R09, R16, R20 a R21, R29 a R45), acompanhadas de 2 refinamentos semânticos (`62a0fc5` e `ff237ad`) e 1 ajuste de formatação (`b1964d4`).
 
 *Convenções da coluna "Removido pelo TEMPY?":*
-- **Sim (N → 0):** smell detectado na AST pelo TEMPY e confirmado como eliminado na função alvo;
+- **Sim (N → 0):** smell detectado na AST pelo TEMPY e confirmado como eliminado na função alvo (**32 refatorações confirmadas diretamente sobre smells pré-existentes**);
 - **Suprimido via helper:** a lógica condicional e a espera foram transferidas para função utilitária dedicada, suprimindo o smell do corpo do método de teste (R01);
-- **Não (Não detectado pelo TEMPY):** o teste continha espera assíncrona (`asyncio.sleep`) ou ramificações procedurais conceituais do CATSPY que não eram pontuadas pela regra léxica restritiva do TEMPY no estado inicial.
+- **Correção de R35:** saneamento do *Undefined Test* transitório introduzido na divisão de `test_trace` em R35 (R36);
+- **Não (Não detectado pelo TEMPY):** refatorações conceituais do CATSPY (espera assíncrona com `asyncio.sleep` em R02–R05 ou ramificações condicionais sem `assert` no corpo do `if` em R39–R45) não pontuadas pelas regras léxicas restritivas da AST do TEMPY no estado inicial.
 
 | ID | Commit | Autor | Test Smell (CATSPY) | Arquivo | Função / Método Alvo | Testes Passaram? | Introduziu Novo Smell? | Removido pelo TEMPY? |
 |---|---|---|---|---|---|---|---|---|
 | **R01** | `713563b` | kawantorres | Sleepy Test | `tests/test_cli_serve_server.py` | `test_startup_hook_background_task_runs_on_serving_loop` | Sim | Não | Suprimido via helper* |
-| **R02** | `ca18c30` | higor | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R03** | `e27f620` | higor | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_with_returning_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R04** | `bf181c8` | higor | Sleepy Test | `tests/test_shutdown.py` | `test_shutdown_logs_stragglers_that_outlive_the_grace_period` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R05** | `5daa0ba` | higor | Sleepy Test | `tests/test_write_wrapper.py` | `test_track_event_with_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R02** | `ca18c30` | ocarnauba_ (higor) | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R03** | `e27f620` | ocarnauba_ (higor) | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_with_returning_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R04** | `bf181c8` | ocarnauba_ (higor) | Sleepy Test | `tests/test_shutdown.py` | `test_shutdown_logs_stragglers_that_outlive_the_grace_period` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R05** | `5daa0ba` | ocarnauba_ (higor) | Sleepy Test | `tests/test_write_wrapper.py` | `test_track_event_with_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
 | **R06** | `707e0ba` | kawantorres | Undefined Test | `tests/test_queries.py` | `_template_option_attributes` | Sim | Não | Sim (1 → 0) |
 | **R07** | `af3001e` | kawantorres | Undefined Test | `tests/test_queries.py` | `_template_sql` | Sim | Não | Sim (1 → 0) |
 | **R08** | `58c6454` | kawantorres | Undefined Test | `tests/test_queries.py` | `_template_button_sql` | Sim | Não | Sim (1 → 0) |
-| **R09** | `a60b05b` | higor | Undefined Test | `tests/test_http_span.py` | `_route_for` | Sim | Não | Sim (1 → 0) |
+| **R09** | `a60b05b` | ocarnauba_ (higor) | Undefined Test | `tests/test_http_span.py` | `_route_for` | Sim | Não | Sim (1 → 0) |
 | **R10** | `0934420` | kawantorres | Non-Functional Statement | `tests/test_cli_serve_server.py` | `test_startup_error_fails_fast_before_port_binds` | Sim | Não | Sim (1 → 0) |
 | **R11** | `a731402` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `_run_workload` | Sim | Não | Sim (1 → 0) |
 | **R12** | `9996b15` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_conformance_catches_an_unregistered_span` | Sim | Não | Sim (1 → 0) |
 | **R13** | `8ea5734` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_scope_filter_ignores_other_scopes` | Sim | Não | Sim (1 → 0) |
 | **R14** | `05c17e1` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_linked_root_span_kwargs_links_without_parenting` | Sim | Não | Sim (1 → 0) |
 | **R15** | `1c8c0e1` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_linked_root_span_kwargs_with_no_current_span` | Sim | Não | Sim (1 → 0) |
-| **R16** | `7f32810` | higor | Non-Functional Statement | `tests/test_telemetry_metrics.py` | `test_registry_holds_instances_weakly` | Sim | Não | Sim (1 → 0) |
+| **R16** | `7f32810` | ocarnauba_ (higor) | Non-Functional Statement | `tests/test_telemetry_metrics.py` | `test_registry_holds_instances_weakly` | Sim | Não | Sim (1 → 0) |
 | **R17** | `ab0472a` | kawantorres | Unknown Test | `tests/test_internals_datasette.py` | `test_static_rejects_plugin_and_mount` | Sim | Não | Sim (1 → 0) |
 | **R18** | `3b547f2` | kawantorres | Unknown Test | `tests/test_internals_datasette.py` | `test_static_rejects_path_traversal` | Sim | Não | Sim (1 → 0) |
 | **R19** | `e832624` | kawantorres | Unknown Test | `tests/test_internals_datasette.py` | `test_datasette_error_if_string_not_list` | Sim | Não | Sim (1 → 0) |
-| **R20** | `4caaf63` | higor | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_match_a_registered_extra` | Sim | Não | Sim (1 → 0) |
-| **R21** | `05db0b2` | higor | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_be_available_for_the_scope` | Sim | Não | Sim (1 → 0) |
-| **—** | `62a0fc5` | higor | Unknown Test (Refino) | `tests/test_template_context.py` | (Reforço semântico em R20-R21: validação de mensagem) | Sim | Não | Sim (0 → 0) |
+| **R20** | `4caaf63` | ocarnauba_ (higor) | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_match_a_registered_extra` | Sim | Não | Sim (1 → 0) |
+| **R21** | `05db0b2` | ocarnauba_ (higor) | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_be_available_for_the_scope` | Sim | Não | Sim (1 → 0) |
+| **—** | `62a0fc5` | ocarnauba_ (higor) | Unknown Test (Refino) | `tests/test_template_context.py` | (Reforço semântico em R20-R21: validação de mensagem) | Sim | Não | Sim (0 → 0) |
 | **R22** | `a6d9f67` | kawantorres | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_create_table_operation` | Sim | Não | Sim (2 → 0) |
 | **R23** | `9032459` | kawantorres | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_function_operation` | Sim | Não | Sim (1 → 0) |
 | **R24** | `01705f3` | kawantorres | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_table_kind_for_regular_virtual_and_shadow_tables` | Sim | Não | Sim (6 → 0) |
-| **—** | `ff237ad` | higor | CTL (Refino R24) | `tests/test_utils_sql_analysis.py` | (Eliminação de helper gerador por desempacotamento direto) | Sim | Não | Sim (0 → 0) |
+| **—** | `ff237ad` | ocarnauba_ (higor) | CTL (Refino R24) | `tests/test_utils_sql_analysis.py` | (Eliminação de helper gerador por desempacotamento direto) | Sim | Não | Sim (0 → 0) |
 | **R25** | `3f17fc4` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_permissions_cascade` | Sim | Não | Sim (1 → 0) |
 | **R26** | `d65a7cf` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_padlock` | Sim | Não | Sim (2 → 0) |
 | **R27** | `b4ddef1` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_database` | Sim | Não | Sim (3 → 0) |
 | **R28** | `6c3f2e2` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_database_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
-| **R29** | `61f62b0` | higor | Conditional Test Logic | `tests/test_permissions.py` | `test_view_table` | Sim | Não | Sim (2 → 0) |
-| **R30** | `7f1d81a` | higor | Conditional Test Logic | `tests/test_permissions.py` | `test_table_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
-| **R31** | `3e89ebe` | higor | Conditional Test Logic | `tests/test_permissions.py` | `test_view_query` | Sim | Não | Sim (2 → 0) |
-| **R32** | `f3b04f2` | higor | Conditional Test Logic | `tests/test_permissions.py` | `test_view_instance` | Sim | Não | Sim (1 → 0) |
-| **R33** | `96fe24c` | higor | Conditional Test Logic | `tests/test_template_context.py` | `test_context_class_fields_all_have_help` | Sim | Não | Sim (1 → 0) |
-| **R34** | `7957219` | higor | Conditional Test Logic | `tests/test_routes.py` | `test_routes` | Sim | Não | Sim (1 → 0) |
-| **R35** | `71658fb` | higor | Conditional Test Logic | `tests/test_tracer.py` | `test_trace` | Sim | Sim (temporário)** | Sim (2 → 0) |
-| **R36** | `86b667e` | higor | Conditional Test Logic | `tests/test_tracer.py` | `test_trace_enabled` | Sim | Não | Sim (0 → 0) |
-| **R37** | `88bf94b` | higor | Conditional Test Logic | `tests/test_load_extensions.py` | `test_load_extension_is_disabled` | Sim | Não | Sim (2 → 0) |
-| **R38** | `1538199` | higor | Conditional Test Logic | `tests/test_internals_request.py` | `test_request_args` | Sim | Não | Sim (1 → 0) |
-| **R39** | `e46119a` | higor | Conditional Test Logic | `tests/test_table_api.py` | `test_nofacet` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R40** | `9d71b43` | higor | Conditional Test Logic | `tests/test_table_api.py` | `test_nosuggest` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R41** | `d7717c3` | higor | Conditional Test Logic | `tests/test_table_api.py` | `test_nocount` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R42** | `394fd94` | higor | Conditional Test Logic | `tests/test_csv.py` | `test_custom_sql_csv_errors` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R43** | `2028ad2` | higor | Conditional Test Logic | `tests/test_table_api.py` | `test_binary_data_in_json` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R44** | `a5c6418` | higor | Conditional Test Logic | `tests/test_fts_permissions.py` | `test_external_content_fts_inherits_content_table_view_permission` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R45** | `e3a7861` | higor | Conditional Test Logic | `tests/test_queries.py` | `test_execute_write_schema_operations_use_schema_permissions` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R29** | `61f62b0` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_permissions.py` | `test_view_table` | Sim | Não | Sim (2 → 0) |
+| **R30** | `7f1d81a` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_permissions.py` | `test_table_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
+| **R31** | `3e89ebe` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_permissions.py` | `test_view_query` | Sim | Não | Sim (2 → 0) |
+| **R32** | `f3b04f2` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_permissions.py` | `test_view_instance` | Sim | Não | Sim (1 → 0) |
+| **R33** | `96fe24c` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_template_context.py` | `test_context_class_fields_all_have_help` | Sim | Não | Sim (1 → 0) |
+| **R34** | `7957219` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_routes.py` | `test_routes` | Sim | Não | Sim (1 → 0) |
+| **R35** | `71658fb` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace` | Sim | Sim (temporário)** | Sim (2 → 0) |
+| **R36** | `86b667e` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace_enabled` | Sim | Não | Correção de R35** |
+| **R37** | `88bf94b` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_load_extensions.py` | `test_load_extension_is_disabled` | Sim | Não | Sim (2 → 0) |
+| **R38** | `1538199` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_internals_request.py` | `test_request_args` | Sim | Não | Sim (1 → 0) |
+| **R39** | `e46119a` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nofacet` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R40** | `9d71b43` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nosuggest` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R41** | `d7717c3` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nocount` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R42** | `394fd94` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_csv.py` | `test_custom_sql_csv_errors` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R43** | `2028ad2` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_binary_data_in_json` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R44** | `a5c6418` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_fts_permissions.py` | `test_external_content_fts_inherits_content_table_view_permission` | Sim | Não | Não (Não detectado pelo TEMPY) |
+| **R45** | `e3a7861` | ocarnauba_ (higor) | Conditional Test Logic | `tests/test_queries.py` | `test_execute_write_schema_operations_use_schema_permissions` | Sim | Não | Não (Não detectado pelo TEMPY) |
 
 *\*Nota sobre R01:* A refatoração R01 suprimiu do corpo do método de teste tanto 1 ocorrência de Sleepy Test (`time.sleep`) quanto 2 ocorrências de Conditional Test Logic (`while` e `if break`), transferindo a lógica para a função auxiliar `poll_for_marker_task`.  
-*\*\*Nota sobre R35:* No commit `71658fb`, a divisão de `test_trace` gerou temporariamente uma função utilitária com asserções que o TEMPY sinalizou como *Undefined Test*. O caso foi prontamente sanado no commit subsequente `86b667e` (R36), eliminando o smell transitório.
+*\*\*Nota sobre R35 e R36:* No commit `71658fb` (R35), a divisão de `test_trace` gerou temporariamente uma função utilitária com asserções que o TEMPY sinalizou como *Undefined Test*. O caso foi prontamente sanado no commit subsequente `86b667e` (R36), eliminando o smell transitório. Portanto, R36 atuou como refinamento saneador do R35, consolidando **32 refatorações confirmadas diretamente sobre smells pré-existentes**.
 
 ---
 
@@ -251,6 +252,61 @@ def test_startup_hook_background_task_runs_on_serving_loop(serve_with_plugins):
 - Complexidade Ciclomática (CC) do Teste: Antes = 5 (Classificação A), Depois = 3 (Classificação A)
 - Complexidade Ciclomática (CC) do Helper `poll_for_marker_task`: 3 (Classificação A) *(complexidade transferida)*
 - SLOC do Arquivo `tests/test_cli_serve_server.py`: Antes = 159 linhas, Depois = 162 linhas
+
+---
+
+#### Exemplo 1b: Sleepy Test em Teste Assíncrono (Severidade Média)
+- **ID da Refatoração:** R02
+- **Commit SHA:** `ca18c30` (`ca18c309`)
+- **Autor no Git:** `ocarnauba_ (higor)`
+- **Arquivo:** `tests/test_internals_database.py`
+- **Método Alvo:** `test_execute_write_block_false`
+- **Estratégia Adotada:** Substituição de pausa fixa arbitrária (`await asyncio.sleep(0.1)`) por espera ativa assíncrona com deadline (`wait_for_row_value`).
+
+**Contextualização:**  
+O teste disparava uma operação de escrita assíncrona com `block=False` e pausava a execução por um período fixo arbitrário com `await asyncio.sleep(0.1)` antes de checar se o registro havia sido gravado. Essa pausa introduzia latência fixa desnecessária e risco de intermitência caso o ambiente estivesse sobrecarregado. A refatoração introduziu o helper `wait_for_row_value`, que realiza consultas em pequenos intervalos (5ms) e retorna assim que o valor é confirmado (tipicamente em menos de 10ms), lançando `TimeoutError` se o deadline expirar. O TEMPY não detecta esse caso no estado inicial porque seu parser AST de *Sleepy Test* inspeciona apenas chamadas síncronas a `time.sleep`, mas o caso enquadra-se rigorosamente na definição conceitual de Sleepy Test do CATSPY.
+
+**Diff Literal do Git (`git show ca18c30`):**
+
+```python
+# ANTES:
+@pytest.mark.asyncio
+async def test_execute_write_block_false(db):
+    await db.execute_write(
+        "update roadside_attractions set name = ? where pk = ?",
+        ["Mystery!", 1],
+    )
+    await asyncio.sleep(0.1)
+    rows = await db.execute("select name from roadside_attractions where pk = 1")
+    assert "Mystery!" == rows.rows[0][0]
+
+# DEPOIS:
+async def wait_for_row_value(db, sql, expected, timeout=1.0, interval=0.005):
+    deadline = asyncio.get_running_loop().time() + timeout
+    while asyncio.get_running_loop().time() < deadline:
+        rows = await db.execute(sql)
+        if rows.rows and rows.rows[0][0] == expected:
+            return rows.rows[0][0]
+        await asyncio.sleep(interval)
+    raise TimeoutError(f"Expected {expected!r} not found within {timeout}s")
+
+
+@pytest.mark.asyncio
+async def test_execute_write_block_false(db):
+    await db.execute_write(
+        "update roadside_attractions set name = ? where pk = ?",
+        ["Mystery!", 1],
+    )
+    name = await wait_for_row_value(
+        db, "select name from roadside_attractions where pk = 1", "Mystery!"
+    )
+    assert name == "Mystery!"
+```
+
+**Métricas Mensuradas com Radon:**
+- Complexidade Ciclomática (CC) do Teste: 1 (Antes = 1, Depois = 1)
+- Complexidade Ciclomática (CC) do Helper `wait_for_row_value`: 4 (Classificação A)
+- SLOC do Arquivo `tests/test_internals_database.py`: Antes = 560 linhas, Depois = 571 linhas (+11 linhas)
 
 ---
 
@@ -459,8 +515,13 @@ As medições comparativas entre a linha de base (`cf113a5`) e o commit final de
 | **Maintainability Index Médio (Testes)** | Radon | 43,10 | 43,09 | -0,01 | Estável |
 | **Total de Test Smells (TEMPY)** | TEMPY | **258** | **208** | **-50** | **-19,38%** |
 
+*Nota sobre a medição no commit final do PR (`b1964d4`):* O commit final de entrega no branch (`b1964d4`) adicionou apenas a quebra de linha da assinatura em `tests/test_csv.py` para adequação às 88 colunas do Flake8. O SLOC dos testes passou de 39.525 linhas no commit `e3a7861` para 39.529 linhas no commit `b1964d4` (+4 linhas estruturais de quebra de assinatura), enquanto todas as demais métricas permaneceram estritamente idênticas: Complexidade Ciclomática média de 4,38, Maintainability Index médio de 43,09, cobertura global de 90,27% e total de 2.850 testes aprovados (0 falhas).
+
 *Comando de validação Radon utilizado:*  
 `radon raw tests/ -j && radon cc tests/ -j && radon mi tests/ -j`
+
+*Manifesto do escopo do TEMPY:*  
+A listagem completa dos 85 arquivos analisados encontra-se versionada nos manifestos `metrics-before-tempy/lista_arquivos.txt` e `metrics-after-tempy/lista_arquivos.txt`.
 
 ---
 
@@ -552,7 +613,7 @@ O catálogo foi especialmente útil ao conceituar o impacto negativo da lógica 
 
 ### 3. Quais estratégias recomendadas pelo catálogo não se aplicaram ou precisaram de adaptação?
 - **Tratamento de Funções Utilitárias vs. Undefined Test:** Na literatura clássica de testes, é comum transferir validações repetitivas para funções utilitárias auxiliares. No entanto, o detector estático TEMPY sinaliza qualquer função que contenha `assert` fora do padrão `test_*` como *Undefined Test*. A equipe adaptou essa abordagem substituindo instruções `assert` em métodos helpers por exceções de controle defensivas (`raise ValueError(...)`), preservando a robustez sem gerar novos apontamentos estáticos.
-- **Temporização em Ambientes Assíncronos (Asyncio / ASGI):** As recomendações convencionais para *Sleepy Test* concentram-se em chamadas síncronas a `time.sleep`. No ecossistema assíncrono do Datasette, chamadas síncronas bloqueiam o event loop. Foi necessário adaptar a mitigação utilizando loops de polling cooperativo assíncrono (`asyncio.sleep`) calibrados com deadlines estritos, evitando lentidão e travamentos na execução paralela com múltiplos workers.
+- **Temporização em Ambientes Assíncronos (Asyncio / ASGI):** As recomendações convencionais para *Sleepy Test* concentram-se em chamadas síncronas a `time.sleep`. No ecossistema assíncrono do Datasette, os testes continham pausas fixas arbitrárias (`await asyncio.sleep(0.1)`). A equipe substituiu essas pausas fixas por funções auxiliares de polling assíncrono com deadline (`wait_for_row_value`, etc.), fazendo com que os testes terminem imediatamente assim que a condição de banco é satisfeita, sem aguardar intervalos fixos desnecessários e sem travar o event loop.
 
 ### 4. O que faltou no catálogo ou poderia ser melhorado?
 - **Cobertura de Padrões Assíncronos:** O catálogo poderia se beneficiar de diretrizes e exemplos voltados a testes assíncronos modernos (`pytest-asyncio`, corrotinas e event loops), que possuem desafios próprios de temporização e ciclo de vida.
@@ -604,8 +665,13 @@ A divisão de trabalho entre os integrantes está registrada de forma transparen
 
 1. **Adesão ao CATSPY:** A equipe concentrou o trabalho nos 5 tipos catalogados no CATSPY, desconsiderando *Exception Handling*.
 2. **Volume de Entregas e Atendimento ao Requisito Individual:** Foram entregues **45 refatorações de código de teste**, distribuídas entre os integrantes (**20 para Kawan Torres** e **25 para Cícero Higor**), atendendo plenamente à meta individual da disciplina de no mínimo 20 refatorações por aluno com autoria confirmada no `git log`.
-3. **Confirmação pelo Detector:** Do total de 45 intervenções, 33 foram confirmadas diretamente pelo TEMPY (eliminando **47 ocorrências** em 4 tipos canônicos de forma direta e **3 ocorrências** suprimidas via helper em R01, totalizando **50 ocorrências de redução** no TEMPY).
-4. **Superação da Meta Global da Disciplina:** A equipe eliminou 47 ocorrências confirmadas pelo TEMPY, superando com folga a meta global de 40 smells eliminados.
+3. **Confirmação pelo Detector:** Do total de 45 intervenções:
+   - **32 refatorações** foram confirmadas diretamente pelo TEMPY eliminando ocorrências pré-existentes na base (31 CTL, 7 NFS, 5 UT, 4 Undefined);
+   - **1 refatoração** (R36) consistiu no saneamento de um *Undefined Test* transitório introduzido temporariamente na divisão de método de R35;
+   - **1 refatoração** (R01) suprimiu 3 ocorrências no TEMPY via função utilitária dedicada (1 Sleepy Test + 2 CTL);
+   - **11 refatorações** consistiram em refatorações conceituais orientadas pelo CATSPY (R02–R05 eliminando pausas assíncronas arbitrárias e R39–R45 eliminando lógica condicional não flagrada pelo parser estático do TEMPY).
+   Totalizando **50 reduções de ocorrências no TEMPY** (de 258 para 208).
+4. **Superação da Meta Global da Disciplina:** A equipe eliminou 47 ocorrências confirmadas diretamente pelo TEMPY (ou 50 considerando as supressões do método de R01), superando com folga a meta global de 40 smells eliminados.
 5. **Reprodutibilidade:** Os scripts de apoio utilizados para coletar métricas de cobertura, Radon e TEMPY encontram-se versionados no diretório `scripts/` do repositório para conferência.
 
 ---
