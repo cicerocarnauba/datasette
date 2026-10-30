@@ -5,8 +5,8 @@
 - **Docente:** Profª. Dra. Carla Ilane Moreira Bezerra
 - **Monitoria:** Gabriel Alves Pessoa
 - **Equipe:**
-  - Cícero Higor (login/git: `ocarnauba_`)
-  - Kawan Torres (login/git: `kawantorres`)
+  - Cícero Higor (Matrícula: 511393, login/git: `ocarnauba_`)
+  - Kawan Torres (Matrícula: 514930, login/git: `kawantorres`)
 - **Projeto:** [simonw/datasette](https://github.com/simonw/datasette)
 - **Fork:** [cicerocarnauba/datasette](https://github.com/cicerocarnauba/datasette)
 - **Commit Base Inicial:** `cf113a5` (`cf113a59850862125b86ce1a58c117aa21341e07`)
