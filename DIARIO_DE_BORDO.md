@@ -5,12 +5,13 @@
 - **Docente:** Profª. Dra. Carla Ilane Moreira Bezerra
 - **Monitoria:** Gabriel Alves Pessoa
 - **Equipe:**
-  - Cícero Higor (Matrícula: 511393, login/git: `ocarnauba_`)
-  - Kawan Torres (Matrícula: 514930, login/git: `kawantorres`)
+  - Cícero Higor (Matrícula: 574228, login/git: `ocarnauba_`)
+  - Kawan Torres (Matrícula: 563869, login/git: `kawantorres`)
 - **Projeto:** [simonw/datasette](https://github.com/simonw/datasette)
 - **Fork:** [cicerocarnauba/datasette](https://github.com/cicerocarnauba/datasette)
-- **Commit Base Inicial:** `cf113a5` (`cf113a59850862125b86ce1a58c117aa21341e07`)
-- **Commit Final de Refatoração de Código:** `746720f` (`746720f83737b5c8795da3cb0a542b8faae2f46b`)
+- **Commit Base Inicial (Planilha):** `cf113a5` (`cf113a59850862125b86ce1a58c117aa21341e07`)
+- **Commit Final de Refatoração de Código:** `e3a7861` (`e3a78619b0d680bc94c34a4755106a9d7fe32b13`)
+- **Commit de Formatação PEP 8:** `b1964d4` (`b1964d48507851d9571f0df28a786e24699f4306`)
 - **Branch de Trabalho:** `refatoracao-test-smells`
 - **Link Oficial no Google Docs da Disciplina:** https://docs.google.com/document/d/1jvLB-C7dT7S-WHd-vc8-YLf6qjfu3JX3XeOdKnqxBc8/edit?usp=sharing
 - **Catálogo de Referência Oficial:** [CATSPY](https://cat-spy.vercel.app/smells) (UFC Quixadá)
@@ -19,23 +20,23 @@
 
 ## 📊 Resumo Executivo das Refatorações da Equipe (45 Registros | 47 Commits)
 
-| Integrante | Smells Refatorados (CATSPY) | Qtd. Registros | Commits de Referência | Arquivos Atribuídos |
+| Integrante | Smells Refatorados (CATSPY) | Qtd. Registros | Commits no Git | Arquivos Atribuídos |
 |---|---|---|---|---|
-| **Kawan Torres** | Sleepy Test (1)<br>Undefined Test (3)<br>Non-Functional Statement (6)<br>Unknown Test (3)<br>Conditional Test Logic (10) | **23 registros** | `9bce5bb` a `bfe137a` e `167c563` a `18be25d` | `tests/test_cli_serve_server.py`<br>`tests/test_queries.py`<br>`tests/test_telemetry_testing_kit.py`<br>`tests/test_internals_datasette.py`<br>`tests/test_utils_sql_analysis.py`<br>`tests/test_permissions.py` (R25–R31) |
-| **Cícero Higor** | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (14) | **22 registros** | `8b7144b` a `746720f` (inclui 2 refinos)* | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py` (R32)<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py` |
+| **Kawan Torres** | Sleepy Test (1)<br>Undefined Test (3)<br>Non-Functional Statement (6)<br>Unknown Test (3)<br>Conditional Test Logic (7) | **20 registros** | `713563b` a `6c3f2e2` (20 commits) | `tests/test_cli_serve_server.py`<br>`tests/test_queries.py`<br>`tests/test_telemetry_testing_kit.py`<br>`tests/test_internals_datasette.py`<br>`tests/test_utils_sql_analysis.py`<br>`tests/test_permissions.py` (R25–R28) |
+| **Cícero Higor** | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (17) | **25 registros** | `ca18c30` a `e3a7861` (27 commits)* | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py` (R29–R32)<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py` |
 | **Total Dupla** | **5 tipos distintos do CATSPY** | **45 registros** | **47 commits atômicos** | **18 arquivos de teste independentes** |
 
-*\*Nota de auditoria de esforço individual:* As 45 refatorações de código de teste foram distribuídas paritariamente entre os integrantes (**23 registros para Kawan Torres** e **22 registros para Cícero Higor**), cumprindo e superando a cota individual obrigatória de no mínimo 20 refatorações por aluno. O trabalho foi conduzido em regime colaborativo e pair programming. A equipe descartou refatorações de *Exception Handling* por ausência desse smell no catálogo de referência CATSPY.
+*\*Nota de auditoria de esforço individual:* As 45 refatorações de código de teste foram distribuídas de modo que ambos os membros atingissem e superassem a cota individual mínima obrigatória de 20 refatorações (**20 registros para Kawan Torres** e **25 registros para Cícero Higor**), com autoria 100% comprovada no histórico do repositório (`git log --format="%h | %an"`). Cícero Higor realizou 25 commits de refatoração, 2 commits de refinamento semântico (`62a0fc5` e `ff237ad`) e 1 commit de formatação de estilo (`b1964d4`). A equipe descartou refatorações de *Exception Handling* por ausência desse smell no catálogo de referência CATSPY.
 
 ---
 
-# Parte 1: Registros de Refatoração — Kawan Torres (Registros #01 a #23)
+# Parte 1: Registros de Refatoração — Kawan Torres (Registros #01 a #20)
 
 ---
 
 ### Registro #01 — Sleepy Test
 - **Responsável:** Kawan Torres
-- **Commit:** `9bce5bb`
+- **Commit:** `713563b`
 - **Arquivo e Teste:** `tests/test_cli_serve_server.py::test_startup_hook_background_task_runs_on_serving_loop` (linha 107)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -48,13 +49,13 @@
    Consultar a seção de Sleepy Test no CATSPY sobre o impacto de pausas e técnicas para delegar polling ativo para funções utilitárias dedicadas. Link: https://cat-spy.vercel.app/smells/Sleepy%20Test
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Extração da rotina de consulta com timeout para a função auxiliar `poll_for_marker_task(port, timeout=3.0)`, removendo a chamada direta de `time.sleep` do corpo do teste e simplificando o método para `payload = poll_for_marker_task(port)`.
+   Extração da rotina de consulta com timeout para a função auxiliar `poll_for_marker_task(port, timeout=3.0)`, removendo a chamada direta de `time.sleep` e a condicional do corpo do teste e simplificando o método para `payload = poll_for_marker_task(port)`.
 
 ---
 
 ### Registro #02 — Undefined Test
 - **Responsável:** Kawan Torres
-- **Commit:** `7a4c7a2`
+- **Commit:** `707e0ba`
 - **Arquivo e Teste:** `tests/test_queries.py::_template_option_attributes` (linhas 18-20)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -73,7 +74,7 @@
 
 ### Registro #03 — Undefined Test
 - **Responsável:** Kawan Torres
-- **Commit:** `aca7a06`
+- **Commit:** `af3001e`
 - **Arquivo e Teste:** `tests/test_queries.py::_template_sql` (linhas 31-33)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -92,7 +93,7 @@
 
 ### Registro #04 — Undefined Test
 - **Responsável:** Kawan Torres
-- **Commit:** `86fd342`
+- **Commit:** `58c6454`
 - **Arquivo e Teste:** `tests/test_queries.py::_template_button_sql` (linhas 39-42)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -111,7 +112,7 @@
 
 ### Registro #05 — Non-Functional Statement
 - **Responsável:** Kawan Torres
-- **Commit:** `475ffb1`
+- **Commit:** `0934420`
 - **Arquivo e Teste:** `tests/test_cli_serve_server.py::test_startup_error_fails_fast_before_port_binds` (linhas 135-140)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -130,7 +131,7 @@
 
 ### Registro #06 — Non-Functional Statement
 - **Responsável:** Kawan Torres
-- **Commit:** `a116702`
+- **Commit:** `a731402`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::_run_workload` (linha 35)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -149,7 +150,7 @@
 
 ### Registro #07 — Non-Functional Statement
 - **Responsável:** Kawan Torres
-- **Commit:** `b5603f9`
+- **Commit:** `9996b15`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_conformance_catches_an_unregistered_span` (linha 62)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -168,7 +169,7 @@
 
 ### Registro #08 — Non-Functional Statement
 - **Responsável:** Kawan Torres
-- **Commit:** `ccdb305`
+- **Commit:** `8ea5734`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_scope_filter_ignores_other_scopes` (linha 88)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -187,7 +188,7 @@
 
 ### Registro #09 — Non-Functional Statement
 - **Responsável:** Kawan Torres
-- **Commit:** `2d896ac`
+- **Commit:** `05c17e1`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_linked_root_span_kwargs_links_without_parenting` (linha 115)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -206,7 +207,7 @@
 
 ### Registro #10 — Non-Functional Statement
 - **Responsável:** Kawan Torres
-- **Commit:** `0781592`
+- **Commit:** `1c8c0e1`
 - **Arquivo e Teste:** `tests/test_telemetry_testing_kit.py::test_linked_root_span_kwargs_with_no_current_span` (linha 140)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -225,7 +226,7 @@
 
 ### Registro #11 — Unknown Test
 - **Responsável:** Kawan Torres
-- **Commit:** `4c73f6e`
+- **Commit:** `ab0472a`
 - **Arquivo e Teste:** `tests/test_internals_datasette.py::test_static_rejects_plugin_and_mount` (linhas 95-102)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -244,7 +245,7 @@
 
 ### Registro #12 — Unknown Test
 - **Responsável:** Kawan Torres
-- **Commit:** `7531827`
+- **Commit:** `3b547f2`
 - **Arquivo e Teste:** `tests/test_internals_datasette.py::test_static_rejects_path_traversal` (linhas 110-118)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -263,7 +264,7 @@
 
 ### Registro #13 — Unknown Test
 - **Responsável:** Kawan Torres
-- **Commit:** `c8889c1`
+- **Commit:** `e832624`
 - **Arquivo e Teste:** `tests/test_internals_datasette.py::test_datasette_error_if_string_not_list` (linhas 125-132)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -282,7 +283,7 @@
 
 ### Registro #14 — Conditional Test Logic
 - **Responsável:** Kawan Torres
-- **Commit:** `040ae2c`
+- **Commit:** `a6d9f67`
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_create_table_operation` (linhas 45-60)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -301,7 +302,7 @@
 
 ### Registro #15 — Conditional Test Logic
 - **Responsável:** Kawan Torres
-- **Commit:** `3e2bcc8`
+- **Commit:** `9032459`
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_function_operation` (linhas 120-135)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -319,8 +320,8 @@
 ---
 
 ### Registro #16 — Conditional Test Logic
-- **Responsável:** Kawan Torres (Refino Cícero Higor: `3172976`)
-- **Commit:** `bfe137a` (Refino: `3172976`)
+- **Responsável:** Kawan Torres (Refino Cícero Higor: `ff237ad`)
+- **Commit:** `01705f3` (Refino: `ff237ad`)
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_table_kind_for_regular_virtual_and_shadow_tables` (linhas 283-297)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -333,13 +334,13 @@
    Consultar a seção de Conditional Test Logic no CATSPY sobre linearidade em asserções de teste. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
 
 4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Inicialmente extraído para helper e, no refinamento definitivo `3172976`, substituído por desempacotamento direto determinístico `[regular_insert] = regular_analysis.operations`, eliminando 100% de qualquer lógica condicional ou geradora.
+   Inicialmente extraído para helper e, no refinamento definitivo `ff237ad`, substituído por desempacotamento direto determinístico `[regular_insert] = regular_analysis.operations`, eliminando 100% de qualquer lógica condicional ou geradora.
 
 ---
 
 ### Registro #17 — Conditional Test Logic
 - **Responsável:** Kawan Torres
-- **Commit:** `167c563`
+- **Commit:** `3f17fc4`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_permissions_cascade` (linhas 110-120)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -358,7 +359,7 @@
 
 ### Registro #18 — Conditional Test Logic
 - **Responsável:** Kawan Torres
-- **Commit:** `5cd9f1a`
+- **Commit:** `d65a7cf`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_padlock` (linhas 145-155)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -377,7 +378,7 @@
 
 ### Registro #19 — Conditional Test Logic
 - **Responsável:** Kawan Torres
-- **Commit:** `28bd370`
+- **Commit:** `b4ddef1`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_database` (linhas 180-195)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -396,7 +397,7 @@
 
 ### Registro #20 — Conditional Test Logic
 - **Responsável:** Kawan Torres
-- **Commit:** `d5df3e9`
+- **Commit:** `6c3f2e2`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_database_list_respects_view_table` (linhas 230-240)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -413,70 +414,13 @@
 
 ---
 
-### Registro #21 — Conditional Test Logic
-- **Responsável:** Kawan Torres
-- **Commit:** `3c3ede7`
-- **Arquivo e Teste:** `tests/test_permissions.py::test_view_table` (linhas 260-275)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Conditional Test Logic. Verificações de permissão de visualização de tabela estruturadas com condicionais sobre tipos de resposta.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Garantir a cobertura dos branches de permissão sem código procedural.
-
-3. **Usei o CATSPY para:**
-   Consultar o catálogo CATSPY para Conditional Test Logic. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Parametrização declarativa do conjunto de testes.
+# Parte 2: Registros de Refatoração — Cícero Higor (Registros #21 a #45)
 
 ---
 
-### Registro #22 — Conditional Test Logic
-- **Responsável:** Kawan Torres
-- **Commit:** `9942a6b`
-- **Arquivo e Teste:** `tests/test_permissions.py::test_table_list_respects_view_table` (linhas 300-315)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Conditional Test Logic. Loop iterativo com filtragem condicional para inspecionar itens da lista de tabelas retornada pela página HTML.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Extrair a lista de tabelas visíveis de forma determinística sem loops manuais no teste.
-
-3. **Usei o CATSPY para:**
-   Consultar recomendações do CATSPY para evitar condicionais em asserções de lista. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Extração declarativa dos nomes das tabelas e asserção direta de igualdade de conjuntos.
-
----
-
-### Registro #23 — Conditional Test Logic
-- **Responsável:** Kawan Torres
-- **Commit:** `18be25d`
-- **Arquivo e Teste:** `tests/test_permissions.py::test_view_query` (linhas 340-355)
-
-1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Conditional Test Logic. Teste com `if` para avaliar se a consulta customizada deveria retornar 200 ou 403 dependendo do ator.
-
-2. **Minhas principais dificuldades na remoção do code smell são:**
-   Desacoplar a lógica de autenticação dos códigos de status HTTP esperados.
-
-3. **Usei o CATSPY para:**
-   Consultar o catálogo CATSPY para Conditional Test Logic. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
-
-4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
-   Uso do `@pytest.mark.parametrize` mapeando `(actor, expected_status)` diretamente.
-
----
-
-# Parte 2: Registros de Refatoração — Cícero Higor (Registros #24 a #45)
-
----
-
-### Registro #24 — Sleepy Test
+### Registro #21 — Sleepy Test
 - **Responsável:** Cícero Higor
-- **Commit:** `8b7144b`
+- **Commit:** `ca18c30`
 - **Arquivo e Teste:** `tests/test_internals_database.py::test_execute_write_block_false` (linha 115)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -493,9 +437,9 @@
 
 ---
 
-### Registro #25 — Sleepy Test
+### Registro #22 — Sleepy Test
 - **Responsável:** Cícero Higor
-- **Commit:** `d059a5c`
+- **Commit:** `e27f620`
 - **Arquivo e Teste:** `tests/test_internals_database.py::test_execute_write_with_returning_block_false` (linha 142)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -512,9 +456,9 @@
 
 ---
 
-### Registro #26 — Sleepy Test
+### Registro #23 — Sleepy Test
 - **Responsável:** Cícero Higor
-- **Commit:** `d8b827c`
+- **Commit:** `bf181c8`
 - **Arquivo e Teste:** `tests/test_shutdown.py::test_shutdown_logs_stragglers_that_outlive_the_grace_period` (linhas 45-50)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -531,9 +475,9 @@
 
 ---
 
-### Registro #27 — Sleepy Test
+### Registro #24 — Sleepy Test
 - **Responsável:** Cícero Higor
-- **Commit:** `9533ed8`
+- **Commit:** `5daa0ba`
 - **Arquivo e Teste:** `tests/test_write_wrapper.py::test_track_event_with_block_false` (linha 62)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -550,9 +494,9 @@
 
 ---
 
-### Registro #28 — Undefined Test
+### Registro #25 — Undefined Test
 - **Responsável:** Cícero Higor
-- **Commit:** `7daa8b0`
+- **Commit:** `a60b05b`
 - **Arquivo e Teste:** `tests/test_http_span.py::_route_for` (linhas 25-28)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -569,9 +513,9 @@
 
 ---
 
-### Registro #29 — Non-Functional Statement
+### Registro #26 — Non-Functional Statement
 - **Responsável:** Cícero Higor
-- **Commit:** `4e944db`
+- **Commit:** `7f32810`
 - **Arquivo e Teste:** `tests/test_telemetry_metrics.py::test_registry_holds_instances_weakly` (linha 78)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -588,9 +532,9 @@
 
 ---
 
-### Registro #30 — Unknown Test
+### Registro #27 — Unknown Test
 - **Responsável:** Cícero Higor
-- **Commit:** `667b9c5` (Refino: `92ae493`)
+- **Commit:** `4caaf63` (Refino: `62a0fc5`)
 - **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_match_a_registered_extra` (linha 82)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -607,9 +551,9 @@
 
 ---
 
-### Registro #31 — Unknown Test
+### Registro #28 — Unknown Test
 - **Responsável:** Cícero Higor
-- **Commit:** `4fdd31f` (Refino: `92ae493`)
+- **Commit:** `05db0b2` (Refino: `62a0fc5`)
 - **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_be_available_for_the_scope` (linha 97)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -626,9 +570,66 @@
 
 ---
 
+### Registro #29 — Conditional Test Logic
+- **Responsável:** Cícero Higor
+- **Commit:** `61f62b0`
+- **Arquivo e Teste:** `tests/test_permissions.py::test_view_table` (linhas 260-275)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Conditional Test Logic. Verificações de permissão de visualização de tabela estruturadas com condicionais sobre tipos de resposta.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Garantir a cobertura dos branches de permissão sem código procedural.
+
+3. **Usei o CATSPY para:**
+   Consultar o catálogo CATSPY para Conditional Test Logic. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Parametrização declarativa do conjunto de testes.
+
+---
+
+### Registro #30 — Conditional Test Logic
+- **Responsável:** Cícero Higor
+- **Commit:** `7f1d81a`
+- **Arquivo e Teste:** `tests/test_permissions.py::test_table_list_respects_view_table` (linhas 300-315)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Conditional Test Logic. Loop iterativo com filtragem condicional para inspecionar itens da lista de tabelas retornada pela página HTML.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Extrair a lista de tabelas visíveis de forma determinística sem loops manuais no teste.
+
+3. **Usei o CATSPY para:**
+   Consultar recomendações do CATSPY para evitar condicionais em asserções de lista. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Extração declarativa dos nomes das tabelas e asserção direta de igualdade de conjuntos.
+
+---
+
+### Registro #31 — Conditional Test Logic
+- **Responsável:** Cícero Higor
+- **Commit:** `3e89ebe`
+- **Arquivo e Teste:** `tests/test_permissions.py::test_view_query` (linhas 340-355)
+
+1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
+   Conditional Test Logic. Teste com `if` para avaliar se a consulta customizada deveria retornar 200 ou 403 dependendo do ator.
+
+2. **Minhas principais dificuldades na remoção do code smell são:**
+   Desacoplar a lógica de autenticação dos códigos de status HTTP esperados.
+
+3. **Usei o CATSPY para:**
+   Consultar o catálogo CATSPY para Conditional Test Logic. Link: https://cat-spy.vercel.app/smells/Conditional%20Test%20Logic
+
+4. **Eu estou usando os seguintes métodos de refatoração para remover o code smell:**
+   Uso do `@pytest.mark.parametrize` mapeando `(actor, expected_status)` diretamente.
+
+---
+
 ### Registro #32 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `be17abd`
+- **Commit:** `f3b04f2`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_instance` (linhas 380-390)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -647,7 +648,7 @@
 
 ### Registro #33 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `506bcf8`
+- **Commit:** `96fe24c`
 - **Arquivo e Teste:** `tests/test_template_context.py::test_context_class_fields_all_have_help` (linha 115)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -666,7 +667,7 @@
 
 ### Registro #34 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `47d4674`
+- **Commit:** `7957219`
 - **Arquivo e Teste:** `tests/test_routes.py::test_routes` (linhas 60-70)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -685,7 +686,7 @@
 
 ### Registro #35 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `a81ae38`
+- **Commit:** `71658fb`
 - **Arquivo e Teste:** `tests/test_tracer.py::test_trace` (linhas 40-55)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -704,7 +705,7 @@
 
 ### Registro #36 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `144b331`
+- **Commit:** `86b667e`
 - **Arquivo e Teste:** `tests/test_tracer.py::test_trace_enabled` (linhas 70-85)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -723,7 +724,7 @@
 
 ### Registro #37 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `2f22ed2`
+- **Commit:** `88bf94b`
 - **Arquivo e Teste:** `tests/test_load_extensions.py::test_load_extension_is_disabled` (linhas 45-55)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -742,7 +743,7 @@
 
 ### Registro #38 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `ef4bf88`
+- **Commit:** `1538199`
 - **Arquivo e Teste:** `tests/test_internals_request.py::test_request_args` (linhas 65-75)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -761,7 +762,7 @@
 
 ### Registro #39 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `7855315`
+- **Commit:** `e46119a`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_nofacet` (linhas 315-325)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -780,7 +781,7 @@
 
 ### Registro #40 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `7498567`
+- **Commit:** `9d71b43`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_nosuggest` (linhas 345-355)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -799,7 +800,7 @@
 
 ### Registro #41 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `c7192ad`
+- **Commit:** `d7717c3`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_nocount` (linhas 375-385)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -818,7 +819,7 @@
 
 ### Registro #42 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `30204fe` (Ajuste de estilo: `818fa070`)
+- **Commit:** `394fd94` (Ajuste de estilo PEP 8: `b1964d4`)
 - **Arquivo e Teste:** `tests/test_csv.py::test_custom_sql_csv_errors` (linhas 188-195)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -837,7 +838,7 @@
 
 ### Registro #43 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `5659420`
+- **Commit:** `2028ad2`
 - **Arquivo e Teste:** `tests/test_table_api.py::test_binary_data_in_json` (linhas 410-430)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -856,7 +857,7 @@
 
 ### Registro #44 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `1808665`
+- **Commit:** `a5c6418`
 - **Arquivo e Teste:** `tests/test_fts_permissions.py::test_external_content_fts_inherits_content_table_view_permission` (linhas 75-85)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
@@ -875,7 +876,7 @@
 
 ### Registro #45 — Conditional Test Logic
 - **Responsável:** Cícero Higor
-- **Commit:** `746720f`
+- **Commit:** `e3a7861`
 - **Arquivo e Teste:** `tests/test_queries.py::test_execute_write_schema_operations_use_schema_permissions` (linhas 210-235)
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
