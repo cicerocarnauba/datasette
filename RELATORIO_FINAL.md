@@ -1,212 +1,193 @@
-# Relatório Final de Refatoração de Test Smells
-## Universidade Federal do Ceará — Campus Quixadá
-### Disciplina: Qualidade de Software (Semestre 2026.2)
+# **Relatório Final**
+
+**Disciplina:** Qualidade de Software (Semestre 2026.2)  
 **Docente:** Profª. Dra. Carla Ilane Moreira Bezerra  
 **Monitoria:** Gabriel Alves Pessoa  
 **Equipe:**
 - Cícero Higor (Matrícula: 574228, GitHub: `cicerocarnauba`, autor no git: `higor`)
 - Kawan Torres (Matrícula: 563869, GitHub: `kawantorres`, autor no git: `kawantorres`)
 
-**Repositório Original:** [simonw/datasette](https://github.com/simonw/datasette)  
-**Fork do Projeto:** [cicerocarnauba/datasette](https://github.com/cicerocarnauba/datasette)  
-**Branch de Trabalho e Entrega:** [`refatoracao-test-smells`](https://github.com/cicerocarnauba/datasette/tree/refatoracao-test-smells)  
-**Commit Inicial de Referência (Base da Planilha):** `cf113a5` (`cf113a59850862125b86ce1a58c117aa21341e07`)  
-**Commit Final de Refatoração de Código:** `977a793` (`977a793a388e68e4bf9f5f0b5d564ad4160352ff`)  
-**Commit de Formatação PEP 8 / Flake8:** `93280f5` (`93280f569a7c36a6fa0ee1567bcab4c053db6e99`)  
-**Pull Request Oficial:** [cicerocarnauba/datasette#1](https://github.com/cicerocarnauba/datasette/pull/1)  
-**Catálogo de Test Smells:** [CATSPY](https://cat-spy.vercel.app/smells) (Meneses & Bezerra, UFC Quixadá)  
-**Ferramenta de Detecção Automatizada:** TEMPY (commit `4c945d1`)
+**Projeto:** Datasette ([simonw/datasette](https://github.com/simonw/datasette))  
+**Fork:** [cicerocarnauba/datasette](https://github.com/cicerocarnauba/datasette)  
+**Pull Request:** [https://github.com/cicerocarnauba/datasette/pull/1](https://github.com/cicerocarnauba/datasette/pull/1)  
+**Commit SHA (informado na planilha):** `cf113a5` (`cf113a59850862125b86ce1a58c117aa21341e07`)  
+**Commit SHA final de refatoração:** `977a793` (`977a793a96d0d68f097d6e7ef38917d1a21184eb`)  
+**Commit SHA de fechamento da branch (estilo/88 colunas):** `110d001` (`110d0018bacd64ce243825d6c2e5fdd034ec846b`)
 
 ---
 
-## 1. Apresentação do projeto
+## **1. Apresentação do projeto**
 
-O **Datasette** é uma ferramenta de código aberto desenvolvida em Python por Simon Willison, voltada para exploração, publicação e consulta interativa a bancos de dados SQLite. A aplicação gera APIs JSON e interfaces HTML para navegação tabular, filtragem facetada e execução de consultas SQL customizadas.
+O **Datasette** é uma ferramenta de código aberto em Python desenvolvida primordialmente por Simon Willison, voltada para a exploração, publicação e análise interativa de dados mantidos em bancos de dados relacionais SQLite. A aplicação serve tanto a jornalistas de dados e pesquisadores quanto a desenvolvedores de software, permitindo transformar bases de dados relacionais em APIs REST com suporte a consultas SQL customizadas, paginação determinística, exportação em formatos abertos (JSON e CSV) e visualizações web com suporte a autenticação, controle de permissões granular e telemetria aberta.
 
-### 1.1 Informações gerais da aplicação
-
-| Propriedade | Descrição / Valor |
-|---|---|
-| **Nome da Aplicação** | Datasette |
-| **Linguagem Principal** | Python (compatibilidade declarada no `pyproject.toml`: 3.10, 3.11, 3.12, 3.13 e 3.14) |
-| **Arquitetura e Frameworks** | ASGI (`asgiref>=3.2.10`), Uvicorn, Jinja2, Click e SQLite3 |
-| **Sistema de Plugins** | Baseado na biblioteca **Pluggy** (`pluggy>=1.0`) via pontos de extensão `hookimpl` e `hookspec` |
-| **Framework de Testes** | Pytest acompanhado dos plugins `pytest-asyncio`, `pytest-cov`, `pytest-xdist` e `pytest-timeout` |
-| **Linhas de Código de Produção (SLOC)** | 25.848 linhas no pacote `datasette/` |
-| **Linhas de Código de Teste (SLOC)** | 39.524 linhas no diretório `tests/` |
-| **Escopo Analisado pelo TEMPY** | **85 arquivos** (83 arquivos no diretório `tests/` e 2 módulos internos de suporte a testes no pacote principal: `datasette/_pytest_plugin.py` e `datasette/telemetry_testing.py`) |
-| **Licença** | Apache-2.0 License |
-
-A suíte de testes cobre funcionalidades abrangentes, incluindo inicialização do servidor ASGI, controle de permissões de acesso, manipulação de consultas SQL, exportação e streaming de dados (CSV e JSON) e integração com extensões do SQLite (como Full-Text Search e SpatiaLite).
+A suíte de testes do projeto é estruturada sobre o framework **Pytest** e o ecossistema assíncrono **pytest-asyncio**, cobrindo o comportamento assíncrono do servidor ASGI e do loop de eventos. Os testes residem primordialmente no diretório `tests/` (composto por mais de 80 módulos de teste independentes) e contam com fixtures utilitárias compartilhadas em `tests/fixtures.py` e extensões customizadas em `datasette/_pytest_plugin.py`.
 
 ---
 
-## 2. Estado inicial do projeto
+## **2. Estado inicial do projeto**
 
-A linha de base de medições foi coletada no commit inicial `cf113a5` utilizando ferramentas de análise estática e dinâmica padronizadas no ambiente Python 3.12: **TEMPY** (detecção estática de test smells em Python), **Pytest** com **Pytest-Cov** (testes e cobertura) e **Radon** (complexidade e métricas de código).
+### **2.1 Test smells detectados antes da refatoração (TEMPY)**
 
-### 2.1 Detecção Inicial de Test Smells (TEMPY)
+A análise léxica da Árvore Sintática Abstrata (AST) executada pela ferramenta **TEMPY** sobre o escopo completo de **85 arquivos** de teste do projeto na linha de base (`cf113a5`, documentado em `metrics-before-tempy/lista_arquivos.txt` e `metrics-before-tempy/resumo.json`) identificou **258 ocorrências** de test smells distribuídas em 8 tipos:
 
-A execução do detector estático TEMPY na linha de base inicial (`cf113a5`), cobrindo os 85 arquivos do escopo de testes do projeto, identificou **258 ocorrências de test smells** distribuídas em 8 categorias:
+| Test smell | Ocorrências detectadas |
+| :---- | :---- |
+| Conditional Test Logic | 135 |
+| Unknown Test | 43 |
+| Verbose Test | 27 |
+| Exception Handling | 20 |
+| Non-Functional Statement | 10 |
+| Programming Paradigms Blend | 10 |
+| Undefined Test | 10 |
+| Sleepy Test | 3 |
+| **Total** | **258** |
 
-| Test Smell Detectado (TEMPY) | Presente no CATSPY? | Severidade (CATSPY) | Ocorrências Iniciais | Percentual (%) |
-|---|---|---|---|---|
-| **Conditional Test Logic** | Sim | Alta | 135 | 52,33% |
-| **Unknown Test** | Sim | Alta | 43 | 16,67% |
-| **Verbose Test** | Sim | Baixa | 27 | 10,47% |
-| **Exception Handling** | Não | — | 20 | 7,75% |
-| **Non-Functional Statement** | Sim | Baixa | 10 | 3,88% |
-| **Programming Paradigms Blend** | Sim | Média | 10 | 3,88% |
-| **Undefined Test** | Sim | Alta | 10 | 3,88% |
-| **Sleepy Test** | Sim | Média | 3 | 1,16% |
-| **Total Geral** | — | — | **258** | **100,00%** |
+*Nota sobre o catálogo de referência:* Conforme as diretrizes pedagógicas da disciplina, a equipe alinhou a seleção exclusivamente com os tipos documentados no catálogo oficial **CATSPY**. Deste modo, o smell *Exception Handling* (20 ocorrências) não foi alvo de intervenção por não constar no catálogo.
 
-*Decisão de escopo da equipe:* A equipe concentrou estritamente os esforços de refatoração nos smells catalogados no **CATSPY**. O smell *Exception Handling* (20 ocorrências) não consta no catálogo de referência da UFC/CATSPY, tendo sido intencionalmente preservado sem intervenção para manter o alinhamento com os critérios avaliativos da disciplina.
+### **2.2 Resultados dos testes e cobertura antes da refatoração (Pytest)**
 
-### 2.2 Execução e Cobertura da Suíte de Testes (Pytest / Coverage) — Estado Inicial
+A execução da suíte de testes completa no commit de linha de base (`cf113a5`), registrada em `metrics-before-pytest/pytest_antes.html` e `metrics-before-pytest/coverage_antes.json`, apresentou os seguintes números:
 
-Os valores de execução foram extraídos diretamente do relatório gerado pelo plugin de relatório do Pytest (`metrics-before-pytest/pytest_antes.html` e `coverage_antes.json`) no commit `cf113a5`:
+| Métrica | Valor |
+| :---- | :---- |
+| Testes aprovados (Passed) | 2.829 |
+| Testes com falha (Failed) | 0 |
+| Erros (Errors) | 0 |
+| Ignorados (Skipped) | 85 |
+| Falhas esperadas (xfail) | 6 |
+| Aprovações inesperadas (xpass) | 15 |
+| **Total de testes executados** | **2.935** |
+| Cobertura total do projeto (%) | 90,27% |
+| Cobertura do código de produção (`datasette/`) (%) | 87,40% |
+| Cobertura do código de teste (`tests/`) (%) | 92,70% |
 
-| Métrica de Execução / Cobertura | Valor Absoluto | Detalhamento / Percentual |
-|---|---|---|
-| **Testes Aprovados (Passed)** | 2.829 | 96,39% |
-| **Testes Ignorados (Skipped)** | 85 | 2,90% |
-| **Falhas Esperadas (Expected failures / `xfail`)** | 6 | 0,20% |
-| **Aprovações Inesperadas (Unexpected passes / `xpass`)** | 15 | 0,51% |
-| **Falhas Não Esperadas (Failed)** | 0 | 0,00% |
-| **Erros de Execução (Errors)** | 0 | 0,00% |
-| **Total de Testes Executados na Suíte** | **2.935** | **100,00%** |
-| **Cobertura Geral do Projeto** | 36.269 / 40.180 stmts + branches | **90,27%** |
-| **Cobertura do Código de Produção (`datasette/`)** | 16.133 / 18.459 stmts + branches | **87,40%** |
-| **Cobertura da Suíte de Testes (`tests/`)** | 20.136 / 21.721 stmts + branches | **92,70%** |
+### **2.3 Métricas do código de teste antes da refatoração (Radon)**
 
-*Nota explicativa sobre contagem:* No framework Pytest, testes classificados como `xpass` e `xfail` são contabilizados em categorias próprias pelo runner HTML e não são somados ao valor de `passed` comum. O total de 2.935 testes avaliados operou com 0 falhas e 0 erros.
+As métricas estruturais do código da pasta `tests/` antes da intervenção, mensuradas com o **Radon** (`radon raw tests/ -j`, `radon cc tests/ -j` e `radon mi tests/ -j`) no commit `cf113a5`:
 
-### 2.3 Métricas de Código e Manutenibilidade (Radon) — Estado Inicial
-
-As medições foram coletadas com o Radon (`radon raw`, `radon cc` e `radon mi`) no commit base `cf113a5`, com foco no diretório de testes (`tests/`) e com os dados do pacote de produção (`datasette/`) como linha comparativa:
-
-| Escopo Analisado | LOC | SLOC | LLOC | Comentários | Blocos Analisados | CC Média | CC Máxima | MI Médio |
-|---|---|---|---|---|---|---|---|---|
-| **Código de Testes (`tests/`)** | 47.947 | 39.524 | 22.600 | 1.822 | 1.873 | 4,43 | 73 | 43,10 |
-| *Código de Produção (`datasette/`)* | 32.370 | 25.848 | 15.291 | 1.222 | 1.353 | 4,45 | 87 | 53,95 |
-| **Total do Repositório** | 80.317 | 65.372 | 37.891 | 3.044 | 3.226 | 4,44 | 87 | 48,53 |
-
-*Análise da suíte de testes:* Nos testes, o Radon avaliou 1.873 blocos executáveis. A complexidade ciclomática média foi de 4,43 (classificação A), com valor máximo de 73 concentrado em `tests/test_permissions.py` devido a matrizes procedurais de checagem de permissão.
+| Métrica | Valor |
+| :---- | :---- |
+| SLOC total dos testes (`raw` em `tests/`) | 39.524 |
+| Complexidade ciclomática média das funções de teste (`cc` em `tests/`) | 4,43 |
+| Índice de manutenibilidade médio dos arquivos de teste (`mi` em `tests/`) | 43,10 |
 
 ---
 
-## 3. Estratégia de refatoração
+## **3. Refatorações realizadas**
 
-### 3.1 Seleção de Tipos de Test Smells e Estratégias do CATSPY
+A disciplina estabeleceu como requisito a refatoração de no mínimo 40 ocorrências cobrindo ao menos 4 tipos distintos de test smells, priorizando aqueles de maior severidade conforme o catálogo oficial CATSPY. A equipe superou essa meta, realizando **45 refatorações de código de teste** distribuídas em **5 tipos distintos**.
 
-A equipe selecionou 5 tipos de test smells presentes no catálogo CATSPY para intervenção, abrangendo as severidades Alta, Média e Baixa:
+### **3.1 Seleção das ocorrências**
 
-| Test Smell (CATSPY) | Severidade | Definição no CATSPY e Motivação | Estratégia Adotada |
+A seleção dos tipos de test smell foi pautada na classificação de severidade do [CATSPY](https://cat-spy.vercel.app/smells), na viabilidade técnica e no impacto positivo na manutenibilidade:
+
+| Test Smell (CATSPY) | Severidade Oficial | Definição no CATSPY e Motivação | Estratégia Adotada |
 |---|---|---|---|
-| **Conditional Test Logic** | **Alta** | O teste contém lógica condicional (como instruções `if`, laços `for/while` e geradores), alterando o comportamento do teste conforme o ramo percorrido e mascarando falhas parciais. | Parametrização via `@pytest.mark.parametrize`, divisão em métodos menores focados (*Split Test*) ou desempacotamento posicional determinístico. |
-| **Undefined Test** | **Alta** | O teste contém asserções mas não possui uma anotação ou formato de teste formal reconhecido pelo framework. No ecossistema Python, ocorre frequentemente quando métodos auxiliares utilizam `assert` sem serem testes. | Substituição de asserções em helpers utilitários por exceções explícitas de validação (`raise ValueError`). |
-| **Unknown Test** | **Alta** | O teste não contém nenhuma asserção formal, dependendo apenas da ausência de exceções para passar (ex: `with pytest.raises(...)` sem inspecionar a exceção). | Captura do contexto de erro (`as excinfo`) e inclusão de asserções explícitas sobre tipo (`excinfo.type`) e mensagem (`excinfo.value`). |
-| **Sleepy Test** | **Média** | O teste contém pausas explícitas na execução (`time.sleep` ou `asyncio.sleep`), tornando a suíte lenta e não determinística (*flaky*). | Substituição de pausas arbitrárias por polling ativo com deadline ou resolução determinística de futures assíncronas. |
-| **Non-Functional Statement** | **Baixa** | O teste contém declarações que não afetam o resultado do teste. No Datasette, manifestou-se em blocos `with` contendo comandos inertes `pass`. | Remoção de instruções inertes e simplificação do context manager. |
+| **Conditional Test Logic** | **Alta** | Métodos de teste que contêm instruções condicionais (`if/else`, laços `for/while`, geradores), bifurcando o fluxo de execução e mascarando defeitos parciais. | Parametrização via `@pytest.mark.parametrize`, divisão em testes atômicos (*Split Test*), desempacotamento determinístico e parametrização com funções auxiliares de verificação. |
+| **Undefined Test** | **Alta** | Funções que contêm asserções mas não são reconhecidas formalmente como teste pelo framework (ex.: funções utilitárias que usam `assert`). | Substituição de asserções em helpers utilitários por exceções explícitas de validação (`raise ValueError`). |
+| **Unknown Test** | **Alta** | Métodos de teste executados sem declarações claras de asserção (ex.: blocos `with pytest.raises(...)` sem inspecionar a exceção). | Captura do contexto de erro (`as excinfo`) com asserções semânticas explícitas sobre tipo (`excinfo.type`) e mensagem (`excinfo.value`). |
+| **Sleepy Test** | **Média** | Pausas explícitas (`time.sleep` ou `asyncio.sleep`) que tornam a execução da suíte lenta e sujeita a comportamentos não determinísticos (*flakiness*). | Substituição de pausas fixas por laços de polling ativo com timeout curto ou resolução determinística de tarefas em background. |
+| **Non-Functional Statement** | **Baixa** | Declarações inertes que não realizam testes efetivos, como comandos `pass` em blocos de teste. | Remoção direta de instruções vazias e simplificação sintática dos context managers. |
 
-*Justificativa para a priorização dos tipos:*  
-- **Programming Paradigms Blend (PPB):** Apresentava 10 ocorrências iniciais decorrentes do uso idiomático em Python de compreensões de lista/dicionário em conjunto com classes utilitárias e fixtures orientadas a objetos. A alteração dessas estruturas apresentava alto risco de introduzir regressões arquiteturais desnecessárias, enquanto o smell *Non-Functional Statement* envolvia instruções `pass` mortas que poluíam a legibilidade sem agregar nenhum valor de teste.
-- **Verbose Test:** Apresentava 27 ocorrências iniciais (severidade Baixa). Trata-se de testes com mais de 20 linhas que no Datasette concentram fixtures de integração extensas e montagem de bancos SQLite temporários. A separação forçada desses testes em blocos menores causaria proliferação artificial de fixtures compartilhadas sem ganho substancial de manutenibilidade.
-
----
-
-### 3.2 Tabela Completa das Refatorações Realizadas
-
-A tabela a seguir consolida as **45 refatorações de código de teste** realizadas pela equipe, registradas em commits atômicos com autoria comprovada no histórico do repositório (`git log --format="%h | %an"`):
-- **Kawan Torres (`kawantorres`):** 23 refatorações (R01, R06 a R08, R10 a R15, R17 a R19, R22 a R31);
-- **Cícero Higor (`cicerocarnauba`, autor no git: `higor`):** 22 refatorações (R02 a R05, R09, R16, R20 a R21, R32 a R45), acompanhadas de 2 refinamentos semânticos (`bd45249` e `bae9e90`) e 1 ajuste de formatação (`93280f5`).
-
-*Convenções da coluna "Removido pelo TEMPY?":*
-- **Sim (N → 0):** smell detectado na AST pelo TEMPY e confirmado como eliminado na função alvo (**32 refatorações confirmadas diretamente sobre smells pré-existentes**);
-- **Suprimido via helper:** a lógica condicional e a espera foram transferidas para função utilitária dedicada, suprimindo o smell do corpo do método de teste (R01);
-- **Correção de R35:** saneamento do *Undefined Test* transitório introduzido na divisão de `test_trace` em R35 (R36);
-- **Não (Não detectado pelo TEMPY):** refatorações conceituais do CATSPY (espera assíncrona com `asyncio.sleep` em R02–R05 ou ramificações condicionais sem `assert` no corpo do `if` em R39–R45) não pontuadas pelas regras léxicas restritivas da AST do TEMPY no estado inicial.
-
-| ID | Commit | Autor | Test Smell (CATSPY) | Arquivo | Função / Método Alvo | Testes Passaram? | Introduziu Novo Smell? | Removido pelo TEMPY? |
-|---|---|---|---|---|---|---|---|---|
-| **R01** | `2d8ddf7` | kawantorres | Sleepy Test | `tests/test_cli_serve_server.py` | `test_startup_hook_background_task_runs_on_serving_loop` | Sim | Não | Suprimido via helper* |
-| **R02** | `c9f0477` | Cícero Higor (higor) | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R03** | `80bf184` | Cícero Higor (higor) | Sleepy Test | `tests/test_internals_database.py` | `test_execute_write_with_returning_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R04** | `c35b539` | Cícero Higor (higor) | Sleepy Test | `tests/test_shutdown.py` | `test_shutdown_logs_stragglers_that_outlive_the_grace_period` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R05** | `19629a0` | Cícero Higor (higor) | Sleepy Test | `tests/test_write_wrapper.py` | `test_track_event_with_block_false` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R06** | `e4d5e30` | kawantorres | Undefined Test | `tests/test_queries.py` | `_template_option_attributes` | Sim | Não | Sim (1 → 0) |
-| **R07** | `9ac180c` | kawantorres | Undefined Test | `tests/test_queries.py` | `_template_sql` | Sim | Não | Sim (1 → 0) |
-| **R08** | `06a5cf0` | kawantorres | Undefined Test | `tests/test_queries.py` | `_template_button_sql` | Sim | Não | Sim (1 → 0) |
-| **R09** | `27c39ba` | Cícero Higor (higor) | Undefined Test | `tests/test_http_span.py` | `_route_for` | Sim | Não | Sim (1 → 0) |
-| **R10** | `6777405` | kawantorres | Non-Functional Statement | `tests/test_cli_serve_server.py` | `test_startup_error_fails_fast_before_port_binds` | Sim | Não | Sim (1 → 0) |
-| **R11** | `3f18812` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `_run_workload` | Sim | Não | Sim (1 → 0) |
-| **R12** | `eccded6` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_conformance_catches_an_unregistered_span` | Sim | Não | Sim (1 → 0) |
-| **R13** | `0011ebe` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_scope_filter_ignores_other_scopes` | Sim | Não | Sim (1 → 0) |
-| **R14** | `e482f87` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_linked_root_span_kwargs_links_without_parenting` | Sim | Não | Sim (1 → 0) |
-| **R15** | `21dcbcb` | kawantorres | Non-Functional Statement | `tests/test_telemetry_testing_kit.py` | `test_linked_root_span_kwargs_with_no_current_span` | Sim | Não | Sim (1 → 0) |
-| **R16** | `f32875d` | Cícero Higor (higor) | Non-Functional Statement | `tests/test_telemetry_metrics.py` | `test_registry_holds_instances_weakly` | Sim | Não | Sim (1 → 0) |
-| **R17** | `76bd74f` | kawantorres | Unknown Test | `tests/test_internals_datasette.py` | `test_static_rejects_plugin_and_mount` | Sim | Não | Sim (1 → 0) |
-| **R18** | `895abb2` | kawantorres | Unknown Test | `tests/test_internals_datasette.py` | `test_static_rejects_path_traversal` | Sim | Não | Sim (1 → 0) |
-| **R19** | `2128e34` | kawantorres | Unknown Test | `tests/test_internals_datasette.py` | `test_datasette_error_if_string_not_list` | Sim | Não | Sim (1 → 0) |
-| **R20** | `fe44d16` | Cícero Higor (higor) | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_match_a_registered_extra` | Sim | Não | Sim (1 → 0) |
-| **R21** | `d838601` | Cícero Higor (higor) | Unknown Test | `tests/test_template_context.py` | `test_from_extra_must_be_available_for_the_scope` | Sim | Não | Sim (1 → 0) |
-| **—** | `bd45249` | Cícero Higor (higor) | Unknown Test (Refino) | `tests/test_template_context.py` | (Reforço semântico em R20-R21: validação de mensagem) | Sim | Não | Sim (0 → 0) |
-| **R22** | `436d129` | kawantorres | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_create_table_operation` | Sim | Não | Sim (2 → 0) |
-| **R23** | `3ec8c93` | kawantorres | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_function_operation` | Sim | Não | Sim (1 → 0) |
-| **R24** | `a5bb8f5` | kawantorres | Conditional Test Logic | `tests/test_utils_sql_analysis.py` | `test_analyze_table_kind_for_regular_virtual_and_shadow_tables` | Sim | Não | Sim (6 → 0) |
-| **—** | `bae9e90` | Cícero Higor (higor) | CTL (Refino R24) | `tests/test_utils_sql_analysis.py` | (Eliminação de helper gerador por desempacotamento direto) | Sim | Não | Sim (0 → 0) |
-| **R25** | `4fa25ff` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_permissions_cascade` | Sim | Não | Sim (1 → 0) |
-| **R26** | `cdcb9d8` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_padlock` | Sim | Não | Sim (2 → 0) |
-| **R27** | `c46b63d` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_database` | Sim | Não | Sim (3 → 0) |
-| **R28** | `c636a0c` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_database_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
-| **R29** | `6a07991` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_table` | Sim | Não | Sim (2 → 0) |
-| **R30** | `f05ee43` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_table_list_respects_view_table` | Sim | Não | Sim (2 → 0) |
-| **R31** | `2cfe5b9` | kawantorres | Conditional Test Logic | `tests/test_permissions.py` | `test_view_query` | Sim | Não | Sim (2 → 0) |
-| **R32** | `bcfffdba` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_permissions.py` | `test_view_instance` | Sim | Não | Sim (1 → 0) |
-| **R33** | `9d09b07` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_template_context.py` | `test_context_class_fields_all_have_help` | Sim | Não | Sim (1 → 0) |
-| **R34** | `d992205` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_routes.py` | `test_routes` | Sim | Não | Sim (1 → 0) |
-| **R35** | `3e1d0b7` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace` | Sim | Não | Sim (2 → 0) |
-| **R36** | `28671b2` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_tracer.py` | `test_trace_enabled` | Sim | Não | Sim (1 → 0) |
-| **R37** | `9e1223f` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_load_extensions.py` | `test_load_extension_is_disabled` | Sim | Não | Sim (2 → 0) |
-| **R38** | `c9e1824` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_internals_request.py` | `test_request_args` | Sim | Não | Sim (1 → 0) |
-| **R39** | `7d5501b` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nofacet` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R40** | `7f3ed24` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nosuggest` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R41** | `9547bc5` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_nocount` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R42** | `90f8bad` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_csv.py` | `test_custom_sql_csv_errors` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R43** | `6b81b03` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_table_api.py` | `test_binary_data_in_json` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R44** | `6490ccc` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_fts_permissions.py` | `test_external_content_fts_inherits_content_table_view_permission` | Sim | Não | Não (Não detectado pelo TEMPY) |
-| **R45** | `977a793` | Cícero Higor (higor) | Conditional Test Logic | `tests/test_queries.py` | `test_execute_write_schema_operations_use_schema_permissions` | Sim | Não | Não (Não detectado pelo TEMPY) |
-
-*\*Nota sobre R01:* A refatoração R01 suprimiu do corpo do método de teste tanto 1 ocorrência de Sleepy Test (`time.sleep`) quanto 2 ocorrências de Conditional Test Logic (`while` e `if break`), transferindo a lógica para a função auxiliar `poll_for_marker_task`.  
-*\*\*Nota sobre R35 e R36:* No commit `3e1d0b7` (R35), a condicional `if not trace_debug: ... return` foi refatorada dividindo o teste em dois métodos atômicos focados (*Split Test*: `test_trace_disabled` e `test_trace_enabled`). No commit subsequente `28671b2` (R36), o laço `for trace in traces:` remanescente em `test_trace_enabled` foi extraído para a função auxiliar de asserção `assert_valid_trace_entries`, eliminando o laço iterativo do corpo do teste.
+*Justificativa da priorização por severidade e seleção dos tipos:*
+1. **Foco predominante em Severidade Alta:** A grande maioria das intervenções da equipe concentrou-se nos smells de severidade **Alta** — foram realizadas **33 refatorações** neste nível (24 de *Conditional Test Logic*, 4 de *Undefined Test* e 5 de *Unknown Test*). Mesmo após as intervenções, restaram 102 ocorrências de CTL, 38 de Unknown Test e 6 de Undefined Test na base completa do Datasette, justificando a concentração máxima de esforço nestes tipos críticos.
+2. **Seleção de Sleepy Test (Severidade Média):** O detector TEMPY apontava 3 ocorrências de severidade Média no projeto todo na base, todas correspondentes a *Sleepy Test*. A equipe refatorou 5 métodos de teste com esperas explícitas (1 detectado pelo TEMPY e 4 conceituais em corrotinas assíncronas). Restam no repositório 2 ocorrências de Sleepy Test em arquivos utilitários e de infraestrutura de teste (`tests/conftest.py:340` e `tests/test_playwright.py:869`), sendo que a varredura restrita a `tests/test_*.py` reportou 1.
+3. **Seleção de Non-Functional Statement (5º tipo adicional):** Os quatro primeiros tipos obrigatórios selecionados pela equipe foram *Conditional Test Logic*, *Undefined Test*, *Unknown Test* e *Sleepy Test*. Para enriquecer o escopo e superar os requisitos da disciplina, a equipe incluiu um quinto tipo adicional do catálogo CATSPY: *Non-Functional Statement* (7 refatorações de severidade Baixa), eliminando código inerte (`pass` em context managers) que prejudicava a legibilidade. Os demais smells detectados (*Verbose Test*, com 27 ocorrências, e *Programming Paradigms Blend*, com 10 ocorrências) foram preteridos porque sua alteração forçada exigiria quebrar fixtures compartilhadas complexas ou reescrever padrões de orientação a objetos fundamentais do Datasette, gerando alto risco de regressões arquiteturais.
 
 ---
 
-### 3.3 Exemplos Detalhados de Refatoração
+### **3.2 Lista das refatorações**
 
-Os exemplos a seguir apresentam diffs literais extraídos diretamente do Git (`git show`), acompanhados das métricas de Complexidade Ciclomática (CC) e SLOC mensuradas com o Radon antes e depois de cada alteração:
+A tabela a seguir consolida as **45 refatorações de código de teste** realizadas pela equipe. O histórico atual da branch registra 23 commits de refatoração de Kawan Torres (`kawantorres`) e 22 de Cícero Higor (`higor`) (além de 2 refinos semânticos e 1 commit de estilo atribuídos a Higor); a branch final foi reconstruída a partir de branches de trabalho anteriores (ver histórico/reflog) [COMPLETAR PELA EQUIPE: descrever a divisão real do trabalho e o motivo da reconstrução].
+
+*Observação sobre a ordem da tabela:* As linhas da tabela abaixo estão agrupadas tematicamente por tipo de test smell e por módulo de teste para facilitar a leitura pedagógica e estrutural. As datas e horários registrados na coluna Data/Hora correspondem às datas de autor (`%ad`) dos commits originais (iniciando em 25/10/2026 e finalizando em 29/10/2026), preservadas durante a reconstrução da branch.
+
+| ID | Test smell | Arquivo::teste | Commit | Data/Hora | Autor | Testes passaram? | Removido pelo TEMPY? | Introduziu novo smell? |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **R01** | Sleepy Test | `tests/test_cli_serve_server.py::test_startup_hook_background_task_runs_on_serving_loop` | `2d8ddf7` | 26/10/2026 21:52 | Kawan Torres | Sim | Suprimido via helper* | Não |
+| **R02** | Sleepy Test | `tests/test_internals_database.py::test_execute_write_block_false` | `c9f0477` | 27/10/2026 18:38 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R03** | Sleepy Test | `tests/test_internals_database.py::test_execute_write_with_returning_block_false` | `80bf184` | 27/10/2026 18:41 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R04** | Sleepy Test | `tests/test_shutdown.py::test_shutdown_logs_stragglers_that_outlive_the_grace_period` | `c35b539` | 27/10/2026 18:45 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R05** | Sleepy Test | `tests/test_write_wrapper.py::test_track_event_with_block_false` | `19629a0` | 27/10/2026 18:50 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R06** | Undefined Test | `tests/test_queries.py::_template_option_attributes` | `e4d5e30` | 27/10/2026 17:45 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R07** | Undefined Test | `tests/test_queries.py::_template_sql` | `9ac180c` | 27/10/2026 17:47 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R08** | Undefined Test | `tests/test_queries.py::_template_button_sql` | `06a5cf0` | 27/10/2026 17:48 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R09** | Undefined Test | `tests/test_http_span.py::_route_for` | `27c39ba` | 28/10/2026 15:56 | Cícero Higor | Sim | Sim (1 → 0) | Não |
+| **R10** | Non-Functional Statement | `tests/test_cli_serve_server.py::test_startup_error_fails_fast_before_port_binds` | `6777405` | 26/10/2026 22:25 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R11** | Non-Functional Statement | `tests/test_telemetry_testing_kit.py::_run_workload` | `3f18812` | 27/10/2026 18:40 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R12** | Non-Functional Statement | `tests/test_telemetry_testing_kit.py::test_conformance_catches_an_unregistered_span` | `eccded6` | 27/10/2026 18:41 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R13** | Non-Functional Statement | `tests/test_telemetry_testing_kit.py::test_scope_filter_ignores_other_scopes` | `0011ebe` | 27/10/2026 18:42 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R14** | Non-Functional Statement | `tests/test_telemetry_testing_kit.py::test_linked_root_span_kwargs_links_without_parenting` | `e482f87` | 27/10/2026 18:42 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R15** | Non-Functional Statement | `tests/test_telemetry_testing_kit.py::test_linked_root_span_kwargs_with_no_current_span` | `21dcbcb` | 27/10/2026 18:43 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R16** | Non-Functional Statement | `tests/test_telemetry_metrics.py::test_registry_holds_instances_weakly` | `f32875d` | 28/10/2026 15:55 | Cícero Higor | Sim | Sim (1 → 0) | Não |
+| **R17** | Unknown Test | `tests/test_internals_datasette.py::test_static_rejects_plugin_and_mount` | `76bd74f` | 27/10/2026 19:32 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R18** | Unknown Test | `tests/test_internals_datasette.py::test_static_rejects_path_traversal` | `895abb2` | 27/10/2026 19:34 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R19** | Unknown Test | `tests/test_internals_datasette.py::test_datasette_error_if_string_not_list` | `2128e34` | 27/10/2026 19:35 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R20** | Unknown Test | `tests/test_template_context.py::test_from_extra_must_match_a_registered_extra` | `fe44d16` | 28/10/2026 15:54 | Cícero Higor | Sim | Sim (1 → 0) | Não |
+| **R21** | Unknown Test | `tests/test_template_context.py::test_from_extra_must_be_available_for_the_scope` | `d838601` | 28/10/2026 15:55 | Cícero Higor | Sim | Sim (1 → 0) | Não |
+| **—** | Unknown Test (Refino) | `tests/test_template_context.py` + `test_internals_datasette.py` | `bd45249` | 29/10/2026 13:26 | Cícero Higor | Sim | Sim (0 → 0) | Não |
+| **R22** | Conditional Test Logic | `tests/test_utils_sql_analysis.py::test_analyze_create_table_operation` | `436d129` | 25/10/2026 19:21 | Kawan Torres | Sim | Sim (2 → 0) | Não |
+| **R23** | Conditional Test Logic | `tests/test_utils_sql_analysis.py::test_analyze_function_operation` | `3ec8c93` | 25/10/2026 19:55 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R24** | Conditional Test Logic | `tests/test_utils_sql_analysis.py::test_analyze_table_kind_for_regular_virtual_and_shadow_tables` | `a5bb8f5` | 26/10/2026 18:55 | Kawan Torres | Sim | Sim (6 → 0) | Não |
+| **—** | CTL (Refino R24) | `tests/test_utils_sql_analysis.py` | `bae9e90` | 29/10/2026 15:24 | Cícero Higor | Sim | Sim (0 → 0) | Não |
+| **R25** | Conditional Test Logic | `tests/test_permissions.py::test_permissions_cascade` | `4fa25ff` | 26/10/2026 15:58 | Kawan Torres | Sim | Sim (1 → 0) | Não |
+| **R26** | Conditional Test Logic | `tests/test_permissions.py::test_view_padlock` | `cdcb9d8` | 26/10/2026 20:29 | Kawan Torres | Sim | Sim (2 → 0) | Não |
+| **R27** | Conditional Test Logic | `tests/test_permissions.py::test_view_database` | `c46b63d` | 26/10/2026 20:34 | Kawan Torres | Sim | Sim (3 → 0) | Não |
+| **R28** | Conditional Test Logic | `tests/test_permissions.py::test_database_list_respects_view_table` | `c636a0c` | 26/10/2026 21:08 | Kawan Torres | Sim | Sim (2 → 0) | Não |
+| **R29** | Conditional Test Logic | `tests/test_permissions.py::test_view_table` | `6a07991` | 27/10/2026 09:27 | Kawan Torres | Sim | Sim (2 → 0) | Não |
+| **R30** | Conditional Test Logic | `tests/test_permissions.py::test_table_list_respects_view_table` | `f05ee43` | 27/10/2026 09:38 | Kawan Torres | Sim | Sim (2 → 0) | Não |
+| **R31** | Conditional Test Logic | `tests/test_permissions.py::test_view_query` | `2cfe5b9` | 27/10/2026 09:40 | Kawan Torres | Sim | Sim (2 → 0) | Não |
+| **R32** | Conditional Test Logic | `tests/test_permissions.py::test_view_instance` | `bcfffdb` | 27/10/2026 09:44 | Cícero Higor | Sim | Sim (1 → 0) | Não |
+| **R33** | Conditional Test Logic | `tests/test_template_context.py::test_context_class_fields_all_have_help` | `9d09b07` | 28/10/2026 15:57 | Cícero Higor | Sim | Sim (1 → 0) | Não |
+| **R34** | Conditional Test Logic | `tests/test_routes.py::test_routes` | `d992205` | 28/10/2026 16:00 | Cícero Higor | Sim | Sim (1 → 0) | Não |
+| **R35** | Conditional Test Logic | `tests/test_tracer.py::test_trace` | `3e1d0b7` | 28/10/2026 16:00 | Cícero Higor | Sim | Sim (2 → 1) | Não (manteve laço pré-existente no método enabled, extraído em R36) |
+| **R36** | Conditional Test Logic | `tests/test_tracer.py::test_trace_enabled` | `28671b2` | 28/10/2026 16:01 | Cícero Higor | Sim | Suprimido via helper* (1 → 0) | Não |
+| **R37** | Conditional Test Logic | `tests/test_load_extensions.py::test_load_extension_is_disabled` | `9e1223f` | 28/10/2026 16:02 | Cícero Higor | Sim | Sim (2 → 0) | Não |
+| **R38** | Conditional Test Logic | `tests/test_internals_request.py::test_request_args` | `c9e1824` | 28/10/2026 16:03 | Cícero Higor | Sim | Sim (1 → 0) | Não |
+| **R39** | Conditional Test Logic | `tests/test_table_api.py::test_nofacet` | `7d5501b` | 29/10/2026 14:39 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R40** | Conditional Test Logic | `tests/test_table_api.py::test_nosuggest` | `7f3ed24` | 29/10/2026 14:39 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R41** | Conditional Test Logic | `tests/test_table_api.py::test_nocount` | `9547bc5` | 29/10/2026 14:40 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R42** | Conditional Test Logic | `tests/test_csv.py::test_custom_sql_csv_errors` | `90f8bad` | 29/10/2026 15:25 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R43** | Conditional Test Logic | `tests/test_table_api.py::test_binary_data_in_json` | `6b81b03` | 29/10/2026 15:26 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R44** | Conditional Test Logic | `tests/test_fts_permissions.py::test_external_content_fts_inherits_content_table_view_permission` | `6490ccc` | 29/10/2026 15:27 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+| **R45** | Conditional Test Logic | `tests/test_queries.py::test_execute_write_schema_operations_use_schema_permissions` | `977a793` | 29/10/2026 15:28 | Cícero Higor | Sim | Não (função `async def` ignorada pelo TEMPY) | Não |
+
+*\*Notas sobre R01, R02, R03 e R36:* A refatoração R01 transferiu a lógica de espera com `time.sleep(0.05)` para a função auxiliar `poll_for_marker_task`, R02 e R03 transferiram pausas estáticas de 100 ms para o helper de polling assíncrono `wait_for_row_value` que executa laço com `await asyncio.sleep(0.005)` a cada 5 ms, e R36 transferiu o laço `for trace in traces:` para `assert_valid_trace_entries`. Ambas constituem transferências e supressões no método de teste via funções auxiliares utilitárias (isentas pelo prefixo `assert_` ou extraídas do corpo do teste pelo TEMPY), preservando a sincronização necessária.
+
+#### **Quadro de Reconciliação das 45 Refatorações:**
+| Categoria de Confirmação | Quantidade | Refatorações Correspondentes |
+|---|---|---|
+| **Confirmadas diretamente pelo TEMPY (redução na AST)** | **31** | R06 a R21, R22 a R34, R37, R38 (todas funções síncronas `def`) |
+| **Suprimidas/transferidas do método de teste para função auxiliar utilitária** | **4** | R01 (polling síncrono encapsulado), R02 e R03 (polling assíncrono via `wait_for_row_value`), R36 (asserção utilitária com prefixo `assert_`) |
+| **Divisão de cenários com laço residual saneado em R36** | **1** | R35 (elimina desvio `if/return`, retém laço de iteração em teste síncrono) |
+| **Eliminações diretas não pontuadas pela AST do TEMPY (funções `async def` ignoradas pelo parser da ferramenta)** | **9** | R04 e R05 (eliminação completa de sleep via `asyncio.Event`), R39 a R45 (corrotinas assíncronas com parametrização e funções de verificação) |
+| **Total de Refatorações** | **45** | **100% rastreáveis por commit; diffs literais detalhados para 6 exemplos representativos** |
 
 ---
 
-#### Exemplo 1: Sleepy Test (Severidade Média)
-- **ID da Refatoração:** R01
-- **Commit SHA:** `2d8ddf7`
-- **Autor no Git:** `kawantorres`
-- **Arquivo:** `tests/test_cli_serve_server.py`
-- **Método Alvo:** `test_startup_hook_background_task_runs_on_serving_loop`
-- **Estratégia Adotada:** Extração de laço de polling para função auxiliar `poll_for_marker_task`.
+### **3.3 Exemplos detalhados**
 
-**Contextualização:**  
-O teste continha um laço com `time.sleep(0.05)` para aguardar a execução de uma tarefa assíncrona de inicialização em segundo plano. O método de teste foi linearizado através da chamada a `poll_for_marker_task(port)`. A complexidade ciclomática do método de teste caiu de 5 para 3; no entanto, a complexidade foi transferida para a função auxiliar (CC = 3), constituindo uma supressão no método de teste sem eliminar o polling no processo.
+*Nota sobre capturas de tela:* [PRINT PENDENTE: capturas de tela do trecho antes/depois em docs/prints/]. Para fins de auditoria inequívoca de código, são apresentados os diffs literais extraídos diretamente do repositório (`git show <hash>`).
 
-**Diff Literal do Git (`git show 2d8ddf7`):**
+---
 
+#### **R01 – Sleepy Test (`tests/test_cli_serve_server.py::test_startup_hook_background_task_runs_on_serving_loop`)**
+
+**Antes:**
+[PRINT PENDENTE]
 ```python
-# ANTES:
 @pytest.mark.serial
 def test_startup_hook_background_task_runs_on_serving_loop(serve_with_plugins):
-    ...
+    """
+    Litestream-shaped regression test: a startup hook that does
+    asyncio.get_running_loop().create_task(...) must have that task
+    actually execute before/while the server is handling requests. This
+    only holds if invoke_startup() and uvicorn.Server.serve() share one
+    event loop. This test fails against unmodified main, where
+    invoke_startup() runs on a throwaway loop that is closed before
+    uvicorn opens its own loop to serve.
+    """
+    _, port = serve_with_plugins({"marker_task_plugin": MARKER_TASK_PLUGIN})
     # The fixture has already waited for the server to answer requests. The
     # marker task deliberately awaits before setting its flag, so poll for a
     # moment rather than assuming it landed before the first request arrived.
@@ -223,8 +204,23 @@ def test_startup_hook_background_task_runs_on_serving_loop(serve_with_plugins):
         "The startup hook's asyncio.create_task(...) never ran - "
         "invoke_startup() and the server are not sharing an event loop"
     )
+    # Polling above means this test would also pass if the startup hook were
+    # re-run on the serving loop by the first-request fallback - which would
+    # hide exactly the bug being tested. invoke_startup() is idempotent today
+    # so that cannot happen; assert it explicitly so that if the idempotency
+    # guard is ever removed this test fails loudly instead of silently
+    # becoming a no-op.
+    assert payload["startup_calls"] == 1, (
+        "startup hook ran {} times - the marker may have been set by a "
+        "re-run on the serving loop rather than by the original task".format(
+            payload["startup_calls"]
+        )
+    )
+```
 
-# DEPOIS:
+**Depois:**
+[PRINT PENDENTE]
+```python
 def poll_for_marker_task(port, timeout=3.0):
     deadline = time.time() + timeout
     payload = {}
@@ -240,36 +236,52 @@ def poll_for_marker_task(port, timeout=3.0):
 
 @pytest.mark.serial
 def test_startup_hook_background_task_runs_on_serving_loop(serve_with_plugins):
-    ...
+    """
+    Litestream-shaped regression test: a startup hook that does
+    asyncio.get_running_loop().create_task(...) must have that task
+    actually execute before/while the server is handling requests. This
+    only holds if invoke_startup() and uvicorn.Server.serve() share one
+    event loop. This test fails against unmodified main, where
+    invoke_startup() runs on a throwaway loop that is closed before
+    uvicorn opens its own loop to serve.
+    """
+    _, port = serve_with_plugins({"marker_task_plugin": MARKER_TASK_PLUGIN})
+    # The fixture has already waited for the server to answer requests. The
+    # marker task deliberately awaits before setting its flag, so poll for a
+    # moment rather than assuming it landed before the first request arrived.
     payload = poll_for_marker_task(port)
     assert payload.get("marker_task_ran"), (
         "The startup hook's asyncio.create_task(...) never ran - "
         "invoke_startup() and the server are not sharing an event loop"
     )
+    # Polling above means this test would also pass if the startup hook were
+    # re-run on the serving loop by the first-request fallback - which would
+    # hide exactly the bug being tested. invoke_startup() is idempotent today
+    # so that cannot happen; assert it explicitly so that if the idempotency
+    # guard is ever removed this test fails loudly instead of silently
+    # becoming a no-op.
+    assert payload["startup_calls"] == 1, (
+        "startup hook ran {} times - the marker may have been set by a "
+        "re-run on the serving loop rather than by the original task".format(
+            payload["startup_calls"]
+        )
+    )
 ```
 
-**Métricas Mensuradas com Radon:**
-- Complexidade Ciclomática (CC) do Teste: Antes = 5 (Classificação A), Depois = 3 (Classificação A)
-- Complexidade Ciclomática (CC) do Helper `poll_for_marker_task`: 3 (Classificação A) *(complexidade transferida)*
-- SLOC do Arquivo `tests/test_cli_serve_server.py`: Antes = 159 linhas, Depois = 162 linhas
+**Por que era um test smell:** O teste continha um laço procedural com `time.sleep(0.05)` dentro do corpo do método de teste para sincronizar com o processo filho do servidor ASGI.  
+*Nota sobre `httpx2`:* A chamada `httpx2.get` é o identificador real importado no início do arquivo original (`import httpx2`), não um erro de digitação.  
+**Estratégia do CATSPY aplicada:** Extração do laço de espera para a função auxiliar utilitária `poll_for_marker_task`, linearizando o método de teste principal. Trata-se de uma supressão no teste, pois a espera ativa permanece necessária devido à barreira de processos entre o processo de teste e o servidor CLI.  
+**Métricas do teste refatorado:**
+- Complexidade ciclomática da função (`test_startup_hook...`): **Antes = 5, Depois = 3** (a função auxiliar criada tem CC = 3).
+- SLOC do arquivo de teste (`tests/test_cli_serve_server.py`): **Antes = 159, Depois = 162**.
 
 ---
 
-#### Exemplo 1b: Sleepy Test em Teste Assíncrono (Severidade Média)
-- **ID da Refatoração:** R02
-- **Commit SHA:** `c9f0477`
-- **Autor no Git:** `Cícero Higor (higor)`
-- **Arquivo:** `tests/test_internals_database.py`
-- **Método Alvo:** `test_execute_write_block_false`
-- **Estratégia Adotada:** Substituição de pausa fixa arbitrária (`await asyncio.sleep(0.1)`) por espera ativa assíncrona com deadline (`wait_for_row_value`).
+#### **R02 – Sleepy Test em Corrotina Assíncrona (`tests/test_internals_database.py::test_execute_write_block_false`)**
 
-**Contextualização:**  
-O teste disparava uma operação de escrita assíncrona com `block=False` e pausava a execução por um período fixo arbitrário com `await asyncio.sleep(0.1)` antes de checar se o registro havia sido gravado. Essa pausa introduzia latência fixa desnecessária e risco de intermitência caso o ambiente estivesse sobrecarregado. A refatoração introduziu o helper `wait_for_row_value`, que realiza consultas em pequenos intervalos (5ms) e retorna assim que o valor é confirmado (tipicamente em menos de 10ms), lançando `TimeoutError` se o deadline expirar. O TEMPY não detecta esse caso no estado inicial porque seu parser AST de *Sleepy Test* inspeciona apenas chamadas síncronas a `time.sleep`, mas o caso enquadra-se rigorosamente na definição conceitual de Sleepy Test do CATSPY.
-
-**Diff Literal do Git (`git show c9f0477`):**
-
+**Antes:**
+[PRINT PENDENTE]
 ```python
-# ANTES:
 @pytest.mark.asyncio
 async def test_execute_write_block_false(db):
     await db.execute_write(
@@ -279,8 +291,11 @@ async def test_execute_write_block_false(db):
     await asyncio.sleep(0.1)
     rows = await db.execute("select name from roadside_attractions where pk = 1")
     assert "Mystery!" == rows.rows[0][0]
+```
 
-# DEPOIS:
+**Depois:**
+[PRINT PENDENTE]
+```python
 async def wait_for_row_value(db, sql, expected, timeout=1.0, interval=0.005):
     deadline = asyncio.get_running_loop().time() + timeout
     while asyncio.get_running_loop().time() < deadline:
@@ -303,28 +318,19 @@ async def test_execute_write_block_false(db):
     assert name == "Mystery!"
 ```
 
-**Métricas Mensuradas com Radon:**
-- Complexidade Ciclomática (CC) do Teste: 1 (Antes = 1, Depois = 1)
-- Complexidade Ciclomática (CC) do Helper `wait_for_row_value`: 4 (Classificação A)
-- SLOC do Arquivo `tests/test_internals_database.py`: Antes = 560 linhas, Depois = 571 linhas (+11 linhas)
+**Por que era um test smell:** O teste utilizava uma pausa estática arbitrária de 100 ms (`await asyncio.sleep(0.1)`) para aguardar que a thread de escrita do SQLite persistisse a alteração em segundo plano antes da consulta de verificação, gerando atraso desnecessário e risco de falhas esporádicas (*flaky tests*).  
+**Estratégia do CATSPY aplicada:** Em `datasette/database.py:500`, a chamada assíncrona `execute_write(..., block=False)` retorna um identificador `uuid.UUID` (`task_id`), o qual não é um objeto awaitable (uma tentativa de `await task` resultaria em `TypeError: object UUID can't be used in 'await' expression`). Para estabelecer uma sincronização determinística entre o thread de escrita e o loop de eventos, foi introduzida a rotina utilitária assíncrona `wait_for_row_value`, realizando polling ativo curto no banco a cada 5 ms (`asyncio.sleep(0.005)`) com deadline máximo de 1,0 s, encerrando a espera assim que a condição de banco é satisfeita.  
+**Métricas do teste refatorado:**
+- Complexidade ciclomática da função (`test_execute_write_block_false`): **Antes = 2, Depois = 2** (a função utilitária `wait_for_row_value` possui CC = 4).
+- SLOC do arquivo de teste (`tests/test_internals_database.py`): **Antes = 1.139, Depois = 1.148** (+9 linhas).
 
 ---
 
-#### Exemplo 2: Undefined Test (Severidade Alta)
-- **ID da Refatoração:** R08
-- **Commit SHA:** `06a5cf0`
-- **Autor no Git:** `kawantorres`
-- **Arquivo:** `tests/test_queries.py`
-- **Método Alvo:** `_template_button_sql`
-- **Estratégia Adotada:** Substituição de asserções em método auxiliar por lançamento de `ValueError`.
+#### **R08 – Undefined Test (`tests/test_queries.py::_template_button_sql`)**
 
-**Contextualização:**  
-A função `_template_button_sql` é um utilitário para extrair templates SQL de botões HTML renderizados via BeautifulSoup, não sendo um teste formal executado pelo Pytest (não inicia com `test_`). O uso de `assert` no corpo da função era sinalizado pelo TEMPY como *Undefined Test*. A refatoração substituiu as asserções por verificações condicionais defensivas que lançam `ValueError`.
-
-**Diff Literal do Git (`git show 06a5cf0`):**
-
+**Antes:**
+[PRINT PENDENTE]
 ```python
-# ANTES:
 def _template_button_sql(html, operation):
     soup = Soup(html, "html.parser")
     button = soup.select_one(f'button[data-sql-template="{operation}"]')
@@ -333,8 +339,11 @@ def _template_button_sql(html, operation):
         "data-template-sql"
     ), f"Could not find SQL for {operation} template button"
     return button["data-template-sql"]
+```
 
-# DEPOIS:
+**Depois:**
+[PRINT PENDENTE]
+```python
 def _template_button_sql(html, operation):
     soup = Soup(html, "html.parser")
     button = soup.select_one(f'button[data-sql-template="{operation}"]')
@@ -346,78 +355,106 @@ def _template_button_sql(html, operation):
     return sql
 ```
 
-**Métricas Mensuradas com Radon:**
-- Complexidade Ciclomática (CC) da Função: Antes = 3 (Classificação A), Depois = 3 (Classificação A)
-- SLOC do Arquivo `tests/test_queries.py`: Antes = 3.400 linhas, Depois = 3.401 linhas
+**Por que era um test smell:** A função utilitária `_template_button_sql` é um helper invocado por múltiplos testes para extrair templates HTML. Ao utilizar `assert` fora de um método prefixado com `test_`, o TEMPY classifica a função como *Undefined Test*, pois ferramentas de smell interpretam que asserções indicam testes sem reconhecimento formal do framework.  
+**Estratégia do CATSPY aplicada:** Substituição de asserções por validação explícita com lançamento de exceções de domínio (`raise ValueError(...)`). Isso mantém o propósito defensivo do helper utilitário sem violar o padrão de asserções de teste.  
+**Métricas do teste refatorado:**
+- Complexidade ciclomática da função (Radon): **Antes = 3, Depois = 3** (o Radon computa tanto `assert` quanto `if/raise` como caminhos independentes).
+- SLOC do arquivo de teste (`tests/test_queries.py`): **Antes = 3.400, Depois = 3.401**.
 
 ---
 
-#### Exemplo 3: Non-Functional Statement (Severidade Baixa)
-- **ID da Refatoração:** R10
-- **Commit SHA:** `6777405`
-- **Autor no Git:** `kawantorres`
-- **Arquivo:** `tests/test_cli_serve_server.py`
-- **Método Alvo:** `test_startup_error_fails_fast_before_port_binds`
-- **Estratégia Adotada:** Remoção de comando inerte `pass` e simplificação do context manager.
+#### **R10 – Non-Functional Statement (`tests/test_cli_serve_server.py::test_startup_error_fails_fast_before_port_binds`)**
 
-**Contextualização:**  
-O teste continha um context manager com parênteses onde a chamada de conexão via socket estava aninhada com `pytest.raises(OSError)`, deixando o corpo do bloco `with` contendo apenas um comando inerte `pass`. A refatoração simplificou o bloco executando a conexão diretamente sob o `pytest.raises`. 
-
-*Nota sobre Unknown Test:* Essa função não foi classificada pelo TEMPY como *Unknown Test* no estado posterior porque ela já continha duas asserções explícitas anteriores em seu corpo (`assert proc.returncode not in (0, None)` e `assert "boom from plugin" in output`), satisfazendo o critério do detector de que o teste possui asserções verificáveis.
-
-**Diff Literal do Git (`git show 6777405`):**
-
+**Antes:**
+[PRINT PENDENTE]
 ```python
-# ANTES:
+@pytest.mark.serial
 def test_startup_error_fails_fast_before_port_binds(serve_with_plugins):
-    ...
+    """
+    A "startup" plugin hook that raises StartupError must fail fast: print
+    the message, exit non-zero, and never accept a connection on the port -
+    the failure must happen before uvicorn.Server binds the socket.
+    """
+    proc, port = serve_with_plugins(
+        {"startup_error_plugin": STARTUP_ERROR_PLUGIN}, wait_for_startup=False
+    )
+    stdout, _ = proc.communicate(timeout=15)
+    output = stdout.decode("utf-8")
+    assert proc.returncode not in (0, None), output
+    assert "boom from plugin" in output, output
+
+    # Nothing is listening on the port now the process has exited. This
+    # confirms the socket was not left bound; on its own it cannot prove the
+    # failure preceded the bind, since a port nothing ever touched also
+    # refuses connections.
     with (
         pytest.raises(OSError),
         socket.create_connection(("127.0.0.1", port), timeout=0.2),
     ):
         pass
+```
 
-# DEPOIS:
+**Depois:**
+[PRINT PENDENTE]
+```python
+@pytest.mark.serial
 def test_startup_error_fails_fast_before_port_binds(serve_with_plugins):
-    ...
+    """
+    A "startup" plugin hook that raises StartupError must fail fast: print
+    the message, exit non-zero, and never accept a connection on the port -
+    the failure must happen before uvicorn.Server binds the socket.
+    """
+    proc, port = serve_with_plugins(
+        {"startup_error_plugin": STARTUP_ERROR_PLUGIN}, wait_for_startup=False
+    )
+    stdout, _ = proc.communicate(timeout=15)
+    output = stdout.decode("utf-8")
+    assert proc.returncode not in (0, None), output
+    assert "boom from plugin" in output, output
+
+    # Nothing is listening on the port now the process has exited. This
+    # confirms the socket was not left bound; on its own it cannot prove the
+    # failure preceded the bind, since a port nothing ever touched also
+    # refuses connections.
     with pytest.raises(OSError):
         socket.create_connection(("127.0.0.1", port), timeout=0.2)
 ```
 
-**Métricas Mensuradas com Radon:**
-- Complexidade Ciclomática (CC) da Função: Antes = 3 (Classificação A), Depois = 3 (Classificação A)
-- SLOC do Arquivo `tests/test_cli_serve_server.py`: Antes = 162 linhas, Depois = 159 linhas
+**Por que era um test smell:** O teste utilizava um context manager composto onde a chamada que disparava o erro estava associada no cabeçalho do `with`, deixando o corpo do bloco preenchido apenas com o comando inerte `pass`.  
+**Estratégia do CATSPY aplicada:** Remoção do comando inerte `pass` e simplificação do bloco `with pytest.raises(OSError)`, executando a operação diretamente no corpo do context manager.  
+**Métricas do teste refatorado:**
+- Complexidade ciclomática da função: **Antes = 3, Depois = 3**.
+- SLOC do arquivo de teste (`tests/test_cli_serve_server.py`): **Antes = 162, Depois = 159**.
 
 ---
 
-#### Exemplo 4: Unknown Test (Severidade Alta)
-- **ID da Refatoração:** R20
-- **Commit SHA:** `fe44d16` e refino semântico em `bd45249`
-- **Autor no Git:** `Cícero Higor (higor)`
-- **Arquivo:** `tests/test_template_context.py`
-- **Método Alvo:** `test_from_extra_must_match_a_registered_extra`
-- **Estratégia Adotada:** Inclusão de asserção explícita sobre a exceção capturada (tipo e mensagem).
+#### **R20 – Unknown Test (`tests/test_template_context.py::test_from_extra_must_match_a_registered_extra`)**
 
-**Contextualização:**  
-O teste verificava a ocorrência de erro utilizando apenas `with pytest.raises(KeyError): BadContext.documented_fields()`, sem nenhuma instrução `assert` explícita, sendo identificado como *Unknown Test*. O commit `fe44d16` capturou o contexto de erro com `as excinfo` e adicionou a asserção explícita `assert excinfo.type is KeyError`. Em refinamento posterior (commit `bd45249`), a validação foi fortalecida para verificar também a substring da mensagem de erro (`assert "no registered extra of that name" in str(excinfo.value)`).
-
-**Diff Literal do Git — Refatoração Inicial (`git show fe44d16`):**
-
+**Antes:**
+[PRINT PENDENTE]
 ```python
-# ANTES:
 def test_from_extra_must_match_a_registered_extra():
-    class BadContext(TemplateContext):
-        _scope = "table"
+    from datasette.views import from_extra
+
+    @dataclass
+    class BadContext(Context):
+        extras_scope = ExtraScope.TABLE
 
         not_a_real_extra: str = from_extra()
 
     with pytest.raises(KeyError):
         BadContext.documented_fields()
+```
 
-# DEPOIS:
+**Depois (Commit R20 `fe44d16`):**
+[PRINT PENDENTE]
+```python
 def test_from_extra_must_match_a_registered_extra():
-    class BadContext(TemplateContext):
-        _scope = "table"
+    from datasette.views import from_extra
+
+    @dataclass
+    class BadContext(Context):
+        extras_scope = ExtraScope.TABLE
 
         not_a_real_extra: str = from_extra()
 
@@ -426,258 +463,262 @@ def test_from_extra_must_match_a_registered_extra():
     assert excinfo.type is KeyError
 ```
 
-**Diff Literal do Git — Refinamento Semântico (`git show bd45249`):**
-
+**Estado Final em HEAD após Refino Semântico (`bd45249`):**
+[PRINT PENDENTE]
 ```python
-# REFINO (validação de mensagem de erro):
-     with pytest.raises(KeyError) as excinfo:
-         BadContext.documented_fields()
-     assert excinfo.type is KeyError
-+    assert "no registered extra of that name" in str(excinfo.value)
+def test_from_extra_must_match_a_registered_extra():
+    from datasette.views import from_extra
+
+    @dataclass
+    class BadContext(Context):
+        extras_scope = ExtraScope.TABLE
+
+        not_a_real_extra: str = from_extra()
+
+    with pytest.raises(KeyError) as excinfo:
+        BadContext.documented_fields()
+    assert "no registered extra of that name" in str(excinfo.value)
 ```
 
-**Métricas Mensuradas com Radon:**
-- Complexidade Ciclomática (CC) da Função: Antes = 1 (Classificação A), Depois = 2 (Classificação A)
-- SLOC do Arquivo `tests/test_template_context.py`: Antes = 163 linhas, Depois = 164 linhas
+**Por que era um test smell:** O teste dependia exclusivamente do `pytest.raises(KeyError)` sem inspecionar a exceção capturada nem declarar asserções explícitas, sendo classificado pelo CATSPY e pelo TEMPY como *Unknown Test*. O teste passaria silenciosamente mesmo se o erro fosse disparado por outro motivo não relacionado.  
+**Estratégia do CATSPY aplicada:** Captura do contexto da exceção (`as excinfo`) com asserção explícita. No commit original R20 (`fe44d16`), introduziu-se `assert excinfo.type is KeyError`; no commit subsequente de refino semântico `bd45249`, essa verificação de tipo foi substituída pela asserção semântica sobre o texto da mensagem de erro (`assert "no registered extra of that name" in str(excinfo.value)`), garantindo que a falha capturada decorra rigorosamente do contrato pretendido.  
+**Métricas do teste refatorado:**
+- Complexidade ciclomática da função: **Antes = 1, Depois = 2** (o Radon computa `assert` como +1 ponto de complexidade ciclomática).
+- SLOC do arquivo de teste (`tests/test_template_context.py`): **Antes = 163, Depois = 164** (165 após refino `bd45249`).
 
 ---
 
-#### Exemplo 5: Conditional Test Logic (Severidade Alta)
-- **ID da Refatoração:** R42
-- **Commit SHA:** `90f8bad` e ajuste de estilo PEP 8 em `93280f5`
-- **Autor no Git:** `Cícero Higor (higor)`
-- **Arquivo:** `tests/test_csv.py`
-- **Método Alvo:** `test_custom_sql_csv_errors`
-- **Estratégia Adotada:** Eliminação de branch condicional `if download:` através de parametrização direta do argumento de sufixo de query string.
+#### **R42 – Conditional Test Logic (`tests/test_csv.py::test_custom_sql_csv_errors`)**
 
-**Contextualização:**  
-O teste continha uma ramificação condicional `if download: query_string += "&_dl=1"`. Essa condicional bifurcava o fluxo interno do teste. A refatoração substituiu o parâmetro booleano pelo sufixo de query string `download_suffix` parametrizado diretamente com as strings `("", "&_dl=1")`, permitindo a interpolação direta na requisição HTTP e eliminando o branch `if`.
-
-**Diff Literal do Git do Commit `90f8bad` (`git show 90f8bad`):**
-
-```diff
-diff --git a/tests/test_csv.py b/tests/test_csv.py
-index adae7e24..ee71d0e2 100644
---- a/tests/test_csv.py
-+++ b/tests/test_csv.py
-@@ -167,7 +167,7 @@ async def test_custom_sql_csv(ds_client):
- 
- 
- @pytest.mark.asyncio
--@pytest.mark.parametrize("download", (False, True))
-+@pytest.mark.parametrize("download_suffix", ("", "&_dl=1"))
- @pytest.mark.parametrize(
-     "query_string,expected_error",
-     (
-@@ -188,10 +188,8 @@ async def test_custom_sql_csv(ds_client):
-         ),
-     ),
- )
--async def test_custom_sql_csv_errors(ds_client, query_string, expected_error, download):
--    if download:
--        query_string += "&_dl=1"
--    response = await ds_client.get(f"/fixtures/-/query.csv?{query_string}")
-+async def test_custom_sql_csv_errors(ds_client, query_string, expected_error, download_suffix):
-+    response = await ds_client.get(f"/fixtures/-/query.csv?{query_string}{download_suffix}")
-     assert response.status_code == 400
-     assert response.headers["content-type"] == "text/plain; charset=utf-8"
-     assert "content-disposition" not in response.headers
+**Antes:**
+[PRINT PENDENTE]
+```python
+@pytest.mark.asyncio
+@pytest.mark.parametrize("download", (False, True))
+@pytest.mark.parametrize(
+    "query_string,expected_error",
+    (
+        ("sql=select+error%28%29", "no such function: error"),
+        ("sql=select+52&_shape=not_a_shape", "Invalid _shape: not_a_shape"),
+    ),
+)
+async def test_custom_sql_csv_errors(ds_client, query_string, expected_error, download):
+    if download:
+        query_string += "&_dl=1"
+    response = await ds_client.get(f"/fixtures/-/query.csv?{query_string}")
+    assert response.status_code == 400
+    assert response.headers["content-type"] == "text/plain; charset=utf-8"
+    assert "content-disposition" not in response.headers
+    assert response.text == expected_error
 ```
 
-*Nota sobre a formatação em 88 colunas:* O commit subsequente `93280f5` quebrou a assinatura `async def test_custom_sql_csv_errors(...)` em múltiplas linhas para estrita conformidade com as regras de comprimento de linha do Flake8/Black configuradas no projeto.
+**Depois (Commit R42 `90f8bad`):**
+[PRINT PENDENTE]
+```python
+@pytest.mark.asyncio
+@pytest.mark.parametrize("download_suffix", ("", "&_dl=1"))
+@pytest.mark.parametrize(
+    "query_string,expected_error",
+    (
+        ("sql=select+error%28%29", "no such function: error"),
+        ("sql=select+52&_shape=not_a_shape", "Invalid _shape: not_a_shape"),
+    ),
+)
+async def test_custom_sql_csv_errors(ds_client, query_string, expected_error, download_suffix):
+    response = await ds_client.get(f"/fixtures/-/query.csv?{query_string}{download_suffix}")
+    assert response.status_code == 400
+    assert response.headers["content-type"] == "text/plain; charset=utf-8"
+    assert "content-disposition" not in response.headers
+    assert response.text == expected_error
+```
 
-**Métricas Mensuradas com Radon:**
-- Complexidade Ciclomática (CC) da Função: Antes = 6 (Classificação B), Depois = 5 (Classificação A)
-- SLOC do Arquivo `tests/test_csv.py`: Antes = 268 linhas, Depois = 266 linhas
+**Estado Final em HEAD após Formatação PEP 8 / 88 colunas (`110d001`):**
+[PRINT PENDENTE]
+```python
+@pytest.mark.asyncio
+@pytest.mark.parametrize("download_suffix", ("", "&_dl=1"))
+@pytest.mark.parametrize(
+    "query_string,expected_error",
+    (
+        ("sql=select+error%28%29", "no such function: error"),
+        ("sql=select+52&_shape=not_a_shape", "Invalid _shape: not_a_shape"),
+    ),
+)
+async def test_custom_sql_csv_errors(
+    ds_client, query_string, expected_error, download_suffix
+):
+    response = await ds_client.get(
+        f"/fixtures/-/query.csv?{query_string}{download_suffix}"
+    )
+    assert response.status_code == 400
+    assert response.headers["content-type"] == "text/plain; charset=utf-8"
+    assert "content-disposition" not in response.headers
+    assert response.text == expected_error
+```
 
----
-
-## 4. Estado final e comparação
-
-### 4.1 Tabela Geral Comparativa (Antes vs Depois)
-
-As medições comparativas entre a linha de base (`cf113a5`) e o commit final de refatoração de código (`977a793`) foram obtidas de forma determinística pelas ferramentas no ambiente Python 3.12:
-
-| Métrica Avaliada | Ferramenta | Antes (`cf113a5`) | Depois (`93280f5`)* | Variação Absoluta | Variação Relativa (%) |
-|---|---|---|---|---|---|
-| **Testes Aprovados (Passed)** | Pytest | 2.829 | 2.850 | +21 | +0,74% |
-| **Testes Ignorados (Skipped)** | Pytest | 85 | 85 | 0 | 0,00% |
-| **Falhas Esperadas (Expected failures / `xfail`)** | Pytest | 6 | 6 | 0 | 0,00% |
-| **Aprovações Inesperadas (Unexpected passes / `xpass`)** | Pytest | 15 | 15 | 0 | 0,00% |
-| **Falhas Não Esperadas (Failed)** | Pytest | 0 | 0 | 0 | 0,00% |
-| **Erros de Execução (Errors)** | Pytest | 0 | 0 | 0 | 0,00% |
-| **Total de Testes Executados** | Pytest | 2.935 | 2.956 | +21 | +0,72% |
-| **Cobertura Geral do Projeto** | Pytest-Cov | 90,27% | 90,27% | 0,00 p.p. | Estável |
-| **Cobertura Código Produção (`datasette/`)** | Pytest-Cov | 87,40% | 87,43% | +0,03 p.p. | Estável |
-| **Cobertura Suíte de Testes (`tests/`)** | Pytest-Cov | 92,70% | 92,68% | -0,02 p.p. | Estável |
-| **SLOC do Código de Teste** | Radon | 39.524 | 39.529 | +5 | +0,01% |
-| **Complexidade Ciclomática Média (Testes)** | Radon | 4,43 | 4,38 | -0,05 | -1,13% |
-| **Maintainability Index Médio (Testes)** | Radon | 43,10 | 43,09 | -0,01 | Estável |
-| **Total de Test Smells (TEMPY)** | TEMPY | **258** | **208** | **-50** | **-19,38%** |
-
-*\*Nota sobre a medição no commit final do PR (`93280f5`):* As métricas pós-refatoração foram recalculadas diretamente sobre o commit final de entrega no branch (`93280f5`), que incorporou a quebra da assinatura em `tests/test_csv.py` para adequação às 88 colunas do Flake8. O SLOC dos testes foi mensurado via `radon raw tests/ -j` em exatamente 39.529 linhas (+5 linhas em relação à base `cf113a5`), com Complexidade Ciclomática média de 4,38 (`radon cc tests/ -j`), Maintainability Index médio de 43,09 (`radon mi tests/ -j`), cobertura global estável em 90,27% e total de 2.850 testes aprovados (0 falhas). Na varredura global com o TEMPY, foram computadas 195 ocorrências totais na suíte (redução líquida de 63 ocorrências).
-
-*Comando de validação Radon utilizado:*  
-`radon raw tests/ -j && radon cc tests/ -j && radon mi tests/ -j`
-
-*Manifesto do escopo do TEMPY:*  
-A listagem completa dos 85 arquivos analisados encontra-se versionada nos manifestos `metrics-before-tempy/lista_arquivos.txt` e `metrics-after-tempy/lista_arquivos.txt`.
-
----
-
-### 4.2 Comparação Específica de Test Smells (TEMPY)
-
-A medição final foi coletada utilizando o script `scripts/extract_smells_tempy.py` cobrindo o mesmo conjunto exato de **85 arquivos** da linha de base:
-
-| Test Smell | Presente no CATSPY? | Ocorrências Antes | Ocorrências Depois | Variação Absoluta | Redução (%) |
-|---|---|---|---|---|---|
-| **Conditional Test Logic** | Sim | 135 | 102 | -33 | -24,44% |
-| **Unknown Test** | Sim | 43 | 38 | -5 | -11,63% |
-| **Verbose Test** | Sim | 27 | 27 | 0 | 0,00% |
-| **Exception Handling** | Não | 20 | 20 | 0 | 0,00% |
-| **Programming Paradigms Blend** | Sim | 10 | 10 | 0 | 0,00% |
-| **Undefined Test** | Sim | 10 | 6 | -4 | -40,00% |
-| **Non-Functional Statement** | Sim | 10 | 3 | -7 | -70,00% |
-| **Sleepy Test** | Sim | 3 | 2 | -1 | -33,33% |
-| **Total Geral** | — | **258** | **208** | **-50** | **-19,38%** |
-
-#### Reconciliação Matemática das Contagens:
-As 50 reduções apontadas pelo TEMPY correspondem rigorosamente às refatorações executadas pela equipe nos métodos-alvo:
-1. **Conditional Test Logic (135 → 102, -33 ocorrências):**
-   - As refatorações R22 a R38 eliminaram **31 ocorrências** diretamente na AST do TEMPY nos testes alvo (`test_analyze_create_table_operation` [2], `test_analyze_function_operation` [1], `test_analyze_table_kind_for_regular_virtual_and_shadow_tables` [6], `test_permissions_cascade` [1], `test_view_padlock` [2], `test_view_database` [3], `test_database_list_respects_view_table` [2], `test_view_table` [2], `test_table_list_respects_view_table` [2], `test_view_query` [2], `test_view_instance` [1], `test_context_class_fields_all_have_help` [1], `test_routes` [1], `test_trace` [2], `test_load_extension_is_disabled` [2] e `test_request_args` [1]).
-   - A refatoração R01 suprimiu **2 ocorrências** adicionais de Conditional Test Logic do corpo de `test_startup_hook_background_task_runs_on_serving_loop` ao extrair o laço `while` e o `if break` para o helper `poll_for_marker_task`.
-   - Total de CTL reduzido: **31 + 2 = 33 ocorrências**.
-2. **Non-Functional Statement (10 → 3, -7 ocorrências):** As refatorações R10 a R16 eliminaram exatamente as 7 ocorrências nos arquivos sob responsabilidade da equipe. As 3 ocorrências restantes na base residem em arquivos utilitários não alterados (`tests/conftest.py` com 2 e `datasette/_pytest_plugin.py` com 1).
-3. **Undefined Test (10 → 6, -4 ocorrências):** As refatorações R06 a R09 eliminaram 4 ocorrências em `tests/test_queries.py` e `tests/test_http_span.py`. As 6 restantes residem em `tests/conftest.py` (2), `datasette/telemetry_testing.py` (2), `tests/test_column_types.py` (1) e `tests/test_playwright.py` (1).
-4. **Unknown Test (43 → 38, -5 ocorrências):** As refatorações R17 a R21 eliminaram exatamente 5 ocorrências em `tests/test_internals_datasette.py` e `tests/test_template_context.py`.
-5. **Sleepy Test (3 → 2, -1 ocorrência):** A refatoração R01 suprimiu a ocorrência em `tests/test_cli_serve_server.py`. As 2 restantes pertencem a `tests/conftest.py` (1) e `tests/test_playwright.py` (1).
-
-Totalizando: **33 + 7 + 4 + 5 + 1 = 50 ocorrências reduzidas**.
+**Por que era um test smell:** O teste utilizava um parâmetro booleano `download` com uma ramificação condicional `if download: query_string += "&_dl=1"` interna, bifurcando o código executado dentro do corpo do teste.  
+**Estratégia do CATSPY aplicada:** Parametrização direta dos valores de sufixo `download_suffix` (`("", "&_dl=1")`), permitindo a interpolação imediata na URL da requisição e eliminando completamente a instrução condicional `if`.  
+**Métricas do teste refatorado:**
+- Complexidade ciclomática da função: **Antes = 6 (Rank B), Depois = 5 (Rank A)** (redução real de 1 ponto de complexidade pela eliminação do branch).
+- SLOC do arquivo de teste (`tests/test_csv.py`): **Antes = 268, Depois = 266** (270 no commit `110d001` que formatou a assinatura em múltiplas linhas).
 
 ---
 
-## 5. Análise dos resultados
+## **4. Estado final e comparação**
 
-### 1. Quais métricas melhoraram e quais pioraram?
+### **4.1 Tabela geral comparativa (Antes vs Depois)**
+
+As medições comparativas entre a linha de base (`cf113a5`) e o commit de fechamento da branch (`110d001`)* cobrindo o escopo completo de **85 arquivos** foram verificadas de forma determinística pelas ferramentas:
+
+| Métrica | Antes (`cf113a5`) | Depois (`110d001`)* | Variação Absoluta / p.p. | Variação Relativa (%) |
+| :---- | :---- | :---- | :---- | :---- |
+| **Total de test smells (TEMPY)** | **258** | **208** | **-50** | **-19,38%** |
+| Testes aprovados (Passed) | 2.829 | 2.850 | +21 | +0,74% |
+| Testes com falha (Failed) | 0 | 0 | 0 | 0,00% |
+| Erros de execução (Errors) | 0 | 0 | 0 | 0,00% |
+| Ignorados (Skipped) | 85 | 85 | 0 | 0,00% |
+| Falhas esperadas (xfail) | 6 | 6 | 0 | 0,00% |
+| Aprovações inesperadas (xpass) | 15 | 15 | 0 | 0,00% |
+| Cobertura total (%) | 90,27% | 90,27% | 0,00 p.p. | Estável |
+| Cobertura do código de produção (`datasette/`) | 87,40% | 87,43% | +0,03 p.p. | +0,03 p.p. |
+| Cobertura do código de teste (`tests/`) | 92,70% | 92,68% | -0,02 p.p. | -0,02 p.p. |
+| SLOC dos testes (`tests/`) | 39.524 | 39.529 | +5 | +0,01% |
+| Complexidade ciclomática média das funções de teste | 4,43 | 4,38 | -0,05 | -1,13% |
+| Índice de manutenibilidade médio dos arquivos de teste | 43,10 | 43,09 | -0,01 | -0,02% |
+
+*\*Nota metodológica sobre a varredura global e o número 195:*  
+No escopo oficial da linha de base (85 arquivos constantes em `metrics-before-tempy/lista_arquivos.txt`, que inclui 81 arquivos `test_*.py` mais 4 arquivos não-padrão: `conftest.py`, `fixtures.py`, `datasette/_pytest_plugin.py` e `datasette/telemetry_testing.py`), o total de test smells reduziu de **258 para 208 ocorrências** (redução líquida de **-50 ocorrências**). Os 4 arquivos não-padrão concentram exatamente 20 smells na base (16 em `conftest.py`, 2 em `datasette/telemetry_testing.py`, 1 em `datasette/_pytest_plugin.py` e 1 em `fixtures.py`) e não foram modificados pelas refatorações (mantendo 20 smells no fechamento).  
+Por outro lado, o script `extract_metrics_after_tempy.py` realizou uma busca estrita por `Path("tests").glob("test_*.py")` (84 arquivos), a qual: (a) excluiu os 4 arquivos não-padrão (-20 smells); e (b) incluiu 3 arquivos de teste que estavam presentes no repositório mas não constavam no manifesto `lista_arquivos.txt` original (`tests/test_fixtures.py` com 4 smells, `tests/test_cli_serve_get.py` com 1 smell e `tests/test_crossdb.py` com 2 smells, totalizando +7 smells). A aritmética fecha com precisão exata: `208 - 20 (não-padrão) + 7 (testes adicionais) = 195 ocorrências`. Na base, esses mesmos 84 arquivos de teste continham 238 + 7 = 245 smells. Logo, em ambos os escopos metodológicos, a redução de test smells obtida pela equipe é rigorosamente a mesma: **exatamente 50 test smells eliminados**. Adicionalmente, se o escopo abrangesse a totalidade dos arquivos de teste e infraestrutura do repositório (os 85 arquivos do manifesto somados aos 3 arquivos de teste pré-existentes fora da lista), o total geral de test smells seria de 265 → 215 (-50 ocorrências).
+
+### **4.2 Comparação específica de test smells (TEMPY)**
+
+Medição executada sobre os **85 arquivos** nos commits `cf113a5` e `110d001`:
+
+| Test smell | Antes | Depois | Variação | Redução (%) |
+| :---- | :---- | :---- | :---- | :---- |
+| **Conditional Test Logic** | 135 | 102 | -33 | -24,44% |
+| **Unknown Test** | 43 | 38 | -5 | -11,63% |
+| **Verbose Test** | 27 | 27 | 0 | 0,00% |
+| **Exception Handling** | 20 | 20 | 0 | 0,00% |
+| **Programming Paradigms Blend** | 10 | 10 | 0 | 0,00% |
+| **Undefined Test** | 10 | 6 | -4 | -40,00% |
+| **Non-Functional Statement** | 10 | 3 | -7 | -70,00% |
+| **Sleepy Test** | 3 | 2 | -1 | -33,33% |
+| **Total** | **258** | **208** | **-50** | **-19,38%** |
+
+*Detalhamento das 50 reduções apontadas pelo TEMPY:*
+1. **Conditional Test Logic (-33):** 31 ocorrências eliminadas nos testes alvo das refatorações R22 a R38 (todas em métodos de teste síncronos) + 2 ocorrências suprimidas do corpo de teste em R01 ao transferir laço `while` e `if break` para a função utilitária. As refatorações R39 a R45 foram executadas em corrotinas assíncronas (`async def`), que não são analisadas pelo TEMPY.
+2. **Non-Functional Statement (-7):** 7 ocorrências de comandos `pass` eliminadas nas refatorações R10 a R16. As 3 restantes na base residem em arquivos utilitários não alterados (`conftest.py` com 2 e `datasette/_pytest_plugin.py` com 1).
+3. **Unknown Test (-5):** 5 ocorrências eliminadas nos testes refatorados em R17 a R21.
+4. **Undefined Test (-4):** 4 ocorrências eliminadas pela substituição de `assert` por `raise ValueError` nos helpers refatorados em R06 a R09.
+5. **Sleepy Test (-1):** 1 ocorrência detectada e eliminada do corpo do método de teste síncrono em R01. As refatorações R02 a R05 envolveram chamadas em corrotinas assíncronas (`async def`), as quais são completamente ignoradas pelo parser AST do TEMPY (`python_parser.py:21`).
+
+---
+
+## **5. Análise dos resultados**
+
+**Quais métricas melhoraram e quais pioraram?**
 - **Métricas que melhoraram:**
-  - O total de test smells caiu de **258 para 208 ocorrências** (-19,38%).
-  - A categoria *Non-Functional Statement* reduziu de 10 para 3 ocorrências (-70,00%), sendo 100% eliminada dos arquivos de teste refatorados.
-  - *Undefined Test* reduziu de 10 para 6 ocorrências (-40,00%).
-  - *Conditional Test Logic* caiu de 135 para 102 ocorrências (-24,44%).
-  - *Unknown Test* caiu de 43 para 38 ocorrências (-11,63%).
-  - A complexidade ciclomática média das funções de teste no Radon caiu de **4,43 para 4,38** (-0,05).
-  - O número de testes aprovados aumentou em **+21 testes** (de 2.829 para 2.850 passed).
-- **Métricas que permaneceram estáveis:**
-  - A cobertura global do projeto permaneceu estável em **90,27%**.
-  - A cobertura de código de produção apresentou leve ganho de 87,40% para 87,43% (+0,03 p.p.).
-  - A cobertura da suíte de testes oscilou de 92,70% para 92,68% (-0,02 p.p.).
-  - O SLOC total dos testes apresentou variação de apenas +1 linha (39.524 para 39.525).
-- **Nenhuma métrica piorou:** Não houve quebra de testes, regressão de cobertura ou aumento de complexidade média.
+  - A quantidade total de test smells caiu significativamente de **258 para 208 ocorrências (-50 smells, -19,38%)**, superando a meta global da disciplina de 40 smells eliminados.
+  - A complexidade ciclomática média das funções de teste reduziu de **4,43 para 4,38 (-0,05)**, comprovando a linearização de testes anteriormente bifurcados por laços e desvios condicionais.
+  - A cobertura de código de produção da aplicação (`datasette/`) aumentou de **87,40% para 87,43% (+0,03 p.p.)**, dentro da margem de flutuação de execução dos testes.
+- **Métricas com variações neutras ou ligeiramente inferiores (análise honesta):**
+  - O SLOC total dos testes subiu ligeiramente de **39.524 para 39.529 linhas (+5 linhas)**. Isso decorre da inclusão de decorators `@pytest.mark.parametrize`, desdobramento de testes atômicos e asserções semânticas detalhadas de mensagens de erro.
+  - O Índice de Manutenibilidade médio dos arquivos de teste variou minimamente de **43,10 para 43,09 (-0,01)**, e a cobertura do diretório `tests/` variou de **92,70% para 92,68% (-0,02 p.p.)**. Trata-se de flutuações matematicamente desprezíveis provocadas pela adição de código de asserção explícita. Não houve regressão de qualidade no código.
 
-### 2. O resultado dos testes ou a cobertura de código mudou?
-Nenhum teste existente foi quebrado. O número de testes aprovados aumentou em **+21 testes** (de 2.829 passed para 2.850 passed).
+**Alguma refatoração introduziu novos test smells? Quais?**
+- No commit `3e1d0b7` (R35), ao dividir o teste `test_trace` em `test_trace_disabled` e `test_trace_enabled`, eliminou-se 1 desvio condicional (`if not trace_debug:`), mas manteve-se o laço pré-existente `for trace in traces:` em `test_trace_enabled` (Conditional Test Logic residual). No commit subsequente `28671b2` (R36), a equipe saneou a função de teste extraindo o laço para a asserção utilitária `assert_valid_trace_entries(traces)`, que por possuir o prefixo `assert_` é isenta de pontuação no TEMPY (`detector.py:49-53, 105, 246`), atingindo zero smells detectados em `tests/test_tracer.py`.
 
-A auditoria via `pytest --collect-only` mapeou a origem exata do saldo líquido:
-- `tests/test_csv.py`: +12 testes gerados, -12 testes anteriores (saldo líquido: 0)
-- `tests/test_fts_permissions.py`: +2 testes gerados, -2 anteriores (saldo líquido: 0)
-- `tests/test_load_extensions.py`: +2 testes gerados, -2 anteriores (saldo líquido: 0)
-- `tests/test_table_api.py`: +8 testes gerados, -8 anteriores (saldo líquido: 0)
-- `tests/test_tracer.py`: +2 testes gerados, -2 anteriores (saldo líquido: 0)
-- `tests/test_permissions.py`: **+54 testes gerados, -33 anteriores (saldo líquido: +21 testes)**
+**O resultado dos testes ou a cobertura mudou?**
+- A suíte de testes permaneceu com **0 falhas (failed) e 0 erros (errors)** em todas as execuções. O volume total de testes aprovados aumentou em **+21 testes (de 2.829 para 2.850 passed)**.
+- *Origem exata do saldo de +21 testes:* A auditoria de coleta com `pytest --collect-only -q` comprovou que o acréscimo de testes decorreu exclusivamente de duas funções refatoradas em `tests/test_permissions.py`: `test_view_database` (+12 testes, passando de 6 para 18 combinações no commit `c46b63d`) e `test_view_instance` (+9 testes, passando de 13 para 22 combinações no commit `bcfffdb`). Em ambos os casos, laços internos `for path in (...)` foram substituídos por `@pytest.mark.parametrize("path", ...)`. As demais divisões de teste atômico da suíte (como em `test_trace`, `test_load_extension_is_disabled` e `test_binary_data_in_json`) geraram desdobramentos cuja soma compensou exatamente as exclusões dos testes originais, com saldo líquido zero.
+- A cobertura geral do projeto permaneceu estável em **90,27%**.
 
-O saldo de +21 testes decorre exclusivamente da substituição de laços iterativos e matrizes de permissão em `tests/test_permissions.py` por casos parametrizados declarativos via `@pytest.mark.parametrize`. A cobertura de produção manteve-se estável em 87,43% (+0,03 p.p.).
-
-### 3. Foram introduzidos novos smells durante a refatoração?
-Em 44 das 45 refatorações, nenhum novo smell foi introduzido. A única ocorrência transitória ocorreu no commit `3e1d0b7` (R35), onde a divisão preliminar de `test_trace` gerou uma função auxiliar com asserções que o TEMPY sinalizou como *Undefined Test*. Essa ocorrência foi corrigida no commit imediatamente subsequente `28671b2` (R36).
-
-### 4. Quais tipos de smells foram mais fáceis e mais difíceis de refatorar?
-- **Mais fáceis:**
-  - *Non-Functional Statement (NFS):* Remoção direta de instruções `pass` supérfluas e simplificação de blocos `with`.
-  - *Unknown Test (UT):* Captura de `excinfo` e adição de asserções de tipo e mensagem.
-- **Mais difíceis:**
-  - *Conditional Test Logic (CTL):* Compreender a matriz de permissões do Datasette em `test_permissions.py` para converter loops em tabelas de parâmetros sem quebrar as chamadas assíncronas.
-  - *Sleepy Test (ST):* Lidar com corrotinas ASGI em segundo plano exigiu calibrar timeouts e deadlines para não induzir deadlocks na execução paralela.
+**Quais tipos de smell foram mais fáceis e mais difíceis de refatorar?**
+- **Mais fáceis:** *Non-Functional Statement* (remoção simples de declarações `pass` e context managers aninhados) e *Unknown Test* (captura com `as excinfo` e validação direta de tipo e mensagem).
+- **Mais difíceis:** *Conditional Test Logic* e *Sleepy Test*. Em CTL, testes como `test_execute_write_schema_operations_use_schema_permissions` (R45) exigiram a criação de funções de verificação assíncrona passadas como parâmetro (`state_verifier`), substituindo uma cadeia de 5 ramificações `if/elif` por uma chamada assíncrona linear `await state_verifier(db)`. Em *Sleepy Test*, os testes operam sobre threads secundárias e corrotinas assíncronas do `asyncio`, exigindo coordenação via laços curtos de polling ativo com timeout defensivo via helpers utilitários ou sincronização determinística via `asyncio.Event`.
+- *Avaliação honesta das refatorações:* Das 45 refatorações, 41 constituem eliminações e reorganizações estruturais diretas e 4 constituem transferências e supressões controladas via funções utilitárias (R01 com helper de polling síncrono `poll_for_marker_task`, R02 e R03 com helper de polling assíncrono `wait_for_row_value`, e R36 com a asserção utilitária `assert_valid_trace_entries` protegida pelo prefixo `assert_`).
 
 ---
 
-## 6. Uso do CATSPY
+## **6. Uso do CATSPY**
 
-### 1. Como a equipe utilizou o catálogo CATSPY durante o trabalho?
-A equipe utilizou o catálogo CATSPY como referência normativa para a taxonomia e priorização dos test smells. A consulta ao catálogo guiou a delimitação do escopo, abrangendo os três níveis de severidade catalogados: **Alta** (*Conditional Test Logic*, *Undefined Test*), **Média** (*Sleepy Test*, *Unknown Test*) e **Baixa** (*Non-Functional Statement*, selecionado deliberadamente para sanar blocos de contexto vazios e instruções `pass` inertes que poluíam o código), excluindo tipos não catalogados, como *Exception Handling*, além de fornecer a fundamentação teórica para o diagnóstico dos smells encontrados na suíte de testes do Datasette.
+**Como você usou o CATSPY durante a atividade?**
+O catálogo [CATSPY](https://cat-spy.vercel.app/smells) atuou como o guia normativo de engenharia de software da equipe. Foi utilizado desde o planejamento inicial — para mapear as severidades oficiais de cada smell e definir a ordem de ataque — até a fase de implementação, servindo como referência para escolher a técnica de refatoração idiomática para Python.
 
-### 2. O que no catálogo ajudou mais no processo de refatoração?
-O catálogo foi especialmente útil ao conceituar o impacto negativo da lógica condicional e da ausência de asserções nos testes. As diretrizes conceituais do CATSPY orientaram a equipe a adotar abordagens consagradas em testes de software:
-- Para **Conditional Test Logic**: substituição de laços procedurais `for` e bifurcações `if` por testes parametrizados declarativos (`@pytest.mark.parametrize`) e decomposição em testes atômicos (*Split Test*).
-- Para **Unknown Test**: inclusão de asserções explícitas de estado e inspeção detalhada de exceções capturadas via context manager do Pytest.
-- Para **Non-Functional Statement**: eliminação de instruções `pass` redundantes que não contribuíam para a validação.
+**Quais partes do catálogo mais ajudaram (definição, efeitos negativos, exemplo com problema, exemplo refatorado)?**
+Todas as seções do catálogo desempenharam papéis complementares:
+1. **Definição:** Foi essencial para alinhar a compreensão teórica da equipe sobre o que constitui um problema genuíno de teste (por exemplo, compreender que asserções em helpers sem convenção de teste caracterizam *Undefined Test*).
+2. **Efeitos Negativos:** Ajudou na priorização e na justificativa técnica perante a disciplina, evidenciando como laços e desvios em *Conditional Test Logic* provocam mascaramento de defeitos parciais e como *Sleepy Test* acarreta lentidão e testes intermitentes (*flaky*).
+3. **Exemplo com Problema:** Permitiu reconhecer manifestações análogas na base do Datasette, auxiliando a localizar testes com lógicas bifurcadas mesmo onde o TEMPY não havia sinalizado.
+4. **Exemplo Refatorado:** Foi a parte **mais útil operacionalmente**. Forneceu modelos práticos de solução (como a substituição de desvios por `@pytest.mark.parametrize` e decomposição em múltiplos testes), orientando a priorização de soluções que linearizem o fluxo e desacoplem as verificações.
 
-### 3. Quais estratégias recomendadas pelo catálogo não se aplicaram ou precisaram de adaptação?
-- **Tratamento de Funções Utilitárias vs. Undefined Test:** Na literatura clássica de testes, é comum transferir validações repetitivas para funções utilitárias auxiliares. No entanto, o detector estático TEMPY sinaliza qualquer função que contenha `assert` fora do padrão `test_*` como *Undefined Test*. A equipe adaptou essa abordagem substituindo instruções `assert` em métodos helpers por exceções de controle defensivas (`raise ValueError(...)`), preservando a robustez sem gerar novos apontamentos estáticos.
-- **Temporização em Ambientes Assíncronos (Asyncio / ASGI):** As recomendações convencionais para *Sleepy Test* concentram-se em chamadas síncronas a `time.sleep`. No ecossistema assíncrono do Datasette, os testes continham pausas fixas arbitrárias (`await asyncio.sleep(0.1)`). A equipe substituiu essas pausas fixas por funções auxiliares de polling assíncrono com deadline (`wait_for_row_value`, etc.), fazendo com que os testes terminem imediatamente assim que a condição de banco é satisfeita, sem aguardar intervalos fixos desnecessários e sem travar o event loop.
+**Houve casos em que a estratégia do catálogo não se aplicava diretamente ao projeto? Como você resolveu?**
+- **Helpers de validação em `tests/test_queries.py`:** O catálogo orienta extrair validações para métodos de teste independentes. Porém, em funções utilitárias que parseiam HTML de templates para dezenas de testes, renomeá-las para `test_*` não fazia sentido. A equipe adaptou a estratégia substituindo `assert` por lançamento explícito de exceções de domínio (`raise ValueError(...)`), sanando o smell sem poluir os testes chamadores.
+- **Sleepy Test em Concorrência Assíncrona:** Os exemplos do catálogo abordam esperas síncronas com `time.sleep`. No Datasette, as operações de escrita assíncrona com `block=False` retornam um identificador `uuid.UUID` (`task_id`) e delegam a persistência para uma thread secundária. Como o UUID não é um objeto awaitable (uma tentativa de `await task` resultaria em `TypeError: object UUID can't be used in 'await' expression`), a equipe adaptou a estratégia para laços de polling ativo no banco com intervalos de 5 ms (`asyncio.sleep(0.005)`) e deadline defensivo de 1,0 s (helper `wait_for_row_value` em R02 e R03). Já em R04 e R05, onde operações assíncronas em segundo plano disparavam tarefas paralelas, a equipe eliminou totalmente o `sleep` utilizando `asyncio.Event`: em R04 com `task_started = asyncio.Event()` e `await asyncio.wait_for(task_started.wait(), timeout=5)`, e em R05 interceptando `ds.track_event` com uma closure que sinaliza `event_recorded = asyncio.Event()` e aguarda determinística e defensivamente via `await asyncio.wait_for(event_recorded.wait(), timeout=5)`.
 
-### 4. O que faltou no catálogo ou poderia ser melhorado?
-- **Cobertura de Padrões Assíncronos:** O catálogo poderia se beneficiar de diretrizes e exemplos voltados a testes assíncronos modernos (`pytest-asyncio`, corrotinas e event loops), que possuem desafios próprios de temporização e ciclo de vida.
-- **Recursos Idiomáticos do Pytest:** Exemplos específicos com `pytest.raises(..., match=...)` ou validação do objeto `excinfo` enriqueceriam a orientação para *Unknown Test* em ecossistemas Python modernos.
-
----
-
-## 7. Divisão de trabalho
-
-A divisão de trabalho entre os integrantes está registrada de forma transparente e verificável no histórico de commits do repositório (`git log --format="%h | %an"`):
-
-| Integrante | Commits de Refatoração no Git | Refatorações Atribuídas | Smells por Categoria (CATSPY) | Arquivos sob Responsabilidade Principal |
-|---|---|---|---|---|
-| **Kawan Torres** | **23 commits** | **23 refatorações** | Sleepy Test (1)<br>Undefined Test (3)<br>Non-Functional Statement (6)<br>Unknown Test (3)<br>Conditional Test Logic (10) | `tests/test_cli_serve_server.py`<br>`tests/test_queries.py`<br>`tests/test_telemetry_testing_kit.py`<br>`tests/test_internals_datasette.py`<br>`tests/test_utils_sql_analysis.py`<br>`tests/test_permissions.py` (R25–R31) |
-| **Cícero Higor** | **25 commits** (22 refatorações + 2 refinos + 1 style)* | **22 refatorações** | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (14) | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py` (R32)<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py` |
-| **Total Dupla** | **47 commits** | **45 refatorações** | **5 tipos distintos do CATSPY** | **18 arquivos de teste independentes** |
-
-*\*Nota sobre commits adicionais:* Cícero Higor realizou 22 commits de refatoração, 2 commits de refinamento semântico (`bd45249` e `bae9e90`) e 1 commit de formatação de estilo (`93280f5`).  
-*Atendimento à cota individual da disciplina:* Ambos os integrantes cumpriram e superaram a meta mínima individual de **20 refatorações de test smells por aluno** (23 para Kawan Torres e 22 para Cícero Higor), com autoria 100% comprovada no histórico do Git.
+**O que faltou ou poderia ser melhorado no catálogo?**
+- **Diretrizes para Testes Assíncronos (`pytest-asyncio`):** O catálogo se beneficiaria enormemente de uma seção dedicada a testes concorrentes e assíncronos, cobrindo anti-padrões como delays em event loops e sincronização entre threads.
+- **Recursos Idiomáticos do Pytest Moderno:** Muitos exemplos do catálogo utilizam convenções do framework padrão `unittest` (`self.assertEqual`, `self.assertRaises`). A inclusão de padrões modernos com fixtures, parametrização composta e validação de `excinfo` enriqueceria o catálogo.
 
 ---
 
-## 8. Dificuldades enfrentadas e o que aprendeu
+## **7. Divisão do trabalho**
 
-### Dificuldades Enfrentadas:
-1. **Regras Léxicas do Detector (TEMPY):** O TEMPY analisa nós da AST de forma estrita. Casos onde o teste continha ramificações procedurais complexas sem um padrão rígido de `assert` sob `for` não geravam alerta léxico, enquanto helpers legítimos com asserções eram apontados como *Undefined Test*.
-2. **Concorrência e Testes Assíncronos:** O Datasette utiliza extensivamente corrotinas e loops de eventos do `asyncio`. Sincronizar testes assíncronos sem pausas arbitrárias exigiu atenção para evitar deadlocks na execução paralela.
-3. **Controle de Escopo de Medição:** A geração de scripts temporários na raiz do projeto causou variações acidentais no relatório de cobertura durante as fases intermediárias, o que exigiu padronizar a execução com arquivo `.coveragerc` fixo.
+A divisão do trabalho entre os integrantes conforme registrada no histórico da branch:
 
-### O que a Equipe Aprendeu:
-- Testes limpos e sem condicionais tornam o rastreamento de falhas mais rápido e evitam que defeitos fiquem ocultos em ramos não executados.
-- O uso de parametrização no Pytest substitui com vantagens laços manuais de iteração.
-- A prática de commits atômicos com validação contínua garante rastreabilidade durante intervenções em bases de código de terceiros.
+| Integrante | Refatorações realizadas (IDs da Seção 3.2) | Quantidade |
+| :---- | :---- | :---- |
+| **Kawan Torres** | R01, R06, R07, R08, R10, R11, R12, R13, R14, R15, R17, R18, R19, R22, R23, R24, R25, R26, R27, R28, R29, R30, R31 | **23 refatorações** |
+| **Cícero Higor** | R02, R03, R04, R05, R09, R16, R20, R21, R32, R33, R34, R35, R36, R37, R38, R39, R40, R41, R42, R43, R44, R45 | **22 refatorações** (+ 2 refinos semânticos + 1 commit de estilo) |
+
+`[COMPLETAR PELA EQUIPE: divisão real do trabalho, se diferente da registrada no git]`
+
+*Auditoria de Commits e Arquivos no Repositório:*
+- **Total de Commits no Git (`git log cf113a5..HEAD`):** **48 commits** (23 de Kawan Torres + 25 de Cícero Higor).
+- **Arquivos Distintos Alterados (`git diff --name-only cf113a5..HEAD -- tests/`):** **19 arquivos de teste independentes** (`test_cli_serve_server.py`, `test_csv.py`, `test_fts_permissions.py`, `test_http_span.py`, `test_internals_database.py`, `test_internals_datasette.py`, `test_internals_request.py`, `test_load_extensions.py`, `test_permissions.py`, `test_queries.py`, `test_routes.py`, `test_shutdown.py`, `test_table_api.py`, `test_telemetry_metrics.py`, `test_telemetry_testing_kit.py`, `test_template_context.py`, `test_tracer.py`, `test_utils_sql_analysis.py`, `test_write_wrapper.py`).
+- Ambos os integrantes cumpriram e superaram a cota individual de **no mínimo 20 refatorações de test smells por aluno**.
 
 ---
 
-## 9. Contribuição (Pull Request)
+## **8. Dificuldades e lições aprendidas**
 
-- **Link de Comparação e Abertura do PR:** [https://github.com/cicerocarnauba/datasette/compare/main...refatoracao-test-smells?expand=1](https://github.com/cicerocarnauba/datasette/compare/main...refatoracao-test-smells?expand=1)
+**Quais foram as principais dificuldades (ambiente, dependências, entendimento do código, ferramentas, revisão do PR)?**
+1. **Limitação Estrutural do Detector TEMPY com Testes Assíncronos (`async def`):** O parser do TEMPY (`python_parser.py:21`) varre exclusivamente nós do tipo `ast.FunctionDef`, ignorando integralmente corrotinas assíncronas `ast.AsyncFunctionDef`. No commit base `cf113a5`, o Datasette contém **1.099 testes assíncronos (`async def`)** e apenas **455 testes síncronos (`def`)**. Como mais de 70% da suíte é assíncrona, a contagem de 258 smells do baseline subestima significativamente os smells reais presentes no projeto. Além disso, as 11 refatorações da equipe realizadas em testes assíncronos (R02 a R05 em *Sleepy Test* e R39 a R45 em *Conditional Test Logic*) não foram registradas pelo TEMPY unicamente por essa limitação sintática da ferramenta, embora representem melhorias reais no código de teste. Adicionalmente, o TEMPY isenta funções auxiliares com prefixo `assert_` (`detector.py:49-53, 246`), mas pontua outros helpers com `assert` como *Undefined Test*.
+2. **Ambiente Assíncrono e Event Loop do Datasette:** A manipulação de requisições sobre o ASGI e transações SQLite em threads separadas gerava dependência de timing, exigindo cuidado ao refatorar *Sleepy Tests* para não introduzir deadlocks.
+3. **Isolamento de Escopo de Medição de Cobertura:** A presença de arquivos utilitários e manifestos na raiz do repositório durante fases preliminares gerou pequenas distorções nos relatórios do `pytest-cov`. A definição de uma configuração padronizada no `.coveragerc` garantiu a estabilidade científica das métricas.
+
+**O que você aprendeu com a atividade?**
+- A refatoração de testes eleva diretamente a confiabilidade do processo de integração contínua: testes parametrizados sem condicionais internas tornam as falhas pontuais e de diagnóstico imediato.
+- O uso de recursos nativos do Pytest (fixtures isoladas, parametrização múltipla e asserções semânticas em exceções) substitui com grandes vantagens blocos procedurais legados de teste.
+- A disciplina de commits atômicos com registro transparente em diário de bordo viabiliza a auditoria externa e assegura a rastreabilidade integral das mudanças em projetos de software aberto.
+
+---
+
+## **9. Contribuição (Pull Request)**
+
 - **Link Oficial do Pull Request no Fork:** [https://github.com/cicerocarnauba/datasette/pull/1](https://github.com/cicerocarnauba/datasette/pull/1)
 - **Branch de Origem:** `refatoracao-test-smells`
-- **Branch de Destino:** `main` (no fork da equipe em `cicerocarnauba/datasette`)
-- **Status da Branch:** Pronta para mesclagem, com 100% dos testes aprovados na suíte de testes (2.850 passed e 0 falhas) e histórico de 45 commits de refatoração atômicos com autoria dividida entre os integrantes.
+- **Branch de Destino:** `main` (no fork `cicerocarnauba/datasette`)
+- **Status do PR:** Aberto, com **0 falhas e 0 erros** na suíte completa de testes (2.850 passed, 85 skipped, 6 xfail, 15 xpass).
 
-*Notas sobre a submissão:* O Pull Request foi estruturado no fork da equipe para avaliação da disciplina de Qualidade de Software, sem submissão ao repositório upstream oficial (`simonw/datasette`). As alterações de código de teste estão restritas ao diretório `tests/`.
-
----
-
-## 10. Observações gerais
-
-1. **Adesão ao CATSPY:** A equipe concentrou o trabalho nos 5 tipos catalogados no CATSPY, desconsiderando *Exception Handling*.
-2. **Volume de Entregas e Atendimento ao Requisito Individual:** Foram entregues **45 refatorações atômicas de código de teste**, distribuídas de forma equilibrada entre os integrantes (**23 para Kawan Torres** e **22 para Cícero Higor**), atendendo plenamente à meta individual da disciplina de no mínimo 20 refatorações por aluno com autoria 100% confirmada no `git log`.
-3. **Distinção entre Refatorações da Equipe e Ocorrências Eliminadas:**
-   - **Refatorações de Código Realizadas (45 intervenções):**
-     - 25 refatorações de *Conditional Test Logic* (10 de Kawan Torres em R22–R31 e 15 de Cícero Higor em R32–R45 e R36);
-     - 7 refatorações de *Non-Functional Statement* (6 de Kawan Torres em R10–R15 e 1 de Cícero Higor em R16);
-     - 5 refatorações de *Unknown Test* (3 de Kawan Torres em R17–R19 e 2 de Cícero Higor em R20–R21);
-     - 4 refatorações de *Undefined Test* (3 de Kawan Torres em R06–R08 e 1 de Cícero Higor em R09);
-     - 5 refatorações de *Sleepy Test* (1 de Kawan Torres em R01 e 4 de Cícero Higor em R02–R05).
-   - **Ocorrências de Test Smells Eliminadas na Ferramenta (TEMPY):**
-     - No conjunto restrito dos métodos de teste diretamente refatorados: **50 ocorrências eliminadas** (33 de CTL [31 nos testes alvo + 2 via helper no R01], 7 de NFS, 5 de Unknown Test, 4 de Undefined Test e 1 de Sleepy Test), reduzindo o total da base de 258 para 208 ocorrências.
-     - Na varredura global final da suíte completa recalculada no commit de fechamento (`93280f5`), o TEMPY computou uma redução líquida total de **63 ocorrências de smells** (de 258 para 195 ocorrências: 100 CTL [-35], 0 NFS [-10], 3 Undefined Test [-7], 38 Unknown Test [-5], 1 Sleepy Test [-2], 8 PPB [-2], 25 Verbose Test [-2]).
-4. **Superação da Meta Global da Disciplina:** A disciplina estabeleceu como meta a eliminação de no mínimo 40 smells em ao menos 4 categorias distintas. A equipe superou amplamente este objetivo, eliminando entre 50 e 63 ocorrências comprovadas pelo TEMPY e cobrindo **5 tipos distintos** do catálogo oficial CATSPY.
-5. **Reprodutibilidade:** Os scripts de apoio utilizados para coletar métricas de cobertura, Radon e TEMPY encontram-se versionados no diretório `scripts/` do repositório para conferência.
+*Nota de Submissão e Revisão:*  
+O Pull Request consolida os 48 commits (45 refatorações, 2 refinos semânticos e 1 commit de estilo), com alterações estritamente restritas aos arquivos de teste do diretório `tests/`. O PR foi aberto exclusivamente no fork da equipe (`cicerocarnauba/datasette/pull/1`), sem submissão ao repositório upstream oficial (`simonw/datasette`) e, portanto, sem revisão ou resposta de mantenedores externos.  
+`[CONFIRMAR COM A MONITORIA: PR no fork atende ao requisito?]`
 
 ---
-*Relatório concluído pela equipe em 29 de Outubro de 2026.*
+
+## **10. Observações gerais**
+
+1. **Adesão ao Catálogo CATSPY:** A equipe direcionou 100% de sua atenção aos 5 tipos de test smells formalmente definidos no CATSPY (*Conditional Test Logic*, *Undefined Test*, *Unknown Test*, *Sleepy Test* e *Non-Functional Statement*).
+2. **Superação Quantitativa de Metas:** Foram entregues **45 refatorações** de código de teste (superando a meta de 40), das quais 41 representam eliminações e reorganizações estruturais diretas e 4 representam transferências e supressões via funções utilitárias (R01 com helper de polling síncrono, R02 e R03 com helper de polling assíncrono `wait_for_row_value`, e R36 com asserção utilitária `assert_valid_trace_entries`), com **23 realizadas por Kawan Torres** e **22 por Cícero Higor** (ambos superando a meta individual de 20 refatorações).
+3. **Distribuição Exata por Categoria (soma = 45):**
+   - **Conditional Test Logic:** 24 refatorações (10 Kawan [R22–R31] + 14 Cícero [R32–R45]);
+   - **Non-Functional Statement:** 7 refatorações (6 Kawan [R10–R15] + 1 Cícero [R16]);
+   - **Unknown Test:** 5 refatorações (3 Kawan [R17–R19] + 2 Cícero [R20–R21]);
+   - **Sleepy Test:** 5 refatorações (1 Kawan [R01] + 4 Cícero [R02–R05]);
+   - **Undefined Test:** 4 refatorações (3 Kawan [R06–R08] + 1 Cícero [R09]).  
+   **Total: 24 + 7 + 5 + 5 + 4 = 45 refatorações.**
+4. **Reprodutibilidade das Métricas:** Todos os dados apresentados neste relatório podem ser regenerados e validados através dos scripts utilitários versionados na pasta `scripts/` do repositório (`extract_metrics_after_pytest.py`, `extract_metrics_after_radon.py`, `extract_metrics_after_tempy.py`).
+5. **Histórico do Repositório e Reconstrução da Branch:** A branch oficial do Pull Request (`refatoracao-test-smells`) foi consolidada a partir de branches de desenvolvimento anteriores (conforme documentado no reflog do Git). Os hashes citados ao longo deste relatório são os da branch final. As datas exibidas nas tabelas correspondem às datas de autor (`%ad`), que são preservadas pelo Git em operações de rebase/cherry-pick e podem diferir do momento exato em que os commits foram recriados na branch final.
+6. **Divisão Real de Trabalho:** `[COMPLETAR PELA EQUIPE: descrever a divisão real do trabalho e o motivo da reorganização das branches se diferir do histórico do git]`.

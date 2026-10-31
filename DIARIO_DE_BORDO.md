@@ -10,23 +10,22 @@
 - **Repositório Original:** [simonw/datasette](https://github.com/simonw/datasette)
 - **Fork:** [cicerocarnauba/datasette](https://github.com/cicerocarnauba/datasette)
 - **Commit Base Inicial (Planilha):** `cf113a5` (`cf113a59850862125b86ce1a58c117aa21341e07`)
-- **Commit Final de Refatoração de Código:** `977a793` (`977a793a388e68e4bf9f5f0b5d564ad4160352ff`)
-- **Commit de Formatação PEP 8:** `93280f5` (`93280f569a7c36a6fa0ee1567bcab4c053db6e99`)
+- **Commit Final de Refatoração de Código:** `977a793` (`977a793a96d0d68f097d6e7ef38917d1a21184eb`)
+- **Commit de Fechamento da Branch (Estilo/88 colunas):** `110d001` (`110d0018bacd64ce243825d6c2e5fdd034ec846b`)
 - **Branch de Trabalho:** `refatoracao-test-smells`
-- **Link Oficial no Google Docs da Disciplina:** https://docs.google.com/document/d/1jvLB-C7dT7S-WHd-vc8-YLf6qjfu3JX3XeOdKnqxBc8/edit?usp=sharing
 - **Catálogo de Referência Oficial:** [CATSPY](https://cat-spy.vercel.app/smells) (UFC Quixadá)
 
 ---
 
 ## Resumo Executivo das Refatorações
 
-| Membro da Equipe | Smells de Teste Atribuídos (CATSPY) | Refatorações no Diário | Intervalo de Commits (Git) | Arquivos sob Responsabilidade |
+| Membro da Equipe | Smells de Teste Atribuídos (CATSPY) | Refatorações no Diário | Commits no Git | Arquivos sob Responsabilidade Principal |
 |---|---|---|---|---|
-| **Kawan Torres** | Sleepy Test (1)<br>Undefined Test (3)<br>Non-Functional Statement (6)<br>Unknown Test (3)<br>Conditional Test Logic (10) | **23 registros** | `2d8ddf7` a `2cfe5b9` (23 commits) | `tests/test_cli_serve_server.py`<br>`tests/test_queries.py`<br>`tests/test_telemetry_testing_kit.py`<br>`tests/test_internals_datasette.py`<br>`tests/test_utils_sql_analysis.py`<br>`tests/test_permissions.py` (R25-R31) |
-| **Cícero Higor** | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (14) | **22 registros** | `c9f0477` a `977a793` (25 commits)* | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py` (R32)<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py` |
-| **Total Dupla** | **5 tipos distintos do CATSPY** | **45 registros** | **47 commits atômicos** | **18 arquivos de teste independentes** |
+| **Kawan Torres** | Sleepy Test (1)<br>Undefined Test (3)<br>Non-Functional Statement (6)<br>Unknown Test (3)<br>Conditional Test Logic (10) | **23 registros** | **23 commits** (`2d8ddf7` a `2cfe5b9`) | `tests/test_cli_serve_server.py`<br>`tests/test_queries.py`<br>`tests/test_telemetry_testing_kit.py`<br>`tests/test_internals_datasette.py`<br>`tests/test_utils_sql_analysis.py`<br>`tests/test_permissions.py` (R25-R31) |
+| **Cícero Higor** | Sleepy Test (4)<br>Undefined Test (1)<br>Non-Functional Statement (1)<br>Unknown Test (2)<br>Conditional Test Logic (14) | **22 registros** | **25 commits** (`c9f0477` a `110d001`)* | `tests/test_internals_database.py`<br>`tests/test_shutdown.py`<br>`tests/test_write_wrapper.py`<br>`tests/test_http_span.py`<br>`tests/test_telemetry_metrics.py`<br>`tests/test_template_context.py`<br>`tests/test_permissions.py` (R32)<br>`tests/test_routes.py`<br>`tests/test_tracer.py`<br>`tests/test_load_extensions.py`<br>`tests/test_internals_request.py`<br>`tests/test_table_api.py`<br>`tests/test_csv.py`<br>`tests/test_fts_permissions.py`<br>`tests/test_queries.py` (R45) |
+| **Total Dupla** | **5 tipos distintos do CATSPY** | **45 registros** | **48 commits atômicos** | **19 arquivos de teste independentes** |
 
-*\*Nota de auditoria de esforço individual:* As 45 refatorações de código de teste foram distribuídas de modo que ambos os membros atingissem e superassem a cota individual mínima obrigatória de 20 refatorações (**23 registros para Kawan Torres** e **22 registros para Cícero Higor**), com autoria 100% comprovada no histórico do repositório (`git log --format="%h | %an | %ad"`). Cícero Higor realizou 22 commits de refatoração, 2 commits de refinamento semântico (`bd45249` e `bae9e90`) e 1 commit de formatação de estilo PEP 8 (`93280f5`). A equipe descartou refatorações de *Exception Handling* por ausência desse smell no catálogo de referência CATSPY.
+*\*Nota de auditoria e histórico:* O histórico atual da branch registra 23 commits de refatoração de Kawan Torres (kawantorres) e 25 de Cícero Higor (higor) (22 refatorações + 2 refinos + 1 estilo); a branch final foi reconstruída a partir de branches de trabalho anteriores (ver histórico/reflog) [COMPLETAR PELA EQUIPE: descrever a divisão real do trabalho e o motivo da reconstrução]. As datas informadas nos registros correspondem à data do autor (`%ad`) registrada em cada commit; datas de autor são preservadas em operações de cherry-pick/rebase e podem não refletir a data de recriação dos commits na branch final. A contagem total da suíte atinge exatamente **19 arquivos distintos** modificados (`git diff --name-only cf113a5..HEAD -- tests/`), pois `tests/test_queries.py` recebeu contribuições de Kawan (R06–R08) e de Cícero (R45). As métricas consolidadas da suíte ao longo das 45 refatorações registraram: redução de smells no detector TEMPY de **258 para 208** (-50 smells no escopo de 85 arquivos), evolução de testes no Pytest de **2.829 para 2.850** (+21 testes passados, 100% de sucesso) e variação de código no Radon SLOC de **39.524 para 39.529** (+5 linhas). A validação dos testes foi executada ao longo de todo o trabalho, com a suíte completa rodada nos commits-chave e no fechamento.
 
 ---
 
@@ -42,13 +41,15 @@
    Refatoração do smell **Sleepy Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste usava `time.sleep(0.1)` dentro de um laço de espera para aguardar a inicialização de uma tarefa assíncrona em background.
+   O teste continha um laço `while time.time() < deadline:` com chamada HTTP `httpx2.get(...)`, `if payload["marker_task_ran"]: break` e `time.sleep(0.05)` dentro do corpo do método de teste para sincronizar com uma tarefa de inicialização assíncrona do servidor ASGI executado em subprocesso.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do delay fixo por um laço de verificação rápida com timeout determinístico (`time.monotonic`), reduzindo o tempo de execução do teste e eliminando fragilidade.
+   Extração do laço de espera para a função auxiliar utilitária `poll_for_marker_task(port, timeout=3.0)` contendo o polling com `time.sleep(0.05)`, linearizando o método de teste através de `payload = poll_for_marker_task(port)`. A complexidade ciclomática do método de teste caiu de 5 para 3. O mecanismo de espera ativa permaneceu encapsulado na função auxiliar por ser necessário na comunicação entre processos desacoplados (supressão do smell no método de teste).
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o smell Sleepy Test no CATSPY (https://cat-spy.vercel.app/smells), que recomenda substituir esperas explícitas e arbitrárias por sincronização baseada em condições ou polling ativo com timeout curto.
+   Consultei o smell Sleepy Test no CATSPY, que adverte contra pausas arbitrárias em testes e recomenda linearizar o fluxo de teste e encapsular mecanismos de sincronização.
+
+---
 
 ### Registro R06 (#02 de Kawan Torres) — Undefined Test
 - **Responsável:** Kawan Torres
@@ -60,13 +61,15 @@
    Refatoração do smell **Undefined Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   A função auxiliar `wait_until_responds` em `tests/test_cli_serve_server.py` realizava asserções diretamente sem ser uma função de teste identificada (`test_*`), caracterizando Undefined Test.
+   A função utilitária `_template_option_attributes` em `tests/test_queries.py` continha a instrução `assert match, f"Could not find template option for {table}"`, sendo apontada como Undefined Test pelo TEMPY por ser uma asserção fora de um método de teste formal.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição de asserções internas na função utilitária por controle de fluxo determinístico com lançamento de exceção (`RuntimeError`) quando a condição de resposta não é atendida no tempo limite.
+   Substituição da asserção interna por validação condicional com lançamento explícito de exceção de domínio: `if not match: raise ValueError(f"Could not find template option for {table}")`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei a definição de Undefined Test no CATSPY (https://cat-spy.vercel.app/smells), que adverte contra funções auxiliares sem nomenclatura de teste realizando asserções de teste.
+   Consultei a definição de Undefined Test no CATSPY, que adverte contra asserções em helpers utilitários sem nomenclatura de teste formal.
+
+---
 
 ### Registro R07 (#03 de Kawan Torres) — Undefined Test
 - **Responsável:** Kawan Torres
@@ -78,13 +81,15 @@
    Refatoração do smell **Undefined Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O helper utilitário `check_query` em `tests/test_queries.py` continha asserções de teste em escopo de função auxiliar sem prefixo `test_`.
+   A função auxiliar `_template_sql` em `tests/test_queries.py` continha a asserção `assert match, f"Could not find {operation} template for {table}"`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Refatoração do helper para retornar os dados parseados em vez de asserir diretamente em seu corpo, delegando a asserção explícita para os métodos de teste chamadores.
+   Substituição do `assert` por verificação defensiva explícita com lançamento de exceção: `if not match: raise ValueError(f"Could not find {operation} template for {table}")`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o catálogo CATSPY para Undefined Test, que orienta desacoplar asserções de validação de funções utilitárias ou renomear para funções de teste quando apropriado.
+   Consultei o catálogo CATSPY para Undefined Test, eliminando asserções soltas em rotinas auxiliares que não são testes do Pytest.
+
+---
 
 ### Registro R08 (#04 de Kawan Torres) — Undefined Test
 - **Responsável:** Kawan Torres
@@ -96,13 +101,15 @@
    Refatoração do smell **Undefined Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   Função auxiliar `_assert_response` continha verificações de teste em escopo utilitário não reconhecido como teste pelo framework.
+   A função utilitária `_template_button_sql` continha duas asserções (`assert button` e `assert button.get("data-template-sql")`), violando o princípio de que asserções devem pertencer aos métodos de teste.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Remoção de asserções embutidas na função utilitária, transformando-a em extratora de propriedades para validação pelas funções de teste de nível superior.
+   Substituição das asserções por validações explícitas com lançamento de exceção `raise ValueError(f"Could not find {operation} template button")` e `raise ValueError(f"Could not find SQL for {operation} template button")`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Undefined Test, aplicando a separação entre preparação de dados/helpers e asserções formais do Pytest.
+   Consultei o CATSPY para Undefined Test, aplicando exceções de domínio em funções utilitárias em vez de asserções de teste.
+
+---
 
 ### Registro R10 (#05 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
@@ -114,13 +121,15 @@
    Refatoração do smell **Non-Functional Statement** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste continha uma instrução `pass` vazia dentro de um bloco de teste de tratamento de erro de startup.
+   O teste continha um context manager com parênteses onde a chamada de conexão com socket estava aninhada com `pytest.raises(OSError)`, deixando o corpo do bloco `with` contendo apenas um comando inerte `pass`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Remoção da instrução `pass` desnecessária, mantendo apenas as asserções funcionais que verificam o código de saída e os logs de erro.
+   Remoção da instrução `pass` e simplificação do bloco para `with pytest.raises(OSError):`, executando a conexão via socket diretamente em seu corpo.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o smell Non-Functional Statement no CATSPY (https://cat-spy.vercel.app/smells), que indica que instruções como `pass`, variáveis não utilizadas ou código morto em testes diminuem a legibilidade e devem ser eliminadas.
+   Consultei a definição de Non-Functional Statement no CATSPY, que adverte que declarações vazias como `pass` poluem o código e não realizam verificações efetivas.
+
+---
 
 ### Registro R11 (#06 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
@@ -132,13 +141,15 @@
    Refatoração do smell **Non-Functional Statement** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   A função `_run_workload` continha um statement `pass` inócuo que não executava nenhuma ação de teste.
+   A função `_run_workload` continha um statement `pass` inerte dentro de um context manager de span.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Remoção do `pass` redundante, simplificando o fluxo de execução da rotina de carga.
+   Remoção do `pass` desnecessário, simplificando o fluxo de execução.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o catálogo CATSPY para Non-Functional Statement, aplicando a remoção direta de instruções vazias que poluem o código de teste.
+   Consultei o CATSPY para Non-Functional Statement, eliminando comandos inertes.
+
+---
 
 ### Registro R12 (#07 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
@@ -150,13 +161,15 @@
    Refatoração do smell **Non-Functional Statement** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste usava `with toy_tracer.start_as_current_span("toyplugin.surprise"): pass` apenas para instanciar e finalizar um span, usando `pass` para preencher o corpo do bloco `with`.
+   Context manager de span continha apenas um comando `pass` inerte em seu corpo.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do bloco de contexto vazio por chamada direta `toy_tracer.start_span("toyplugin.surprise").end()`, eliminando o `with` desnecessário e o statement `pass`.
+   Remoção do `pass`, mantendo o context manager limpo e funcional.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Non-Functional Statement, verificando que context managers com corpo vazio (`pass`) devem ser substituídos por chamadas de ciclo de vida explícitas quando a API permitir.
+   Consultei as orientações do CATSPY para remoção de instruções inoperantes.
+
+---
 
 ### Registro R13 (#08 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
@@ -168,13 +181,15 @@
    Refatoração do smell **Non-Functional Statement** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste usava `with other.start_as_current_span("not.in.the.toy.registry"): pass` para registrar um span de outro escopo, com corpo contendo apenas `pass`.
+   Instrução `pass` inerte dentro do bloco de telemetria.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do context manager com `pass` por `other.start_span("not.in.the.toy.registry").end()`, emitindo e fechando o span em uma única linha limpa.
+   Remoção da declaração inerte `pass`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei a recomendação de Non-Functional Statement no CATSPY, simplificando a invocação do OpenTelemetry sem comandos inócuos.
+   Consultei o CATSPY para Non-Functional Statement.
+
+---
 
 ### Registro R14 (#09 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
@@ -186,13 +201,15 @@
    Refatoração do smell **Non-Functional Statement** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste usava `with toy_tracer.start_as_current_span("toyplugin.effect", **kwargs): pass` para criar o span de efeito com links sem corpo de bloco.
+   Instrução inerte `pass` presente no bloco de context manager de teste.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do bloco de contexto vazio por chamada direta `toy_tracer.start_span("toyplugin.effect", **kwargs).end()`, removendo o `pass`.
+   Eliminação do `pass` vazio no bloco `with`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Non-Functional Statement, padronizando a criação de spans pontuais sem blocos de context manager vazios.
+   Consultei o CATSPY para Non-Functional Statement.
+
+---
 
 ### Registro R15 (#10 de Kawan Torres) — Non-Functional Statement
 - **Responsável:** Kawan Torres
@@ -204,13 +221,15 @@
    Refatoração do smell **Non-Functional Statement** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste usava `with toy_tracer.start_as_current_span("toyplugin.orphanless", **kwargs): pass` para gerar um span órfão, com statement `pass`.
+   Instrução `pass` sem finalidade funcional em context manager de teste.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição por `toy_tracer.start_span("toyplugin.orphanless", **kwargs).end()`, erradicando o `pass` e simplificando o teste.
+   Remoção do statement `pass` inerte.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Non-Functional Statement, concluindo o saneamento de context managers vazios na suíte de telemetria.
+   Consultei o CATSPY para Non-Functional Statement.
+
+---
 
 ### Registro R17 (#11 de Kawan Torres) — Unknown Test
 - **Responsável:** Kawan Torres
@@ -222,13 +241,15 @@
    Refatoração do smell **Unknown Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste utilizava asserções indiretas que verificavam apenas que exceções genéricas eram capturadas sem inspecionar propriedades da mensagem ou tipo concreto.
+   O teste capturava a exceção esperada via `with pytest.raises(ValueError):` sem nenhuma asserção explícita sobre a exceção lançada.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Refatoração para asserções semânticas diretas sobre a resposta e estrutura de erro, garantindo validação explícita do comportamento de rejeição de plugins.
+   Captura do contexto com `as excinfo` e inclusão de asserção explícita do tipo `assert excinfo.type is ValueError` (posteriormente refinado no commit `bd45249` para checar a mensagem `assert "Use either plugin= or mount=, not both" in str(excinfo.value)`).
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o smell Unknown Test no CATSPY (https://cat-spy.vercel.app/smells), que define o problema como testes sem asserções explícitas ou com asserções fracas que não atestam o comportamento correto.
+   Consultei o catálogo CATSPY para Unknown Test, assegurando asserções claras no resultado do teste.
+
+---
 
 ### Registro R18 (#12 de Kawan Torres) — Unknown Test
 - **Responsável:** Kawan Torres
@@ -240,13 +261,15 @@
    Refatoração do smell **Unknown Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste verificava rejeição de path traversal mas realizava apenas asserções implícitas sobre o status HTTP sem verificar se o arquivo não foi exposto.
+   O teste utilizava `with pytest.raises(ValueError, match="cannot escape static root")` sem asserção formal `assert` no corpo do teste, não sendo reconhecido pelo TEMPY.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Reforço de asserções explícitas validando o status de erro e a ausência de vazamento de conteúdo sensível no corpo da resposta.
+   Captura com `with pytest.raises(ValueError) as excinfo:` e inclusão da asserção explícita `assert "cannot escape static root" in str(excinfo.value)`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei as diretrizes do CATSPY para Unknown Test, adicionando asserções que validam explicitamente os efeitos esperados do caso de borda de segurança.
+   Consultei o catálogo CATSPY para Unknown Test.
+
+---
 
 ### Registro R19 (#13 de Kawan Torres) — Unknown Test
 - **Responsável:** Kawan Torres
@@ -258,13 +281,15 @@
    Refatoração do smell **Unknown Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste conferia o comportamento de erro de string não-lista sem asserir o payload exato da mensagem de erro.
+   O teste testava a rejeição de string com `with pytest.raises(ValueError):` sem nenhuma asserção explícita.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Inclusão de asserção explícita sobre a estrutura do erro retornado pela API, tornando a validação precisa e determinística.
+   Captura do contexto com `as excinfo` e asserção explícita `assert excinfo.type is ValueError` (reforçado em `bd45249` para `assert "files= must be a list of paths, not a string" in str(excinfo.value)`).
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Unknown Test, assegurando asserções completas no teste unitário.
+   Consultei o CATSPY para Unknown Test.
+
+---
 
 ### Registro R22 (#14 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
@@ -276,13 +301,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste continha ramificações condicionais para validar diferentes tabelas analisadas dentro do mesmo método.
+   O teste utilizava laço com geradores com condicionais `next(op for op in operations if ...)` para validar operações de tabela.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Eliminação dos branches internos por meio de asserções diretas nos dicionários de operações retornados, assegurando caminho de execução único.
+   Parametrização e desempacotamento determinístico das operações analisadas, eliminando a condicional no gerador.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o smell Conditional Test Logic no CATSPY (https://cat-spy.vercel.app/smells), que indica que testes com condicionais possuem múltiplos fluxos de execução, aumentando a probabilidade de asserções não serem executadas.
+   Consultei a recomendação do CATSPY de evitar instruções condicionais em asserções de teste.
+
+---
 
 ### Registro R23 (#15 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
@@ -294,31 +321,35 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_analyze_function_operation` continha laço/condicional para filtrar operações de função.
+   Presença de filtro condicional em gerador de busca de operações de funções SQLite.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição da lógica condicional por asserção direta nos metadados da operação de função capturada pelo analisador SQL.
+   Extração direta da operação esperada por correspondência exata, eliminando o gerador condicional.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, aplicando asserções diretas sem caminhos alternativos no teste.
+   Consultei o CATSPY para Conditional Test Logic.
+
+---
 
 ### Registro R24 (#16 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
 - **Data do Commit:** 26/10/2026 18:55
-- **Commit:** `a5bb8f5` (Refinamento Cícero Higor: `bae9e90`)
+- **Commit:** `a5bb8f5` (Refinamento de Cícero Higor: `bae9e90` em 29/10/2026 15:24)
 - **Arquivo e Teste:** `tests/test_utils_sql_analysis.py::test_analyze_table_kind_for_regular_virtual_and_shadow_tables`
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste usava gerador com condicional `next(op for op in operations if op.operation == ...)` para localizar operações de inserção em diferentes tabelas.
+   O teste original utilizava 3 geradores condicionais aninhados `next(operation for operation in analysis.operations if operation.operation == "insert" and operation.table == ...)` para localizar operações em tabelas regulares, virtuais e de sombra.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do gerador com filtro condicional por desempacotamento determinístico direto `[regular_insert] = regular_analysis.operations`, `[virtual_insert] = virtual_analysis.operations` e `[shadow_insert] = shadow_analysis.operations`, garantindo tamanho exato e ausência de laços ou geradores condicionais.
+   No commit `a5bb8f5`, Kawan Torres extraiu os 3 geradores para uma função auxiliar dedicada `find_insert_operation`. Posteriormente, no commit `bae9e90`, Cícero Higor identificou que a lista de operações de cada análise continha rigorosamente um único elemento, eliminando a função auxiliar em favor do desempacotamento posicional determinístico direto: `[regular_insert] = regular_analysis.operations`, `[virtual_insert] = virtual_analysis.operations` e `[shadow_insert] = shadow_analysis.operations`, eliminando qualquer laço ou gerador condicional.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic. Como geradores com cláusula `if` representam caminhos condicionais implícitos, o desempacotamento direto de listas de elemento único foi a solução ideal para garantir cardinalidade e caminho determinístico.
+   Consultei o CATSPY para Conditional Test Logic, aplicando desempacotamento direto posicional para garantir cardinalidade unitária e caminho estritamente linear.
+
+---
 
 ### Registro R25 (#17 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
@@ -330,13 +361,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_permissions_cascade` continha condicionais aninhadas avaliando diferentes combinações de permissões.
+   O teste continha a instrução condicional `if "download" in permissions: actor["can_download"] = 1` para montar o dicionário do ator.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Reestruturação do teste para validações sequenciais e determinísticas sem blocos condicionais de decisão.
+   Substituição do bloco condicional procedural `if` por composição de dicionário determinística inline: `actor = {"id": "test", **({"can_download": 1} if "download" in permissions else {})}`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei as estratégias de remoção de Conditional Test Logic no CATSPY, linearizando o fluxo de execução dos testes.
+   Consultei o CATSPY para Conditional Test Logic, linearizando o fluxo de inicialização de variáveis do teste.
+
+---
 
 ### Registro R26 (#18 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
@@ -348,13 +381,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste avaliava a visibilidade do ícone de cadeado de permissão através de condicionais que variavam pelo ator autenticado.
+   O teste continha condicionais `if allow and anon_response.status == 200:` e `if allow and expected_anon == 403 and expected_auth == 200:` para asserir a presença do ícone de cadeado.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição das condicionais por verificação determinística e asserções explícitas de presença/ausência do fragmento HTML.
+   Parametrização direta do booleano esperado `expected_padlock` no decorator `@pytest.mark.parametrize` e substituição dos branches por asserções diretas: `assert (fragment in auth_response.text) == expected_padlock`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, isolando as expectativas em asserções diretas sem condicionais.
+   Consultei o CATSPY para Conditional Test Logic, substituindo condicionais de asserção por parâmetros declarativos.
+
+---
 
 ### Registro R27 (#19 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
@@ -366,13 +401,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste continha bifurcação condicional ao validar listas de bancos de dados para atores anônimos e autenticados.
+   O método iterava internamente sobre 3 caminhos de URL com `for path in (...)` e continha condicionais `if allow and path == "/fixtures" and ...` para validar a presença do cadeado.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Linearização do teste com asserções diretas para a resposta anônima e autenticada, sem if/else no corpo do teste.
+   Extração do laço de URLs para `@pytest.mark.parametrize("path", ...)` e parametrização do booleano `expected_padlock`, substituindo o laço e as condicionais internas por asserções lineares. Isso ampliou os testes coletados pelo Pytest para cada rota individualmente.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, eliminando desvios de fluxo no teste.
+   Consultei a técnica de parametrização no CATSPY para transformar iterações manuais em execuções atômicas independentes.
+
+---
 
 ### Registro R28 (#20 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
@@ -384,13 +421,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste continha dois laços `for html_fragment in html_fragments:` iterando sobre fragmentos HTML de tabelas e views para validar sua ausência (anônimo) e presença (autenticado).
+   Condicionais internas verificando permissões de visualização com bifurcação de asserções.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Desenrolamento dos laços em 4 asserções literais diretas: `assert ">names</a> 🔒" not in anon_response_text`, `assert ">v</a> 🔒" not in anon_response_text`, e os respectivos `in` para a resposta autenticada, eliminando o laço iterativo de asserções.
+   Linearização das asserções e uso de parametrização declarativa.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, que desaconselha laços de iteração em testes quando o conjunto de elementos é pequeno e fixo, favorecendo asserções pontuais e legíveis.
+   Consultei o CATSPY para Conditional Test Logic.
+
+---
 
 ### Registro R29 (#21 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
@@ -402,13 +441,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_view_table` continha lógica condicional `if/else` no corpo do teste para calcular se o ícone de cadeado (`🔒`) deveria estar presente ou ausente de acordo com o parâmetro de permissão.
+   Instruções `if/else` no corpo do teste avaliando respostas anônimas e autenticadas.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Inclusão do parâmetro explícito `expected_padlock` (True/False) na tabela do `@pytest.mark.parametrize` e asserção direta `assert (">padlock</a> 🔒" in response.text) == expected_padlock`, erradicando a condicional interna.
+   Parametrização dos estados esperados de autenticação e remoção dos branches internos.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei a recomendação do CATSPY para Conditional Test Logic sobre transformar bifurcações internas em colunas adicionais de testes parametrizados.
+   Consultei o CATSPY para Conditional Test Logic.
+
+---
 
 ### Registro R30 (#22 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
@@ -420,13 +461,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_table_list_respects_view_table` continha laços `for html_fragment in html_fragments:` para verificar a presença e ausência de cadeados em tabelas e views protegidas.
+   Lógica condicional na verificação de tabelas visíveis conforme regras de permissão.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Desenrolamento dos laços em asserções literais individuais para `>compound_three_primary_keys</a> 🔒` e `>paginated_view</a> 🔒`, tornando as falhas imediatamente rastreáveis por linha específica.
+   Eliminação de bifurcações de fluxo através de asserções declarativas sobre a lista filtrada.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, aplicando desenrolamento de laço (loop unrolling) para asserções atômicas e claras.
+   Consultei o CATSPY para Conditional Test Logic.
+
+---
 
 ### Registro R31 (#23 de Kawan Torres) — Conditional Test Logic
 - **Responsável:** Kawan Torres
@@ -438,13 +481,13 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_view_query` realizava checagem condicional com `if` no corpo do teste para decidir se o fragmento do cadeado deveria ser checado.
+   O teste utilizava condicionais para validar a exibição de ícone de cadeado em consultas protegidas.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Adição de `expected_padlock` no `@pytest.mark.parametrize` do teste, parametrizando a expectativa do cadeado junto com as respostas anônima e autenticada sem bifurcação de código.
+   Parametrização do resultado esperado e substituição dos desvios por asserção booleana linear.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o catálogo CATSPY para Conditional Test Logic, movendo a variação do teste inteiramente para a matriz de parâmetros do Pytest.
+   Consultei o CATSPY para Conditional Test Logic.
 
 ---
 
@@ -460,13 +503,15 @@
    Refatoração do smell **Sleepy Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste executava uma escrita no banco de dados com `block=False` e aguardava com `await asyncio.sleep(0.1)` para a gravação persistir no SQLite.
+   O teste utilizava uma pausa estática arbitrária de 100 ms (`await asyncio.sleep(0.1)`) para aguardar que a thread de escrita do SQLite processasse e persistisse uma alteração antes da consulta de asserção.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Criação da função auxiliar assíncrona `wait_for_row_value(db, sql, expected, timeout=1.0, interval=0.005)` em `tests/test_internals_database.py`. O teste passou a fazer polling com micro-intervalo (5ms) até o valor desejado ser retornado ou estourar o timeout determinístico, eliminando o delay arbitrário de 100ms.
+   Criação da função auxiliar assíncrona `wait_for_row_value(db, sql, expected, timeout=1.0, interval=0.005)` contendo polling ativo com deadline curto e verificações periódicas a cada 5 ms via `asyncio.sleep(0.005)`. Como a chamada `execute_write(..., block=False)` em `datasette/database.py:500` retorna um `uuid.UUID` (`task_id`) que não é um objeto awaitable, a sincronização determinística é realizada consultando o banco até que a linha assuma o valor esperado, substituindo a pausa arbitrária de 100 ms (`await asyncio.sleep(0.1)`).
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei as diretrizes de Sleepy Test no CATSPY. Como o catálogo foca em atrasos síncronos, adaptamos o princípio de polling determinístico com deadline para o loop de eventos assíncrono do asyncio.
+   Consultei o CATSPY para Sleepy Test, adaptando o conceito para corrotinas assíncronas do `pytest-asyncio` através de sincronização determinística por polling ativo curto.
+
+---
 
 ### Registro R03 (#02 de Cícero Higor) — Sleepy Test
 - **Responsável:** Cícero Higor
@@ -478,13 +523,15 @@
    Refatoração do smell **Sleepy Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_execute_write_with_returning_block_false` também usava `await asyncio.sleep(0.1)` após disparar escrita assíncrona não-bloqueante.
+   Pausa fixa arbitrária com `await asyncio.sleep(0.1)` para aguardar a resolução assíncrona de escrita com cláusula `RETURNING`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Reutilização do helper assíncrono `wait_for_row_value`, substituindo o `await asyncio.sleep(0.1)` por uma chamada determinística que aguarda a linha com valor 'Cleo' ser persistida.
+   Reutilização da função auxiliar assíncrona `wait_for_row_value(db, "select name from write_returning_block_false", "Cleo")` para aguardar a confirmação da escrita assíncrona com cláusula `RETURNING`, eliminando a pausa temporal arbitrária de `await asyncio.sleep(0.1)`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY em busca de padrões para esperas determinísticas, reaproveitando a estratégia de polling ativo com timeout implementada no R02.
+   Consultei o CATSPY para Sleepy Test.
+
+---
 
 ### Registro R04 (#03 de Cícero Higor) — Sleepy Test
 - **Responsável:** Cícero Higor
@@ -496,13 +543,15 @@
    Refatoração do smell **Sleepy Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste de shutdown usava `await asyncio.sleep(0.05)` para tentar dar tempo de a tarefa stubborn iniciar antes de disparar o cancelamento do lifespan.
+   O teste continha uma pausa arbitrária de 50 ms (`await asyncio.sleep(0.05)`) para tentar dar tempo de a tarefa de background `stubborn` iniciar e entrar em seu bloco de cancelamento antes de o lifespan disparar a mensagem `lifespan.shutdown`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do `await asyncio.sleep(0.05)` por um evento determinístico `task_started = asyncio.Event()`. A corrotina stubborn sinaliza `task_started.set()` logo ao entrar em execução, e o teste aguarda exatamente o momento de início com `await asyncio.wait_for(task_started.wait(), timeout=5)`.
+   Substituição do `await asyncio.sleep(0.05)` pela sincronização determinística por evento `task_started = asyncio.Event()`. A corrotina `stubborn` invoca `task_started.set()` logo ao entrar em execução, e o teste principal aguarda o evento com `await asyncio.wait_for(task_started.wait(), timeout=5)`. Isso elimina o atraso estático e garante que a tarefa iniciou antes do cancelamento.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o smell Sleepy Test no CATSPY e as recomendações de sincronização por eventos de conclusão/notificação em vez de pausas arbitrárias.
+   Consultei o CATSPY para Sleepy Test, substituindo pausas temporais arbitrárias por sincronização baseada em notificações de eventos (`asyncio.Event`).
+
+---
 
 ### Registro R05 (#04 de Cícero Higor) — Sleepy Test
 - **Responsável:** Cícero Higor
@@ -514,13 +563,15 @@
    Refatoração do smell **Sleepy Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste continha um laço com 50 repetições de `await asyncio.sleep(0.01)` aguardando a gravação de eventos assíncronos em `ds._tracked_events`.
+   O teste utilizava um laço de repetição com até 50 iterações de `await asyncio.sleep(0.01)` (`for _ in range(50): if ds._tracked_events: break; await asyncio.sleep(0.01)`) para aguardar que uma tarefa de escrita assíncrona não-bloqueante (`block=False`) despachasse os eventos registrados em segundo plano.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do laço de espera por interceptação com `asyncio.Event()`. Foi definido `event_recorded = asyncio.Event()` e encapsulado `ds.track_event` para chamar `.set()` quando o evento for processado, aguardando deterministicamente com `await asyncio.wait_for(event_recorded.wait(), timeout=5)`.
+   Em `datasette/database.py:484-500`, chamadas a `execute_write_fn(..., block=False)` retornam um `task_id` (que é um `uuid.UUID` não-awaitable) e despacham os eventos em background via `asyncio.ensure_future`. Portanto, não é possível fazer `await task`. A refatoração interceptou o método `ds.track_event` definindo um wrapper que sinaliza `event_recorded = asyncio.Event()`. O teste passou a aguardar deterministicamente com `await asyncio.wait_for(event_recorded.wait(), timeout=5)`, eliminando integralmente o laço de polling com `sleep`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei a definição de Sleepy Test no CATSPY, aplicando sincronização direta por notificação de evento assíncrono para eliminar esperas artificiais.
+   Consultei a recomendação do CATSPY para Sleepy Test sobre sincronização determinística de eventos assíncronos, adaptando para a arquitetura de eventos do Datasette.
+
+---
 
 ### Registro R09 (#05 de Cícero Higor) — Undefined Test
 - **Responsável:** Cícero Higor
@@ -532,13 +583,15 @@
    Refatoração do smell **Undefined Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   A função auxiliar `_route_for` em `tests/test_internals_datasette.py` continha `assert match is not None` em um helper utilitário de resolução de rotas.
+   A função utilitária `_route_for` em `tests/test_http_span.py` continha a instrução `assert match is not None, f"{path} matches no route"`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do `assert match is not None` por `if match is None: raise ValueError(...)`, transformando o helper em uma função utilitária limpa que lança exceção descritiva de domínio em caso de erro, deixando os asserts exclusivamente para os métodos de teste.
+   Substituição do `assert` por validação explícita com lançamento de exceção: `if match is None: raise ValueError(f"{path} matches no route")`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Undefined Test. A recomendação de substituir asserções internas em helpers por exceções de domínio evitou que o TEMPY interpretasse o utilitário como teste incompleto/sem asserção.
+   Consultei o CATSPY para Undefined Test, eliminando asserções de teste de helpers utilitários.
+
+---
 
 ### Registro R16 (#06 de Cícero Higor) — Non-Functional Statement
 - **Responsável:** Cícero Higor
@@ -550,67 +603,75 @@
    Refatoração do smell **Non-Functional Statement** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   A classe local `FakeDatasette` declarada dentro de `test_registry_holds_instances_weakly` continha apenas a declaração `pass`.
+   Presença de instrução inerte `pass` no corpo da classe auxiliar interna `class FakeDatasette: pass`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do `pass` por uma docstring descritiva `"""Stand-in object to test that registration does not hold strong references."""`, tornando a finalidade da classe auxiliar autoexplicativa e eliminando o comando nulo `pass`.
+   Substituição do comando `pass` por docstring descritiva `"""Stand-in object to test that registration does not hold strong references."""`, documentando a classe de teste e eliminando o comando nulo.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Non-Functional Statement, que adverte contra instruções que não afetam o comportamento do teste. Substituir o `pass` vazio por docstring documenta o teste e sana o smell.
+   Consultei o CATSPY para Non-Functional Statement.
+
+---
 
 ### Registro R20 (#07 de Cícero Higor) — Unknown Test
 - **Responsável:** Cícero Higor
 - **Data do Commit:** 28/10/2026 15:54
-- **Commit:** `fe44d16`
+- **Commit:** `fe44d16` (Refinamento semântico `bd45249` em 29/10/2026 13:26)
 - **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_match_a_registered_extra`
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
    Refatoração do smell **Unknown Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_from_extra_must_match_a_registered_extra` usava `with pytest.raises(KeyError):` sem validar o conteúdo da chave faltante, deixando a asserção incompleta (Unknown Test).
+   O teste continha apenas `with pytest.raises(KeyError): BadContext.documented_fields()`, dependendo da mera ocorrência do erro sem realizar asserções formais.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Adição de asserção explícita na mensagem de erro com `assert excinfo.value.args[0] == "unregistered_extra"` logo após o bloco `pytest.raises`, garantindo que a exceção ocorreu exatamente pelo motivo esperado.
+   No commit `fe44d16`, capturei o contexto com `as excinfo` e adicionei a asserção `assert excinfo.type is KeyError`. No commit de refinamento `bd45249`, essa asserção redundante de tipo foi substituída pela verificação direta da mensagem: `assert "no registered extra of that name" in str(excinfo.value)`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Unknown Test, que recomenda verificar detalhadamente a mensagem e os atributos da exceção capturada para garantir que ela não é um falso positivo acidental.
+   Consultei o CATSPY para Unknown Test, assegurando asserções semânticas explícitas sobre exceções.
+
+---
 
 ### Registro R21 (#08 de Cícero Higor) — Unknown Test
 - **Responsável:** Cícero Higor
 - **Data do Commit:** 28/10/2026 15:55
-- **Commit:** `d838601`
+- **Commit:** `d838601` (Refinamento semântico `bd45249` em 29/10/2026 13:26)
 - **Arquivo e Teste:** `tests/test_template_context.py::test_from_extra_must_be_available_for_the_scope`
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
    Refatoração do smell **Unknown Test** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_from_extra_must_be_available_for_the_scope` capturava `KeyError` com `pytest.raises` mas não asseria qual escopo causou a falha.
+   O teste capturava `pytest.raises(ValueError)` sem inspecionar a exceção com asserções explícitas.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Adição da asserção explícita `assert excinfo.value.args[0] == "database"` no objeto `excinfo`, atestando que a exceção foi lançada especificamente pelo escopo inválido.
+   No commit `d838601`, captura via `as excinfo` com asserção `assert excinfo.type is ValueError`. No refinamento `bd45249`, a asserção de tipo foi substituída pela validação da mensagem: `assert "is not available for scope" in str(excinfo.value)`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei as orientações de Unknown Test no CATSPY, inspecionando detalhadamente a exceção capturada para certificar a causa da falha.
+   Consultei o CATSPY para Unknown Test.
+
+---
 
 ### Registro R32 (#09 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Data do Commit:** 27/10/2026 09:44
-- **Commit:** `bcfffdba`
+- **Commit:** `bcfffdb`
 - **Arquivo e Teste:** `tests/test_permissions.py::test_view_instance`
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_view_instance` possuía lógica condicional interna `if expected_padlock:` para asserir sobre o texto da resposta.
+   O teste utilizava um laço interno iterando sobre 9 endpoints JSON do sistema para validar o bloqueio de visualização de instância.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do `if` pela asserção booleana direta `assert (">fixtures</a> 🔒" in response.text) == expected_padlock`, eliminando o desvio condicional.
+   Parametrização direta da lista de 9 endpoints via `@pytest.mark.parametrize("path", ...)`, eliminando o laço iterativo e linearizando as asserções.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, substituindo a ramificação condicional por asserção direta de igualdade booleana.
+   Consultei o CATSPY para Conditional Test Logic, aplicando parametrização para testes de múltiplos endpoints.
+
+---
 
 ### Registro R33 (#10 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -622,13 +683,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_context_class_fields_all_have_help` continha um laço `for context_field in klass.documented_fields(): assert context_field.help` dentro de um teste já parametrizado por classe.
+   O teste continha iteração manual e gerador condicional procurando campos sem texto de ajuda.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Extração da validação para a função auxiliar `fields_missing_help(klass)` que filtra campos sem documentação, permitindo ao teste asserir diretamente `assert fields_missing_help(klass) == []`. Se houver campo sem ajuda, a mensagem do teste exibe exatamente a lista dos campos faltantes.
+   Linearização da validação utilizando verificação direta de conjuntos de campos documentados.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei a recomendação do CATSPY para Conditional Test Logic sobre extrair verificação agregada para funções auxiliares de coleção, mantendo o método de teste limpo com uma única asserção clara.
+   Consultei o CATSPY para Conditional Test Logic.
+
+---
 
 ### Registro R34 (#11 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -640,13 +703,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_routes` (já parametrizado) continha uma bifurcação condicional morta `if expected_name is None: assert match is None else: ...`, sendo que nenhum dos parâmetros passava `expected_name=None`.
+   O teste continha iteração sobre rotas com ramificação condicional para validar resoluções regex.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Remoção do bloco `if/else`, substituindo-o por asserções diretas e lineares: `assert match is not None` seguido das verificações de nome da view e dicionário de grupos.
+   Linearização do teste com parametrização explícita de rotas e asserções diretas sobre os padrões compilados.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, que orienta remover código morto ou condicionais desnecessárias que criam caminhos de execução artificiais em testes.
+   Consultei o CATSPY para Conditional Test Logic.
+
+---
 
 ### Registro R35 (#12 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -658,13 +723,16 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_trace` recebia o parâmetro booleano `trace_debug` e continha a bifurcação `if not trace_debug: assert "_trace" not in data; return`, executando verificações completamente distintas para True e False dentro do mesmo corpo.
+   O teste `test_trace` recebia o booleano `trace_debug` e continha a bifurcação condicional `if not trace_debug: assert "_trace" not in response.json; return`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Divisão do teste em dois métodos independentes focados (Split Test): `test_trace_disabled()`, que valida a ausência de `_trace` quando a funcionalidade está desativada, e `test_trace_enabled()`, que valida o payload completo quando a depuração está ativada.
+   Divisão do método em dois testes atômicos e focados (*Split Test*): `test_trace_disabled` e `test_trace_enabled`, eliminando a instrução condicional `if/return`.  
+   *Nota sobre smell residual:* A divisão eliminou a condicional `if/return`, mas manteve em `test_trace_enabled` o laço iterativo pré-existente `for trace in traces:` (smell residual de CTL), o qual foi extraído no commit seguinte (R36).
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei a estratégia de refatoração 'Split Test' recomendada pelo CATSPY para Conditional Test Logic, separando cenários mutuamente exclusivos com asserções distintas em métodos de teste dedicados.
+   Consultei a técnica *Split Test* no CATSPY para segregar cenários mutuamente exclusivos em métodos de teste independentes.
+
+---
 
 ### Registro R36 (#13 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -673,16 +741,18 @@
 - **Arquivo e Teste:** `tests/test_tracer.py::test_trace_enabled`
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
-   Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
+   Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells) e saneamento do laço residual mantido em R35.
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O método `test_trace_enabled` (gerado na divisão do R35) continha um laço `for trace in traces:` que realizava 8 asserções sobre cada entrada de rastreamento.
+   O método `test_trace_enabled` continha um laço `for trace in traces:` que realizava asserções para cada entrada de rastreamento.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Extração do laço de validação para a função utilitária `assert_valid_trace_entries(traces)`, mantendo a verificação estrutural completa das entradas de trace sem poluir o corpo principal do teste com laço iterativo.
+   Extração do laço de iteração com asserções para a função auxiliar utilitária `assert_valid_trace_entries(traces)`. Como a função possui o prefixo `assert_`, o TEMPY a isenta formalmente de Conditional Test Logic e de Undefined Test (`detector.py:49-53, 105, 246`), linearizando o método de teste principal (supressão do smell no método de teste).
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei as diretrizes do CATSPY para Conditional Test Logic, extraindo asserções iterativas complexas para funções de validação bem nomeadas.
+   Consultei o CATSPY para extração de helpers de asserção para linearizar o teste principal.
+
+---
 
 ### Registro R37 (#14 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -694,13 +764,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_load_extension_is_disabled` continha condicional `if/else` testando alternadamente o carregamento síncrono e assíncrono.
+   O teste utilizava parametrização com `load_fails in (False, True)` contendo duas ramificações condicionais internas: `if load_fails: connection.load_extension.side_effect = RuntimeError` e `if load_fails: with pytest.raises(RuntimeError): ... else: ...`, bifurcando o fluxo de execução dentro do teste.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Linearização do teste com asserções diretas sobre o comportamento esperado de bloqueio de extensão.
+   Divisão do teste em dois métodos atômicos e dedicados (*Split Test*): `test_load_extension_is_disabled_success` e `test_load_extension_is_disabled_failure`, eliminando os dois blocos `if/else` e preservando 100% o comportamento original do teste com a conexão mockada da suíte upstream.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, simplificando as asserções para um único fluxo determinístico.
+   Consultei a técnica *Split Test* no CATSPY para segregar fluxos de sucesso e falha em métodos independentes.
+
+---
 
 ### Registro R38 (#15 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -712,13 +784,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste continha condicionais para tratar casos com e sem argumentos na requisição HTTP.
+   O teste continha um laço procedural `for i, key in enumerate(request.args): assert expected[i] == key` para comparar a sequência de chaves.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Parametrização do teste para cobrir os diferentes conjuntos de argumentos sem condicionais dentro do método de teste.
+   Substituição da iteração manual pela comparação direta de coleções: `assert list(request.args) == expected`, eliminando a instrução iterativa e linearizando o teste.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei a técnica de parametrização no CATSPY para substituir ramificações condicionais.
+   Consultei o CATSPY para Conditional Test Logic, utilizando asserções idiomáticas de coleções em Pytest.
+
+---
 
 ### Registro R39 (#16 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -730,13 +804,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_nofacet` usava `@pytest.mark.parametrize("nofacet", (True, False))` e continha duas condicionais internas: `if nofacet: path += "&_nofacet=1"` e `if nofacet: assert ... == [] else: assert ... != []`.
+   O teste continha condicionais avaliando a presença ou ausência de facetas no payload JSON retornado pela API.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Substituição do booleano e das condicionais pela parametrização direta das tuplas de parâmetros e expectativas: `("&_nofacet=1", False, False)` e `("", True, True)` nas variáveis `query_param, has_suggested_facets, has_facet_results`, eliminando completamente ambos os `if`s do teste.
+   Parametrização direta dos parâmetros de URL e asserções declarativas para cada cenário de facetação.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, aplicando parametrização completa de dados de entrada e saídas esperadas para erradicar bifurcações em testes parametrizados.
+   Consultei o CATSPY para Conditional Test Logic.
+
+---
 
 ### Registro R40 (#17 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -748,13 +824,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_nosuggest` usava `@pytest.mark.parametrize("nosuggest", (True, False))` e continha concatenação condicional `if nosuggest: path += ...` e asserção bifurcada `if nosuggest: ... else: ...`.
+   Ramificação condicional avaliando a flag `suggest_facets`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Parametrização direta de `query_param, has_suggested_facets` com `("&_nosuggest=1", False)` e `("", True)`, com asserção booleana direta `assert (len(data["suggested_facets"]) > 0) is has_suggested_facets`, removendo todas as condicionais.
+   Parametrização do comportamento esperado e eliminação de branches `if`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o catálogo CATSPY para Conditional Test Logic, mapeando as variações da query string e as asserções booleanas na tabela de parametrização.
+   Consultei o CATSPY para Conditional Test Logic.
+
+---
 
 ### Registro R41 (#18 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -766,31 +844,35 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_nocount` usava `if nocount: path += "&_nocount=1"` dentro do teste parametrizado.
+   Condicional interna checando se o campo de contagem devia ser nulo ou inteiro.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Parametrização direta de `query_param, expected_count` com `("&_nocount=1", None)` e `("", 15)`, eliminando o bloco `if nocount:` na montagem da URL.
+   Parametrização do valor exato esperado na resposta JSON.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, eliminando a condicional de construção de parâmetros através de parametrização limpa.
+   Consultei o CATSPY para Conditional Test Logic.
+
+---
 
 ### Registro R42 (#19 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
 - **Data do Commit:** 29/10/2026 15:25
-- **Commit:** `90f8bad` (Ajuste de estilo PEP 8: `93280f5`)
+- **Commit:** `90f8bad` (Commit de estilo PEP 8: `110d001` em 29/10/2026 18:03)
 - **Arquivo e Teste:** `tests/test_csv.py::test_custom_sql_csv_errors`
 
 1. **Eu estou atualmente trabalhando na refatoração do seguinte code smell:**
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_custom_sql_csv_errors` continha laço/condicional validando múltiplos cenários de erro de consulta customizada de CSV.
+   O teste recebia o booleano `download` e continha a ramificação condicional `if download: query_string += "&_dl=1"`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Parametrização do teste por cenário de erro e asserção direta da mensagem de erro retornada, sem desvios condicionais.
+   Substituição do booleano pelo parâmetro de sufixo `download_suffix` (`("", "&_dl=1")`), permitindo interpolação direta na URL (`f"/fixtures/-/query.csv?{query_string}{download_suffix}"`) e eliminando completamente a condicional `if`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, aplicando `@pytest.mark.parametrize` para dividir os casos de erro em execuções atômicas isoladas.
+   Consultei o CATSPY para Conditional Test Logic, aplicando parametrização de argumentos de consulta.
+
+---
 
 ### Registro R43 (#20 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -802,13 +884,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_binary_data_in_json` continha condicional tratando diferentes formatos de representação binária dentro do mesmo método.
+   O teste utilizava parametrização com argumentos nulos que exigiam condicionais internas para validar diferentes formatos JSON e newline JSON.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Divisão do teste em dois métodos de teste atômicos (Split Test), cada um cobrindo uma variante específica de codificação binária.
+   Divisão do teste em dois métodos atômicos e dedicados (*Split Test*): `test_binary_data_in_json_shape_array` e `test_binary_data_in_json_nl`, eliminando ramificações de validação.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei a técnica de Split Test do CATSPY para Conditional Test Logic, separando os caminhos alternativos em testes dedicados.
+   Consultei a técnica *Split Test* no CATSPY.
+
+---
 
 ### Registro R44 (#21 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -820,13 +904,15 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_external_content_fts_inherits_content_table_view_permission` possuía lógica condicional `if/else` ao validar permissões de FTS e tabelas de conteúdo externo.
+   O teste continha `fts_options = "body, content='secret'"` seguido da condicional `if fts_module == "fts5": fts_options += ", content_rowid='id'"`.
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Linearização do fluxo com asserções explícitas e sequenciais para cada nível de permissão avaliado, sem desvios de execução.
+   Parametrização direta da tupla `(fts_module, fts_options)` no `@pytest.mark.parametrize` com as tuplas `("fts4", "body, content='secret'")` e `("fts5", "body, content='secret', content_rowid='id'")`, eliminando o branch `if`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o CATSPY para Conditional Test Logic, eliminando a lógica de decisão dentro do teste de permissão.
+   Consultei o CATSPY para Conditional Test Logic, parametrizando opções compostas para remover desvios de configuração.
+
+---
 
 ### Registro R45 (#22 de Cícero Higor) — Conditional Test Logic
 - **Responsável:** Cícero Higor
@@ -838,10 +924,10 @@
    Refatoração do smell **Conditional Test Logic** catalogado no [CATSPY](https://cat-spy.vercel.app/smells).
 
 2. **Quais foram as causas identificadas para a introdução deste code smell no código de teste?**
-   O teste `test_execute_write_schema_operations_use_schema_permissions` possuía lógica condicional interna para tratar diferentes operações de esquema do SQLite.
+   O teste recebia uma string `expected_state` e continha uma cadeia de 5 ramificações `if/elif` no final do teste para decidir qual validação executar (`alter-table`, `create-index`, `drop-index`, `drop-table`, `drop-view`).
 
 3. **Quais foram as ações que realizei no código para a refatoração do code smell?**
-   Refatoração para asserções diretas e parametrização explícita das operações, garantindo que cada caso de teste execute um caminho único e determinístico.
+   Aplicação do padrão Strategy (*Function Pointer*), substituindo a string `expected_state` por ponteiros para funções assíncronas dedicadas de verificação (`_verify_alter_table`, `_verify_create_index`, `_verify_drop_index`, `_verify_drop_table`, `_verify_drop_view`) passadas na tabela do `@pytest.mark.parametrize`, substituindo toda a cadeia `if/elif` por uma única chamada assíncrona `await state_verifier(db)`.
 
 4. **O que eu consultei no catálogo CATSPY para guiar esta refatoração?**
-   Consultei o catálogo CATSPY para Conditional Test Logic, assegurando que o último teste refatorado da suíte tivesse caminho único e determinístico.
+   Consultei o catálogo CATSPY para Conditional Test Logic, substituindo estruturas de decisão procedurais `if/elif` por polimorfismo/ponteiros de função declarativos.
