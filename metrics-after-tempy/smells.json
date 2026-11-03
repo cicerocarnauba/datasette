@@ -1,0 +1,1172 @@
+[
+  {
+    "arquivo": "tests/test_actions_sql.py",
+    "smell": "Programming Paradigms Blend",
+    "metodo": "",
+    "linhas": "20;33"
+  },
+  {
+    "arquivo": "tests/test_api.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_common_prefix_database_names",
+    "linhas": "910"
+  },
+  {
+    "arquivo": "tests/test_api.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_common_prefix_database_names",
+    "linhas": "914"
+  },
+  {
+    "arquivo": "tests/test_api.py",
+    "smell": "Programming Paradigms Blend",
+    "metodo": "",
+    "linhas": "16;1149"
+  },
+  {
+    "arquivo": "tests/test_auth.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_auth_create_token",
+    "linhas": "209"
+  },
+  {
+    "arquivo": "tests/test_auth.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_auth_create_token",
+    "linhas": "210"
+  },
+  {
+    "arquivo": "tests/test_auth.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_auth_create_token",
+    "linhas": "223"
+  },
+  {
+    "arquivo": "tests/test_auth.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_auth_create_token",
+    "linhas": "228"
+  },
+  {
+    "arquivo": "tests/test_auth.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_cli_create_token",
+    "linhas": "361"
+  },
+  {
+    "arquivo": "tests/test_auth.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_cli_create_token",
+    "linhas": "369"
+  },
+  {
+    "arquivo": "tests/test_auth.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_cli_create_token",
+    "linhas": "376"
+  },
+  {
+    "arquivo": "tests/test_auth.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_cli_create_token",
+    "linhas": "381"
+  },
+  {
+    "arquivo": "tests/test_auth.py",
+    "smell": "Verbose Test",
+    "metodo": "test_auth_create_token",
+    "linhas": "181;238"
+  },
+  {
+    "arquivo": "tests/test_cli.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_inspect_cli",
+    "linhas": "36"
+  },
+  {
+    "arquivo": "tests/test_cli.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_spatialite_error_if_attempt_to_open_spatialite",
+    "linhas": "96"
+  },
+  {
+    "arquivo": "tests/test_cli.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_startup_error_from_plugin_is_click_exception",
+    "linhas": "354"
+  },
+  {
+    "arquivo": "tests/test_cli.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_setting_default_allow_sql",
+    "linhas": "430"
+  },
+  {
+    "arquivo": "tests/test_cli.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_serve_config",
+    "linhas": "472"
+  },
+  {
+    "arquivo": "tests/test_cli.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_serve_duplicate_database_names",
+    "linhas": "498"
+  },
+  {
+    "arquivo": "tests/test_cli.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_help_settings",
+    "linhas": "535"
+  },
+  {
+    "arquivo": "tests/test_cli.py",
+    "smell": "Exception Handling",
+    "metodo": "test_startup_error_from_plugin_is_click_exception",
+    "linhas": "346"
+  },
+  {
+    "arquivo": "tests/test_cli.py",
+    "smell": "Verbose Test",
+    "metodo": "test_duplicate_database_files_error",
+    "linhas": "550;607"
+  },
+  {
+    "arquivo": "tests/test_cli_serve_get.py",
+    "smell": "Verbose Test",
+    "metodo": "test_serve_with_get_does_not_launch_background_tasks",
+    "linhas": "55;102"
+  },
+  {
+    "arquivo": "tests/test_cli_serve_server.py",
+    "smell": "Exception Handling",
+    "metodo": "test_sigterm_runs_shutdown_hooks",
+    "linhas": "190"
+  },
+  {
+    "arquivo": "tests/test_cli_serve_server.py",
+    "smell": "Exception Handling",
+    "metodo": "test_sigint_runs_shutdown_hooks",
+    "linhas": "216"
+  },
+  {
+    "arquivo": "tests/test_column_types.py",
+    "smell": "Undefined Test",
+    "metodo": "_window_data_from_html",
+    "linhas": "114"
+  },
+  {
+    "arquivo": "tests/test_config_dir.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_databases",
+    "linhas": "145"
+  },
+  {
+    "arquivo": "tests/test_config_dir.py",
+    "smell": "Exception Handling",
+    "metodo": "test_invalid_settings",
+    "linhas": "89"
+  },
+  {
+    "arquivo": "tests/test_config_dir.py",
+    "smell": "Verbose Test",
+    "metodo": "config_dir",
+    "linhas": "33;81"
+  },
+  {
+    "arquivo": "tests/test_crossdb.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_crossdb_warning_if_too_many_databases",
+    "linhas": "44"
+  },
+  {
+    "arquivo": "tests/test_crossdb.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_crossdb_attached_database_list_display",
+    "linhas": "74"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_settings_are_documented",
+    "linhas": "37"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_plugin_hooks_are_documented",
+    "linhas": "56"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_view_classes_are_documented",
+    "linhas": "100"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_table_filters_are_documented",
+    "linhas": "118"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_functions_marked_with_documented_are_documented",
+    "linhas": "177"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "189"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "193"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "199"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "206"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "211"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "213"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "227"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "234"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Unknown Test",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "182"
+  },
+  {
+    "arquivo": "tests/test_docs.py",
+    "smell": "Verbose Test",
+    "metodo": "test_rst_heading_underlines_match_title_length",
+    "linhas": "182;238"
+  },
+  {
+    "arquivo": "tests/test_facets.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_other_types_of_facet_in_metadata",
+    "linhas": "726"
+  },
+  {
+    "arquivo": "tests/test_fd_leak.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_close_releases_file_descriptors",
+    "linhas": "43"
+  },
+  {
+    "arquivo": "tests/test_fixtures.py",
+    "smell": "Exception Handling",
+    "metodo": "test_populate_fixture_database",
+    "linhas": "16"
+  },
+  {
+    "arquivo": "tests/test_fixtures.py",
+    "smell": "Exception Handling",
+    "metodo": "test_write_fixture_database",
+    "linhas": "29"
+  },
+  {
+    "arquivo": "tests/test_fixtures.py",
+    "smell": "Exception Handling",
+    "metodo": "test_extra_database_helpers",
+    "linhas": "37"
+  },
+  {
+    "arquivo": "tests/test_fixtures.py",
+    "smell": "Exception Handling",
+    "metodo": "test_extra_database_helpers",
+    "linhas": "46"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_not_allowed_methods",
+    "linhas": "193"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_sql_time_limit",
+    "linhas": "274"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_row_page_does_not_truncate",
+    "linhas": "286"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_stored_query_show_hide_metadata_option",
+    "linhas": "867"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_config",
+    "linhas": "1000"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_config",
+    "linhas": "1004"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_config",
+    "linhas": "1006"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_config",
+    "linhas": "1027"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_config",
+    "linhas": "1028"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_config",
+    "linhas": "1034"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_config",
+    "linhas": "1047"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_config",
+    "linhas": "1061"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_edit_sql_link_not_shown_if_user_lacks_permission",
+    "linhas": "1156"
+  },
+  {
+    "arquivo": "tests/test_html.py",
+    "smell": "Verbose Test",
+    "metodo": "test_base_url_config",
+    "linhas": "997;1071"
+  },
+  {
+    "arquivo": "tests/test_http_span.py",
+    "smell": "Programming Paradigms Blend",
+    "metodo": "",
+    "linhas": "17;45"
+  },
+  {
+    "arquivo": "tests/test_internals_request.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_request_properties",
+    "linhas": "307"
+  },
+  {
+    "arquivo": "tests/test_multipart.py",
+    "smell": "Verbose Test",
+    "metodo": "load_conformance_test_cases",
+    "linhas": "1128;1180"
+  },
+  {
+    "arquivo": "tests/test_multipart.py",
+    "smell": "Programming Paradigms Blend",
+    "metodo": "",
+    "linhas": "20;222"
+  },
+  {
+    "arquivo": "tests/test_permissions.py",
+    "smell": "Exception Handling",
+    "metodo": "test_permissions_cascade",
+    "linhas": "581"
+  },
+  {
+    "arquivo": "tests/test_permissions.py",
+    "smell": "Exception Handling",
+    "metodo": "test_padlocks_on_database_page",
+    "linhas": "621"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_alter_table_flow",
+    "linhas": "863"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_alter_table_flow",
+    "linhas": "867"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_alter_table_primary_key_columns_stay_at_top",
+    "linhas": "884"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_modal_consumers_dismiss_and_restore_focus",
+    "linhas": "1913"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_modal_consumers_dismiss_and_restore_focus",
+    "linhas": "1917"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_schema_modal_escape_confirmation_and_focus",
+    "linhas": "1991"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_menu_patterns_use_shared_menus",
+    "linhas": "2035"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_menu_patterns_use_shared_menus",
+    "linhas": "2037"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_portfolio_uses_shared_menus",
+    "linhas": "2064"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_menus_fit_viewport",
+    "linhas": "2141"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_menus_fit_viewport",
+    "linhas": "2146"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_menus_fit_viewport",
+    "linhas": "2151"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Sleepy Test",
+    "metodo": "test_alter_table_flow",
+    "linhas": "869"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Unknown Test",
+    "metodo": "test_menu_keyboard_and_dismissal",
+    "linhas": "2188"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Unknown Test",
+    "metodo": "test_column_menu_actions_and_dialog_focus",
+    "linhas": "2222"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "write_playwright_database",
+    "linhas": "107;169"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "write_playwright_config",
+    "linhas": "172;228"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "write_playwright_plugin",
+    "linhas": "231;336"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "test_create_table_flow",
+    "linhas": "419;507"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "test_create_table_from_data_flow",
+    "linhas": "511;619"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "test_alter_table_flow",
+    "linhas": "786;870"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "test_column_chooser_selection_and_drag_in_document",
+    "linhas": "1122;1169"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "test_insert_row_flow_uses_custom_column_field",
+    "linhas": "1173;1322"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "test_bulk_insert_upsert_option_updates_existing_and_inserts_new",
+    "linhas": "1360;1409"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "test_modal_lifecycle",
+    "linhas": "1742;1842"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Verbose Test",
+    "metodo": "test_modal_nested_escape_and_cleanup",
+    "linhas": "1846;1903"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Undefined Test",
+    "metodo": "project_row",
+    "linhas": "349"
+  },
+  {
+    "arquivo": "tests/test_playwright.py",
+    "smell": "Undefined Test",
+    "metodo": "upsert_item_row",
+    "linhas": "392"
+  },
+  {
+    "arquivo": "tests/test_plugins.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_plugin_hooks_have_tests",
+    "linhas": "45"
+  },
+  {
+    "arquivo": "tests/test_plugins.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_plugin_hooks_have_tests",
+    "linhas": "46"
+  },
+  {
+    "arquivo": "tests/test_plugins.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_default_plugins_have_no_templates_path_or_static_path",
+    "linhas": "519"
+  },
+  {
+    "arquivo": "tests/test_plugins.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_default_plugins_have_no_templates_path_or_static_path",
+    "linhas": "520"
+  },
+  {
+    "arquivo": "tests/test_plugins.py",
+    "smell": "Verbose Test",
+    "metodo": "test_hook_register_commands",
+    "linhas": "1314;1361"
+  },
+  {
+    "arquivo": "tests/test_plugins.py",
+    "smell": "Programming Paradigms Blend",
+    "metodo": "",
+    "linhas": "35;1610"
+  },
+  {
+    "arquivo": "tests/test_pr76_fts_policy.py",
+    "smell": "Exception Handling",
+    "metodo": "test_vocabulary_dependency_identity",
+    "linhas": "24"
+  },
+  {
+    "arquivo": "tests/test_pr76_fts_policy.py",
+    "smell": "Exception Handling",
+    "metodo": "test_cross_schema_vocabulary_is_unresolved",
+    "linhas": "113"
+  },
+  {
+    "arquivo": "tests/test_pr76_fts_policy.py",
+    "smell": "Exception Handling",
+    "metodo": "test_vocabulary_quoted_token_boundaries",
+    "linhas": "135"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_publish_cloudrun_memory_cpu",
+    "linhas": "173"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_publish_cloudrun_memory_cpu",
+    "linhas": "175"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_publish_cloudrun_memory_cpu",
+    "linhas": "177"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_publish_cloudrun_memory_cpu",
+    "linhas": "180"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_publish_cloudrun_memory_cpu",
+    "linhas": "190"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_publish_cloudrun_memory_cpu",
+    "linhas": "192"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_publish_cloudrun_memory_cpu",
+    "linhas": "194"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Verbose Test",
+    "metodo": "test_publish_cloudrun_memory_cpu",
+    "linhas": "154;214"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Verbose Test",
+    "metodo": "test_publish_cloudrun_plugin_secrets",
+    "linhas": "221;291"
+  },
+  {
+    "arquivo": "tests/test_publish_cloudrun.py",
+    "smell": "Verbose Test",
+    "metodo": "test_publish_cloudrun_apt_get_install",
+    "linhas": "298;347"
+  },
+  {
+    "arquivo": "tests/test_publish_heroku.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_publish_heroku_generate_dir",
+    "linhas": "173"
+  },
+  {
+    "arquivo": "tests/test_publish_heroku.py",
+    "smell": "Verbose Test",
+    "metodo": "test_publish_heroku_generate_dir",
+    "linhas": "140;185"
+  },
+  {
+    "arquivo": "tests/test_stored_queries.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_stored_query_pages_vary_by_credentials",
+    "linhas": "214"
+  },
+  {
+    "arquivo": "tests/test_stored_queries.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_stored_query_permissions_on_database_page",
+    "linhas": "278"
+  },
+  {
+    "arquivo": "tests/test_stored_queries.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_stored_query_permissions_on_database_page",
+    "linhas": "303"
+  },
+  {
+    "arquivo": "tests/test_stored_queries.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_magic_parameters_csrf_json",
+    "linhas": "410"
+  },
+  {
+    "arquivo": "tests/test_stored_queries.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_magic_parameters_csrf_json",
+    "linhas": "417"
+  },
+  {
+    "arquivo": "tests/test_stored_queries.py",
+    "smell": "Verbose Test",
+    "metodo": "stored_write_client",
+    "linhas": "17;67"
+  },
+  {
+    "arquivo": "tests/test_stored_queries.py",
+    "smell": "Verbose Test",
+    "metodo": "test_stored_query_permissions_on_database_page",
+    "linhas": "256;317"
+  },
+  {
+    "arquivo": "tests/test_table_api.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_page_size_matching_max_returned_rows",
+    "linhas": "884"
+  },
+  {
+    "arquivo": "tests/test_table_api.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_page_size_matching_max_returned_rows",
+    "linhas": "889"
+  },
+  {
+    "arquivo": "tests/test_table_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_table_cell_truncation",
+    "linhas": "149"
+  },
+  {
+    "arquivo": "tests/test_table_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_export_links_are_not_double_prefixed",
+    "linhas": "656"
+  },
+  {
+    "arquivo": "tests/test_table_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_url_export_links_are_not_double_prefixed",
+    "linhas": "681"
+  },
+  {
+    "arquivo": "tests/test_table_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_facet_more_links",
+    "linhas": "2250"
+  },
+  {
+    "arquivo": "tests/test_table_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_facet_more_links",
+    "linhas": "2253"
+  },
+  {
+    "arquivo": "tests/test_table_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_facet_total",
+    "linhas": "2302"
+  },
+  {
+    "arquivo": "tests/test_table_html.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_allow_facet_off",
+    "linhas": "2352"
+  },
+  {
+    "arquivo": "tests/test_tasks_endpoint.py",
+    "smell": "Programming Paradigms Blend",
+    "metodo": "",
+    "linhas": "18;22"
+  },
+  {
+    "arquivo": "tests/test_telemetry_metrics.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_closed_datasette_stops_being_observed",
+    "linhas": "338"
+  },
+  {
+    "arquivo": "tests/test_telemetry_metrics.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_histograms_spread_values_across_buckets",
+    "linhas": "399"
+  },
+  {
+    "arquivo": "tests/test_telemetry_registry.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_registry_matches_the_expected_names",
+    "linhas": "226"
+  },
+  {
+    "arquivo": "tests/test_telemetry_registry.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_registry_has_no_duplicate_names",
+    "linhas": "299"
+  },
+  {
+    "arquivo": "tests/test_telemetry_registry.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_registry_entries_are_documented",
+    "linhas": "307"
+  },
+  {
+    "arquivo": "tests/test_telemetry_registry.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_registry_entries_are_documented",
+    "linhas": "309"
+  },
+  {
+    "arquivo": "tests/test_telemetry_registry.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_registry_entries_survive_deepcopy_and_pickle",
+    "linhas": "326"
+  },
+  {
+    "arquivo": "tests/test_telemetry_registry.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_every_histogram_declares_bucket_boundaries",
+    "linhas": "360"
+  },
+  {
+    "arquivo": "tests/test_telemetry_registry.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_every_histogram_declares_bucket_boundaries",
+    "linhas": "361"
+  },
+  {
+    "arquivo": "tests/test_telemetry_registry.py",
+    "smell": "Exception Handling",
+    "metodo": "test_registry_entries_survive_deepcopy_and_pickle",
+    "linhas": "327"
+  },
+  {
+    "arquivo": "tests/test_telemetry_registry.py",
+    "smell": "Programming Paradigms Blend",
+    "metodo": "",
+    "linhas": "14;85"
+  },
+  {
+    "arquivo": "tests/test_template_context.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_base_context_keys_all_have_docs",
+    "linhas": "202"
+  },
+  {
+    "arquivo": "tests/test_template_context.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_template_context_docs_cover_every_documented_key",
+    "linhas": "210"
+  },
+  {
+    "arquivo": "tests/test_template_context.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_template_context_docs_cover_every_documented_key",
+    "linhas": "212"
+  },
+  {
+    "arquivo": "tests/test_template_context.py",
+    "smell": "Conditional Test Logic",
+    "metodo": "test_template_context_docs_cover_every_documented_key",
+    "linhas": "215"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_validate_sql_select_bad",
+    "linhas": "162"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_validate_sql_select_good",
+    "linhas": "194"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_escape_sqlite_double_quotes_work_in_query",
+    "linhas": "245"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_escape_sqlite_prevents_injection",
+    "linhas": "264"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_detect_fts_different_table_names",
+    "linhas": "280"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_supports_returning",
+    "linhas": "294"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_sqlite_table_type_detects_virtual_and_shadow_tables",
+    "linhas": "309"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_sqlite_table_type_detects_attached_database_tables",
+    "linhas": "343"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_sqlite_hidden_table_names_hides_multiline_content_fts_table",
+    "linhas": "361"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_sqlite_derived_table_dependencies",
+    "linhas": "375"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_is_url",
+    "linhas": "424"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_to_css_class",
+    "linhas": "440"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_temporary_docker_directory_uses_hard_link",
+    "linhas": "444"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_temporary_docker_directory_uses_copy_if_hard_link_fails",
+    "linhas": "472"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_temporary_docker_directory_quotes_args",
+    "linhas": "501"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_compound_keys_after_sql",
+    "linhas": "528"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_table_columns",
+    "linhas": "544"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_path_with_format",
+    "linhas": "569"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_path_with_format_can_override_request_path",
+    "linhas": "575"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_format_bytes",
+    "linhas": "592"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_escape_fts",
+    "linhas": "610"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_escape_css_string",
+    "linhas": "622"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_check_connection_spatialite_raises",
+    "linhas": "626"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_check_connection_passes",
+    "linhas": "634"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_call_with_supported_arguments",
+    "linhas": "640"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_multi_params",
+    "linhas": "663"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_actor_matches_allow",
+    "linhas": "715"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_resolve_env_secrets",
+    "linhas": "729"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_display_actor",
+    "linhas": "747"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_parse_metadata",
+    "linhas": "786"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_tilde_encoding",
+    "linhas": "843"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_truncate_url",
+    "linhas": "865"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_pairs_to_nested_config",
+    "linhas": "915"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_sha256_file",
+    "linhas": "920"
+  },
+  {
+    "arquivo": "tests/test_utils.py",
+    "smell": "Unknown Test",
+    "metodo": "test_deep_dict_update",
+    "linhas": "963"
+  },
+  {
+    "arquivo": "tests/test_utils_sql_analysis.py",
+    "smell": "Exception Handling",
+    "metodo": "test_analyze_create_table_operation",
+    "linhas": "128"
+  },
+  {
+    "arquivo": "tests/test_utils_sql_analysis.py",
+    "smell": "Exception Handling",
+    "metodo": "test_analyze_vacuum_operation",
+    "linhas": "153"
+  },
+  {
+    "arquivo": "tests/test_utils_sql_analysis.py",
+    "smell": "Exception Handling",
+    "metodo": "test_analyze_statement_with_no_authorizer_callbacks_is_unknown",
+    "linhas": "175"
+  },
+  {
+    "arquivo": "tests/test_utils_sql_analysis.py",
+    "smell": "Exception Handling",
+    "metodo": "test_analyze_create_virtual_table_operation",
+    "linhas": "251"
+  },
+  {
+    "arquivo": "tests/test_utils_sql_analysis.py",
+    "smell": "Exception Handling",
+    "metodo": "test_analyze_table_kind_for_regular_virtual_and_shadow_tables",
+    "linhas": "275"
+  },
+  {
+    "arquivo": "tests/test_utils_sql_analysis.py",
+    "smell": "Exception Handling",
+    "metodo": "test_analyze_create_table_as_select_function_is_not_internal",
+    "linhas": "310"
+  },
+  {
+    "arquivo": "tests/test_write_wrapper.py",
+    "smell": "Programming Paradigms Blend",
+    "metodo": "",
+    "linhas": "18;19"
+  }
+]

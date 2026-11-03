@@ -1,0 +1,722 @@
+{
+  "datasette/inspect.py": {
+    "loc": 104,
+    "lloc": 41,
+    "sloc": 79,
+    "comments": 4,
+    "multi": 0,
+    "blank": 18,
+    "single_comments": 7
+  },
+  "datasette/url_builder.py": {
+    "loc": 62,
+    "lloc": 44,
+    "sloc": 48,
+    "comments": 0,
+    "multi": 0,
+    "blank": 14,
+    "single_comments": 0
+  },
+  "datasette/permissions.py": {
+    "loc": 244,
+    "lloc": 134,
+    "sloc": 124,
+    "comments": 24,
+    "multi": 54,
+    "blank": 49,
+    "single_comments": 17
+  },
+  "datasette/actor_auth_cookie.py": {
+    "loc": 25,
+    "lloc": 20,
+    "sloc": 20,
+    "comments": 1,
+    "multi": 0,
+    "blank": 4,
+    "single_comments": 1
+  },
+  "datasette/tokens.py": {
+    "loc": 214,
+    "lloc": 113,
+    "sloc": 122,
+    "comments": 1,
+    "multi": 41,
+    "blank": 46,
+    "single_comments": 5
+  },
+  "datasette/filters.py": {
+    "loc": 469,
+    "lloc": 234,
+    "sloc": 405,
+    "comments": 13,
+    "multi": 0,
+    "blank": 50,
+    "single_comments": 14
+  },
+  "datasette/fixtures.py": {
+    "loc": 414,
+    "lloc": 43,
+    "sloc": 348,
+    "comments": 0,
+    "multi": 0,
+    "blank": 60,
+    "single_comments": 6
+  },
+  "datasette/telemetry.py": {
+    "loc": 481,
+    "lloc": 217,
+    "sloc": 280,
+    "comments": 32,
+    "multi": 59,
+    "blank": 100,
+    "single_comments": 42
+  },
+  "datasette/tracer.py": {
+    "loc": 156,
+    "lloc": 104,
+    "sloc": 127,
+    "comments": 7,
+    "multi": 0,
+    "blank": 23,
+    "single_comments": 6
+  },
+  "datasette/sql_functions.py": {
+    "loc": 7,
+    "lloc": 5,
+    "sloc": 5,
+    "comments": 0,
+    "multi": 0,
+    "blank": 2,
+    "single_comments": 0
+  },
+  "datasette/default_jump_items.py": {
+    "loc": 82,
+    "lloc": 10,
+    "sloc": 79,
+    "comments": 0,
+    "multi": 0,
+    "blank": 3,
+    "single_comments": 0
+  },
+  "datasette/template_contexts.py": {
+    "loc": 40,
+    "lloc": 10,
+    "sloc": 14,
+    "comments": 0,
+    "multi": 18,
+    "blank": 7,
+    "single_comments": 1
+  },
+  "datasette/column_types.py": {
+    "loc": 81,
+    "lloc": 42,
+    "sloc": 38,
+    "comments": 1,
+    "multi": 26,
+    "blank": 17,
+    "single_comments": 0
+  },
+  "datasette/handle_exception.py": {
+    "loc": 88,
+    "lloc": 56,
+    "sloc": 76,
+    "comments": 4,
+    "multi": 0,
+    "blank": 10,
+    "single_comments": 2
+  },
+  "datasette/hookspecs.py": {
+    "loc": 269,
+    "lloc": 132,
+    "sloc": 103,
+    "comments": 0,
+    "multi": 32,
+    "blank": 94,
+    "single_comments": 40
+  },
+  "datasette/app.py": {
+    "loc": 3699,
+    "lloc": 1622,
+    "sloc": 2943,
+    "comments": 183,
+    "multi": 235,
+    "blank": 335,
+    "single_comments": 186
+  },
+  "datasette/write_sql.py": {
+    "loc": 296,
+    "lloc": 109,
+    "sloc": 259,
+    "comments": 8,
+    "multi": 0,
+    "blank": 28,
+    "single_comments": 9
+  },
+  "datasette/renderer.py": {
+    "loc": 123,
+    "lloc": 91,
+    "sloc": 103,
+    "comments": 7,
+    "multi": 0,
+    "blank": 12,
+    "single_comments": 8
+  },
+  "datasette/jump.py": {
+    "loc": 68,
+    "lloc": 32,
+    "sloc": 56,
+    "comments": 0,
+    "multi": 0,
+    "blank": 11,
+    "single_comments": 1
+  },
+  "datasette/resources.py": {
+    "loc": 59,
+    "lloc": 30,
+    "sloc": 39,
+    "comments": 1,
+    "multi": 0,
+    "blank": 16,
+    "single_comments": 4
+  },
+  "datasette/__init__.py": {
+    "loc": 16,
+    "lloc": 10,
+    "sloc": 16,
+    "comments": 10,
+    "multi": 0,
+    "blank": 0,
+    "single_comments": 0
+  },
+  "datasette/csrf.py": {
+    "loc": 177,
+    "lloc": 97,
+    "sloc": 108,
+    "comments": 13,
+    "multi": 24,
+    "blank": 33,
+    "single_comments": 12
+  },
+  "datasette/default_query_actions.py": {
+    "loc": 48,
+    "lloc": 21,
+    "sloc": 41,
+    "comments": 2,
+    "multi": 0,
+    "blank": 5,
+    "single_comments": 2
+  },
+  "datasette/default_table_actions.py": {
+    "loc": 29,
+    "lloc": 13,
+    "sloc": 26,
+    "comments": 0,
+    "multi": 0,
+    "blank": 3,
+    "single_comments": 0
+  },
+  "datasette/blob_renderer.py": {
+    "loc": 62,
+    "lloc": 41,
+    "sloc": 52,
+    "comments": 2,
+    "multi": 0,
+    "blank": 8,
+    "single_comments": 2
+  },
+  "datasette/extras.py": {
+    "loc": 141,
+    "lloc": 103,
+    "sloc": 101,
+    "comments": 8,
+    "multi": 5,
+    "blank": 27,
+    "single_comments": 8
+  },
+  "datasette/version.py": {
+    "loc": 2,
+    "lloc": 2,
+    "sloc": 2,
+    "comments": 0,
+    "multi": 0,
+    "blank": 0,
+    "single_comments": 0
+  },
+  "datasette/events.py": {
+    "loc": 294,
+    "lloc": 138,
+    "sloc": 126,
+    "comments": 3,
+    "multi": 102,
+    "blank": 63,
+    "single_comments": 3
+  },
+  "datasette/_pytest_plugin.py": {
+    "loc": 124,
+    "lloc": 67,
+    "sloc": 75,
+    "comments": 7,
+    "multi": 19,
+    "blank": 23,
+    "single_comments": 7
+  },
+  "datasette/database.py": {
+    "loc": 1270,
+    "lloc": 798,
+    "sloc": 1024,
+    "comments": 108,
+    "multi": 20,
+    "blank": 128,
+    "single_comments": 98
+  },
+  "datasette/default_debug_menu.py": {
+    "loc": 80,
+    "lloc": 10,
+    "sloc": 75,
+    "comments": 0,
+    "multi": 0,
+    "blank": 5,
+    "single_comments": 0
+  },
+  "datasette/background_tasks.py": {
+    "loc": 227,
+    "lloc": 119,
+    "sloc": 118,
+    "comments": 0,
+    "multi": 77,
+    "blank": 31,
+    "single_comments": 1
+  },
+  "datasette/default_actions.py": {
+    "loc": 145,
+    "lloc": 7,
+    "sloc": 142,
+    "comments": 4,
+    "multi": 0,
+    "blank": 2,
+    "single_comments": 1
+  },
+  "datasette/stored_queries.py": {
+    "loc": 580,
+    "lloc": 241,
+    "sloc": 541,
+    "comments": 1,
+    "multi": 0,
+    "blank": 38,
+    "single_comments": 1
+  },
+  "datasette/__main__.py": {
+    "loc": 4,
+    "lloc": 3,
+    "sloc": 3,
+    "comments": 0,
+    "multi": 0,
+    "blank": 1,
+    "single_comments": 0
+  },
+  "datasette/default_database_actions.py": {
+    "loc": 24,
+    "lloc": 12,
+    "sloc": 21,
+    "comments": 0,
+    "multi": 0,
+    "blank": 3,
+    "single_comments": 0
+  },
+  "datasette/forbidden.py": {
+    "loc": 30,
+    "lloc": 13,
+    "sloc": 26,
+    "comments": 0,
+    "multi": 0,
+    "blank": 4,
+    "single_comments": 0
+  },
+  "datasette/default_magic_parameters.py": {
+    "loc": 58,
+    "lloc": 37,
+    "sloc": 45,
+    "comments": 0,
+    "multi": 0,
+    "blank": 13,
+    "single_comments": 0
+  },
+  "datasette/plugins.py": {
+    "loc": 125,
+    "lloc": 67,
+    "sloc": 101,
+    "comments": 5,
+    "multi": 0,
+    "blank": 19,
+    "single_comments": 5
+  },
+  "datasette/facets.py": {
+    "loc": 573,
+    "lloc": 263,
+    "sloc": 513,
+    "comments": 27,
+    "multi": 0,
+    "blank": 34,
+    "single_comments": 26
+  },
+  "datasette/telemetry_registry.py": {
+    "loc": 502,
+    "lloc": 130,
+    "sloc": 385,
+    "comments": 18,
+    "multi": 35,
+    "blank": 63,
+    "single_comments": 19
+  },
+  "datasette/default_column_types.py": {
+    "loc": 101,
+    "lloc": 80,
+    "sloc": 80,
+    "comments": 0,
+    "multi": 0,
+    "blank": 21,
+    "single_comments": 0
+  },
+  "datasette/cli.py": {
+    "loc": 928,
+    "lloc": 392,
+    "sloc": 761,
+    "comments": 41,
+    "multi": 31,
+    "blank": 89,
+    "single_comments": 47
+  },
+  "datasette/telemetry_testing.py": {
+    "loc": 427,
+    "lloc": 234,
+    "sloc": 280,
+    "comments": 5,
+    "multi": 79,
+    "blank": 57,
+    "single_comments": 11
+  },
+  "datasette/default_permissions/tokens.py": {
+    "loc": 38,
+    "lloc": 22,
+    "sloc": 18,
+    "comments": 0,
+    "multi": 9,
+    "blank": 10,
+    "single_comments": 1
+  },
+  "datasette/default_permissions/sqlite_statistics.py": {
+    "loc": 25,
+    "lloc": 10,
+    "sloc": 20,
+    "comments": 0,
+    "multi": 0,
+    "blank": 4,
+    "single_comments": 1
+  },
+  "datasette/default_permissions/__init__.py": {
+    "loc": 45,
+    "lloc": 11,
+    "sloc": 25,
+    "comments": 2,
+    "multi": 13,
+    "blank": 6,
+    "single_comments": 1
+  },
+  "datasette/default_permissions/restrictions.py": {
+    "loc": 199,
+    "lloc": 106,
+    "sloc": 115,
+    "comments": 15,
+    "multi": 29,
+    "blank": 38,
+    "single_comments": 17
+  },
+  "datasette/default_permissions/defaults.py": {
+    "loc": 113,
+    "lloc": 37,
+    "sloc": 74,
+    "comments": 4,
+    "multi": 15,
+    "blank": 20,
+    "single_comments": 4
+  },
+  "datasette/default_permissions/root.py": {
+    "loc": 29,
+    "lloc": 14,
+    "sloc": 15,
+    "comments": 0,
+    "multi": 7,
+    "blank": 7,
+    "single_comments": 0
+  },
+  "datasette/default_permissions/config.py": {
+    "loc": 455,
+    "lloc": 168,
+    "sloc": 297,
+    "comments": 31,
+    "multi": 51,
+    "blank": 66,
+    "single_comments": 41
+  },
+  "datasette/default_permissions/helpers.py": {
+    "loc": 85,
+    "lloc": 54,
+    "sloc": 52,
+    "comments": 0,
+    "multi": 8,
+    "blank": 20,
+    "single_comments": 5
+  },
+  "datasette/publish/heroku.py": {
+    "loc": 254,
+    "lloc": 121,
+    "sloc": 223,
+    "comments": 4,
+    "multi": 0,
+    "blank": 26,
+    "single_comments": 5
+  },
+  "datasette/publish/common.py": {
+    "loc": 98,
+    "lloc": 20,
+    "sloc": 89,
+    "comments": 0,
+    "multi": 0,
+    "blank": 8,
+    "single_comments": 1
+  },
+  "datasette/publish/__init__.py": {
+    "loc": 0,
+    "lloc": 0,
+    "sloc": 0,
+    "comments": 0,
+    "multi": 0,
+    "blank": 0,
+    "single_comments": 0
+  },
+  "datasette/publish/cloudrun.py": {
+    "loc": 307,
+    "lloc": 102,
+    "sloc": 280,
+    "comments": 2,
+    "multi": 0,
+    "blank": 23,
+    "single_comments": 4
+  },
+  "datasette/utils/shutil_backport.py": {
+    "loc": 102,
+    "lloc": 49,
+    "sloc": 88,
+    "comments": 1,
+    "multi": 5,
+    "blank": 8,
+    "single_comments": 1
+  },
+  "datasette/utils/asgi.py": {
+    "loc": 674,
+    "lloc": 357,
+    "sloc": 508,
+    "comments": 32,
+    "multi": 37,
+    "blank": 98,
+    "single_comments": 31
+  },
+  "datasette/utils/multipart.py": {
+    "loc": 784,
+    "lloc": 522,
+    "sloc": 521,
+    "comments": 76,
+    "multi": 56,
+    "blank": 118,
+    "single_comments": 89
+  },
+  "datasette/utils/permissions.py": {
+    "loc": 437,
+    "lloc": 116,
+    "sloc": 325,
+    "comments": 28,
+    "multi": 40,
+    "blank": 47,
+    "single_comments": 25
+  },
+  "datasette/utils/testing.py": {
+    "loc": 175,
+    "lloc": 67,
+    "sloc": 148,
+    "comments": 7,
+    "multi": 0,
+    "blank": 20,
+    "single_comments": 7
+  },
+  "datasette/utils/__init__.py": {
+    "loc": 1806,
+    "lloc": 947,
+    "sloc": 1333,
+    "comments": 81,
+    "multi": 109,
+    "blank": 279,
+    "single_comments": 85
+  },
+  "datasette/utils/check_callable.py": {
+    "loc": 25,
+    "lloc": 18,
+    "sloc": 16,
+    "comments": 1,
+    "multi": 0,
+    "blank": 8,
+    "single_comments": 1
+  },
+  "datasette/utils/internal_db.py": {
+    "loc": 326,
+    "lloc": 60,
+    "sloc": 294,
+    "comments": 2,
+    "multi": 0,
+    "blank": 30,
+    "single_comments": 2
+  },
+  "datasette/utils/baseconv.py": {
+    "loc": 59,
+    "lloc": 34,
+    "sloc": 32,
+    "comments": 3,
+    "multi": 10,
+    "blank": 14,
+    "single_comments": 3
+  },
+  "datasette/utils/actions_sql.py": {
+    "loc": 931,
+    "lloc": 290,
+    "sloc": 670,
+    "comments": 48,
+    "multi": 89,
+    "blank": 121,
+    "single_comments": 51
+  },
+  "datasette/utils/sql_analysis.py": {
+    "loc": 620,
+    "lloc": 215,
+    "sloc": 545,
+    "comments": 13,
+    "multi": 8,
+    "blank": 54,
+    "single_comments": 13
+  },
+  "datasette/utils/sqlite.py": {
+    "loc": 438,
+    "lloc": 283,
+    "sloc": 346,
+    "comments": 21,
+    "multi": 12,
+    "blank": 55,
+    "single_comments": 25
+  },
+  "datasette/views/index.py": {
+    "loc": 191,
+    "lloc": 77,
+    "sloc": 153,
+    "comments": 14,
+    "multi": 0,
+    "blank": 24,
+    "single_comments": 14
+  },
+  "datasette/views/table.py": {
+    "loc": 2551,
+    "lloc": 1251,
+    "sloc": 2189,
+    "comments": 121,
+    "multi": 0,
+    "blank": 242,
+    "single_comments": 120
+  },
+  "datasette/views/base.py": {
+    "loc": 338,
+    "lloc": 208,
+    "sloc": 294,
+    "comments": 13,
+    "multi": 0,
+    "blank": 32,
+    "single_comments": 12
+  },
+  "datasette/views/table_extras.py": {
+    "loc": 1360,
+    "lloc": 658,
+    "sloc": 1203,
+    "comments": 8,
+    "multi": 0,
+    "blank": 149,
+    "single_comments": 8
+  },
+  "datasette/views/query_helpers.py": {
+    "loc": 637,
+    "lloc": 350,
+    "sloc": 562,
+    "comments": 1,
+    "multi": 0,
+    "blank": 74,
+    "single_comments": 1
+  },
+  "datasette/views/special.py": {
+    "loc": 1456,
+    "lloc": 746,
+    "sloc": 1225,
+    "comments": 46,
+    "multi": 15,
+    "blank": 166,
+    "single_comments": 50
+  },
+  "datasette/views/table_create_alter.py": {
+    "loc": 1414,
+    "lloc": 783,
+    "sloc": 1216,
+    "comments": 15,
+    "multi": 0,
+    "blank": 186,
+    "single_comments": 12
+  },
+  "datasette/views/__init__.py": {
+    "loc": 87,
+    "lloc": 56,
+    "sloc": 63,
+    "comments": 4,
+    "multi": 6,
+    "blank": 12,
+    "single_comments": 6
+  },
+  "datasette/views/database.py": {
+    "loc": 1262,
+    "lloc": 600,
+    "sloc": 1114,
+    "comments": 50,
+    "multi": 8,
+    "blank": 89,
+    "single_comments": 51
+  },
+  "datasette/views/execute_write.py": {
+    "loc": 488,
+    "lloc": 221,
+    "sloc": 443,
+    "comments": 0,
+    "multi": 0,
+    "blank": 45,
+    "single_comments": 0
+  },
+  "datasette/views/stored_queries.py": {
+    "loc": 679,
+    "lloc": 291,
+    "sloc": 614,
+    "comments": 0,
+    "multi": 0,
+    "blank": 65,
+    "single_comments": 0
+  },
+  "datasette/views/row.py": {
+    "loc": 934,
+    "lloc": 440,
+    "sloc": 808,
+    "comments": 39,
+    "multi": 0,
+    "blank": 90,
+    "single_comments": 36
+  }
+}

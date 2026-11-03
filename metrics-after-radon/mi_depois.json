@@ -1,0 +1,322 @@
+{
+  "datasette/inspect.py": {
+    "mi": 62.42005158972286,
+    "rank": "A"
+  },
+  "datasette/url_builder.py": {
+    "mi": 47.851747453625286,
+    "rank": "A"
+  },
+  "datasette/permissions.py": {
+    "mi": 61.26966015707363,
+    "rank": "A"
+  },
+  "datasette/actor_auth_cookie.py": {
+    "mi": 71.74187382546806,
+    "rank": "A"
+  },
+  "datasette/tokens.py": {
+    "mi": 58.803576340488895,
+    "rank": "A"
+  },
+  "datasette/filters.py": {
+    "mi": 32.7171157615658,
+    "rank": "A"
+  },
+  "datasette/fixtures.py": {
+    "mi": 50.83152054324979,
+    "rank": "A"
+  },
+  "datasette/telemetry.py": {
+    "mi": 51.22097293160242,
+    "rank": "A"
+  },
+  "datasette/tracer.py": {
+    "mi": 49.67538126663569,
+    "rank": "A"
+  },
+  "datasette/sql_functions.py": {
+    "mi": 100.0,
+    "rank": "A"
+  },
+  "datasette/default_jump_items.py": {
+    "mi": 100.0,
+    "rank": "A"
+  },
+  "datasette/template_contexts.py": {
+    "mi": 93.98893476397687,
+    "rank": "A"
+  },
+  "datasette/column_types.py": {
+    "mi": 78.5041337175172,
+    "rank": "A"
+  },
+  "datasette/handle_exception.py": {
+    "mi": 65.27397471014122,
+    "rank": "A"
+  },
+  "datasette/hookspecs.py": {
+    "mi": 100.0,
+    "rank": "A"
+  },
+  "datasette/app.py": {
+    "mi": 0.0,
+    "rank": "C"
+  },
+  "datasette/write_sql.py": {
+    "mi": 36.228296284564706,
+    "rank": "A"
+  },
+  "datasette/renderer.py": {
+    "mi": 48.54407785029019,
+    "rank": "A"
+  },
+  "datasette/jump.py": {
+    "mi": 53.4095371554884,
+    "rank": "A"
+  },
+  "datasette/resources.py": {
+    "mi": 100.0,
+    "rank": "A"
+  },
+  "datasette/__init__.py": {
+    "mi": 100.0,
+    "rank": "A"
+  },
+  "datasette/csrf.py": {
+    "mi": 62.16816005894331,
+    "rank": "A"
+  },
+  "datasette/default_query_actions.py": {
+    "mi": 70.97611567394132,
+    "rank": "A"
+  },
+  "datasette/default_table_actions.py": {
+    "mi": 69.94980926354864,
+    "rank": "A"
+  },
+  "datasette/blob_renderer.py": {
+    "mi": 61.29668702201257,
+    "rank": "A"
+  },
+  "datasette/extras.py": {
+    "mi": 54.06651702532748,
+    "rank": "A"
+  },
+  "datasette/version.py": {
+    "mi": 100.0,
+    "rank": "A"
+  },
+  "datasette/events.py": {
+    "mi": 69.60102323040302,
+    "rank": "A"
+  },
+  "datasette/_pytest_plugin.py": {
+    "mi": 71.11029532707728,
+    "rank": "A"
+  },
+  "datasette/database.py": {
+    "mi": 4.648507020770578,
+    "rank": "C"
+  },
+  "datasette/default_debug_menu.py": {
+    "mi": 75.94371704946475,
+    "rank": "A"
+  },
+  "datasette/background_tasks.py": {
+    "mi": 62.268463175550856,
+    "rank": "A"
+  },
+  "datasette/default_actions.py": {
+    "mi": 100.0,
+    "rank": "A"
+  },
+  "datasette/stored_queries.py": {
+    "mi": 20.540923504775396,
+    "rank": "A"
+  },
+  "datasette/__main__.py": {
+    "mi": 84.58174335197131,
+    "rank": "A"
+  },
+  "datasette/default_database_actions.py": {
+    "mi": 67.51887853289607,
+    "rank": "A"
+  },
+  "datasette/forbidden.py": {
+    "mi": 63.99201249830133,
+    "rank": "A"
+  },
+  "datasette/default_magic_parameters.py": {
+    "mi": 49.18844784506891,
+    "rank": "A"
+  },
+  "datasette/plugins.py": {
+    "mi": 54.78520381548117,
+    "rank": "A"
+  },
+  "datasette/facets.py": {
+    "mi": 28.337132451926504,
+    "rank": "A"
+  },
+  "datasette/telemetry_registry.py": {
+    "mi": 53.14320836194657,
+    "rank": "A"
+  },
+  "datasette/default_column_types.py": {
+    "mi": 37.360124144780855,
+    "rank": "A"
+  },
+  "datasette/cli.py": {
+    "mi": 30.306099017945886,
+    "rank": "A"
+  },
+  "datasette/telemetry_testing.py": {
+    "mi": 40.175891981325854,
+    "rank": "A"
+  },
+  "datasette/default_permissions/tokens.py": {
+    "mi": 93.63909894133819,
+    "rank": "A"
+  },
+  "datasette/default_permissions/sqlite_statistics.py": {
+    "mi": 73.1756852057256,
+    "rank": "A"
+  },
+  "datasette/default_permissions/__init__.py": {
+    "mi": 100.0,
+    "rank": "A"
+  },
+  "datasette/default_permissions/restrictions.py": {
+    "mi": 62.52523389447052,
+    "rank": "A"
+  },
+  "datasette/default_permissions/defaults.py": {
+    "mi": 76.22227065165801,
+    "rank": "A"
+  },
+  "datasette/default_permissions/root.py": {
+    "mi": 92.14780952494819,
+    "rank": "A"
+  },
+  "datasette/default_permissions/config.py": {
+    "mi": 44.47232170473643,
+    "rank": "A"
+  },
+  "datasette/default_permissions/helpers.py": {
+    "mi": 69.23412331536338,
+    "rank": "A"
+  },
+  "datasette/publish/heroku.py": {
+    "mi": 46.43963214421215,
+    "rank": "A"
+  },
+  "datasette/publish/common.py": {
+    "mi": 61.89049250953569,
+    "rank": "A"
+  },
+  "datasette/publish/__init__.py": {
+    "mi": 100.0,
+    "rank": "A"
+  },
+  "datasette/publish/cloudrun.py": {
+    "mi": 45.12964010907817,
+    "rank": "A"
+  },
+  "datasette/utils/shutil_backport.py": {
+    "mi": 61.66379556834006,
+    "rank": "A"
+  },
+  "datasette/utils/asgi.py": {
+    "mi": 28.48726325314677,
+    "rank": "A"
+  },
+  "datasette/utils/multipart.py": {
+    "mi": 20.173227625240322,
+    "rank": "A"
+  },
+  "datasette/utils/permissions.py": {
+    "mi": 59.44466709717766,
+    "rank": "A"
+  },
+  "datasette/utils/testing.py": {
+    "mi": 54.06090970970681,
+    "rank": "A"
+  },
+  "datasette/utils/__init__.py": {
+    "mi": 0.0,
+    "rank": "C"
+  },
+  "datasette/utils/check_callable.py": {
+    "mi": 84.1810770445418,
+    "rank": "A"
+  },
+  "datasette/utils/internal_db.py": {
+    "mi": 58.19043502987624,
+    "rank": "A"
+  },
+  "datasette/utils/baseconv.py": {
+    "mi": 79.27355718658593,
+    "rank": "A"
+  },
+  "datasette/utils/actions_sql.py": {
+    "mi": 34.804631289849205,
+    "rank": "A"
+  },
+  "datasette/utils/sql_analysis.py": {
+    "mi": 30.910006084866218,
+    "rank": "A"
+  },
+  "datasette/utils/sqlite.py": {
+    "mi": 26.395068742278408,
+    "rank": "A"
+  },
+  "datasette/views/index.py": {
+    "mi": 52.1059059800499,
+    "rank": "A"
+  },
+  "datasette/views/table.py": {
+    "mi": 0.0,
+    "rank": "C"
+  },
+  "datasette/views/base.py": {
+    "mi": 36.52877545382233,
+    "rank": "A"
+  },
+  "datasette/views/table_extras.py": {
+    "mi": 5.533863065271429,
+    "rank": "C"
+  },
+  "datasette/views/query_helpers.py": {
+    "mi": 6.598784566813827,
+    "rank": "C"
+  },
+  "datasette/views/special.py": {
+    "mi": 0.0,
+    "rank": "C"
+  },
+  "datasette/views/table_create_alter.py": {
+    "mi": 0.0,
+    "rank": "C"
+  },
+  "datasette/views/__init__.py": {
+    "mi": 67.8842050290678,
+    "rank": "A"
+  },
+  "datasette/views/database.py": {
+    "mi": 5.258107266221302,
+    "rank": "C"
+  },
+  "datasette/views/execute_write.py": {
+    "mi": 16.463800619623708,
+    "rank": "B"
+  },
+  "datasette/views/stored_queries.py": {
+    "mi": 9.387855581778418,
+    "rank": "B"
+  },
+  "datasette/views/row.py": {
+    "mi": 19.509176453757288,
+    "rank": "A"
+  }
+}
